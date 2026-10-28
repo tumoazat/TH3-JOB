@@ -11,6 +11,13 @@ import {
   computeMatch,
   classifyBand,
 } from '../src/lib/matching';
+import multer from 'multer';
+import { extractPdfText, isPdfSignature } from './cvExtractor';
+
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 5 * 1024 * 1024 },
+});
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -297,6 +304,52 @@ app.put('/api/cv/manual', (req, res) => {
   }
   writeDB(db);
   res.json({ success: true });
+});
+
+app.post('/api/cv/extract', upload.single('file'), async (req, res) => {
+  const file = (req as any).file as { mimetype: string; buffer: Buffer } | undefined;
+  if (!file) {
+    return res.status(400).json({ error: { code: 400, message: 'File PDF bắt buộc' } });
+  }
+  if (file.mimetype !== 'application/pdf') {
+    return res.status(400).json({ error: { code: 400, message: 'Chỉ chấp nhận file PDF' } });
+  }
+  if (!isPdfSignature(file.buffer)) {
+    return res.status(400).json({ error: { code: 400, message: 'File không phải PDF hợp lệ' } });
+  }
+  try {
+    const text = await extractPdfText(file.buffer, 30000);
+    const trimmed = (text || '').trim();
+    if (!trimmed) {
+      return res.status(422).json({
+        error: {
+          code: 422,
+          message: 'Không thể trích xuất văn bản từ PDF. Vui lòng nhập thông tin CV thủ công.',
+        },
+      });
+    }
+    const db = readDB();
+    db.profile = { ...db.profile, cvText: trimmed };
+    writeDB(db);
+    res.json({ cvText: trimmed });
+  } catch (e: any) {
+    const isTimeout = e?.message === 'PDF_EXTRACT_TIMEOUT';
+    res.status(422).json({
+      error: {
+        code: 422,
+        message: isTimeout
+          ? 'Xử lý PDF quá lâu, đã hủy. Vui lòng nhập thông tin CV thủ công.'
+          : 'Không thể trích xuất văn bản từ PDF. Vui lòng nhập thông tin CV thủ công.',
+      },
+    });
+  }
+});
+
+app.use((err: any, _req: any, res: any, _next: any) => {
+  if (err?.code === 'LIMIT_FILE_SIZE') {
+    return res.status(400).json({ error: { code: 400, message: 'File vượt quá 5 MB' } });
+  }
+  res.status(500).json({ error: { code: 500, message: 'Lỗi server nội bộ' } });
 });
 
 app.listen(PORT, () => {
