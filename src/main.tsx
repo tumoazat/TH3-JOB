@@ -271,6 +271,21 @@ function runInteraction(event: Event, navigate: ReturnType<typeof useNavigate>) 
   if (!button) return;
   const btnText = button.textContent || '';
   const btnTextLower = btnText.toLowerCase();
+  if (button.matches('[data-status-filter]')) {
+    event.preventDefault();
+    const key = (button as HTMLElement).dataset.statusFilter || 'all';
+    const group = button.closest('[data-tab-group]') || button.parentElement;
+    group?.querySelectorAll<HTMLElement>('[data-status-filter]').forEach((tab) => {
+      tab.classList.remove('bg-surface-container-low', 'bg-surface-container', 'text-primary', 'font-bold');
+      tab.classList.add('text-on-surface-variant');
+    });
+    (button as HTMLElement).classList.remove('text-on-surface-variant');
+    (button as HTMLElement).classList.add('bg-surface-container', 'text-primary', 'font-bold');
+    document.querySelectorAll<HTMLElement>('tr[data-status]').forEach((row) => {
+      row.style.display = key === 'all' || row.dataset.status === key ? '' : 'none';
+    });
+    return;
+  }
   const iconEl = button.querySelector('[data-icon]');
   const iconName = iconEl?.getAttribute('data-icon')?.toLowerCase() || '';
   // AI Talent / Messages / Interview actions
@@ -301,6 +316,36 @@ function runInteraction(event: Event, navigate: ReturnType<typeof useNavigate>) 
     navigate('/12.12 - Quản lý ứng viên (Candidate Management).html');
     return;
   }
+  if (/đăng tin ngay/i.test(btnText)) {
+    event.preventDefault();
+    submitPostJob({
+      title: (document.getElementById('job-title') as HTMLInputElement | null)?.value || '',
+      deadline: (document.getElementById('closing-date') as HTMLInputElement | null)?.value || '',
+    });
+    return;
+  }
+  if (/đặt lại bộ lọc|reset filter/i.test(btnText)) {
+    event.preventDefault();
+    document.querySelectorAll<HTMLElement>('tr[data-status], [data-job-id]').forEach((el) => { el.style.display = ''; });
+    const all = document.querySelector<HTMLElement>('[data-status-filter="all"]'); all?.click();
+    showToast('Đã đặt lại bộ lọc', 'info');
+    return;
+  }
+  const feedback: Array<[RegExp, string, 'success' | 'info']> = [
+    [/phân tích lại cv|phân tích cv/i, 'Đang phân tích CV bằng AI...', 'info'],
+    [/tải xuống|download|xuất danh sách|export/i, 'Đang xuất dữ liệu...', 'info'],
+    [/xem trước cv|preview cv/i, 'Đang mở bản xem trước CV', 'info'],
+    [/duyệt cv|approve/i, 'Đã duyệt CV ứng viên', 'success'],
+    [/xem offer/i, 'Đang mở thư Offer', 'info'],
+    [/lưu hồ sơ|save profile/i, 'Đã lưu hồ sơ', 'success'],
+    [/thêm kỹ năng|thêm dự án|thêm chứng chỉ|thêm từ khóa|thêm tag/i, 'Đã mở biểu mẫu thêm mới', 'info'],
+    [/cập nhật trạng thái/i, 'Cập nhật trạng thái hồ sơ', 'info'],
+    [/chia sẻ liên kết/i, 'Đã sao chép liên kết hồ sơ', 'success'],
+    [/làm bài test|luyện câu hỏi|đánh giá kỹ năng/i, 'Đang mở bài đánh giá kỹ năng', 'info'],
+  ];
+  for (const [re, msg, kind] of feedback) {
+    if (button.tagName === 'BUTTON' && re.test(btnText)) { event.preventDefault(); showToast(msg, kind); return; }
+  }
   // Generic button navigation
   if (button instanceof HTMLButtonElement && !button.matches('[data-apply],[data-bookmark],[data-status-filter],[role="switch"],[role="tab"]')) {
     const label = (button.getAttribute('aria-label') || '').toLowerCase();
@@ -316,14 +361,6 @@ function runInteraction(event: Event, navigate: ReturnType<typeof useNavigate>) 
   }
   const jobId = button.dataset.jobId || button.dataset.apply || button.closest<HTMLElement>('[data-job-id]')?.dataset.jobId;
   const store = window.VL;
-  if (/đăng tin ngay/i.test(btnText)) {
-    event.preventDefault();
-    submitPostJob({
-      title: (document.getElementById('job-title') as HTMLInputElement | null)?.value || '',
-      deadline: (document.getElementById('closing-date') as HTMLInputElement | null)?.value || '',
-    });
-    return;
-  }
   if (/xem chi tiết|view detail/i.test(btnText)) { event.preventDefault(); if (jobId) { navigate(`/05_job_detail.html?id=${jobId}`); return; } const path = window.location.pathname; if (path.includes('03_student_dashboard') || path.includes('08_application')) { navigate('/08_application_tracker.html'); return; } navigate('/05_job_detail.html?id=1'); return; }
   if (button.matches('[data-bookmark]')) {
     event.preventDefault();
@@ -384,12 +421,28 @@ function submitPostJob(data: Record<string, FormDataEntryValue>) {
 }
 
 function wireSearchAndFilters() {
-  document.querySelectorAll<HTMLInputElement>('[data-search-target]').forEach((input) => {
+  const bind = (input: HTMLInputElement) => {
     if (input.dataset.wired) return;
     input.dataset.wired = '1';
     input.addEventListener('input', () => {
-      const query = input.value.trim().toLocaleLowerCase('vi'); document.querySelectorAll<HTMLElement>(input.dataset.searchTarget || '[data-job-id]').forEach((card) => { card.hidden = Boolean(query && !card.textContent?.toLocaleLowerCase('vi').includes(query)); });
+      const query = input.value.trim().toLocaleLowerCase('vi');
+      let targets: HTMLElement[];
+      if (input.dataset.searchTarget) {
+        targets = Array.from(document.querySelectorAll<HTMLElement>(input.dataset.searchTarget));
+      } else {
+        const cards = Array.from(document.querySelectorAll<HTMLElement>('[data-job-id]'));
+        targets = cards.length ? cards : Array.from(document.querySelectorAll<HTMLElement>('tbody tr'));
+      }
+      targets.forEach((el) => {
+        const match = !query || (el.textContent || '').toLocaleLowerCase('vi').includes(query);
+        el.style.display = match ? '' : 'none';
+      });
     });
+  };
+  document.querySelectorAll<HTMLInputElement>('[data-search-target]').forEach(bind);
+  document.querySelectorAll<HTMLInputElement>('input[type="text"]').forEach((input) => {
+    const ph = (input.placeholder || '').toLocaleLowerCase('vi');
+    if (/(tìm|search)/.test(ph)) bind(input);
   });
 }
 

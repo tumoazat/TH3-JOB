@@ -1,272 +1,265 @@
 {
-  "jobs": [
-    {
-      "id": 1,
-      "company": "NovaTech Solutions",
-      "title": "Thực tập sinh Front-end Developer (ReactJS / UI)",
-      "location": "Hà Nội · Cầu Giấy",
-      "type": "Hybrid",
-      "salary": "3–5 triệu",
-      "match": 85,
-      "deadline": "30/11/2026",
-      "tags": [
-        "HTML5",
-        "CSS3",
-        "ReactJS",
-        "Git",
-        "Tailwind CSS"
-      ],
-      "description": "Phát triển giao diện web hiện đại với ReactJS và Tailwind CSS.",
-      "requirements": "Biết HTML/CSS/JS, cơ bản ReactJS, ưu tiên có kinh nghiệm Tailwind.",
-      "benefits": "Lương cạnh tranh, môi trường năng động, cơ hội chính thức.",
-      "posted": "15/10/2026"
-    },
-    {
-      "id": 2,
-      "company": "BlueWave Digital",
-      "title": "Thực tập sinh ReactJS (Có cơ hội lên Chính thức)",
-      "location": "Hà Nội · Thanh Xuân",
-      "type": "On-site",
-      "salary": "4–6 triệu",
-      "match": 82,
-      "deadline": "05/12/2026",
-      "tags": [
-        "React",
-        "Redux Toolkit",
-        "REST API",
-        "JavaScript"
-      ],
-      "description": "Làm việc trong team product xây dựng SaaS B2B.",
-      "requirements": "React hooks, Redux cơ bản, gọi REST API.",
-      "benefits": "Laptop, đào tạo mentor 1:1, xét lên chính thức sau 3 tháng.",
-      "posted": "18/10/2026"
-    },
-    {
-      "id": 3,
-      "company": "PixelWorks Studio",
-      "title": "Junior Web Developer (Next.js & Tailwind)",
-      "location": "Remote",
-      "type": "Remote",
-      "salary": "8–12 triệu",
-      "match": 68,
-      "deadline": "15/12/2026",
-      "tags": [
-        "Next.js",
-        "Tailwind CSS",
-        "TypeScript",
-        "Vercel"
-      ],
-      "description": "Xây dựng các landing page và web app cho khách hàng toàn cầu.",
-      "requirements": "Next.js 14+, TypeScript cơ bản, deploy Vercel.",
-      "benefits": "Remote 100%, flex giờ.",
-      "posted": "20/10/2026"
-    },
-    {
-      "id": 4,
-      "company": "DataNest Solutions",
-      "title": "Thực tập sinh Backend Python (Django / Data Analytics)",
-      "location": "Hà Nội · Hoàng Mai",
-      "type": "Hybrid",
-      "salary": "3–4 triệu",
-      "match": 71,
-      "deadline": "20/12/2026",
-      "tags": [
-        "Python",
-        "Django",
-        "SQL",
-        "Pandas"
-      ],
-      "description": "Hỗ trợ xây dựng pipeline data và REST API nội bộ.",
-      "requirements": "Python cơ bản, biết SQL, ưu tiên có project Django.",
-      "benefits": "Mentoring trực tiếp, báo cáo kết quả thực tập có giá trị.",
-      "posted": "21/10/2026"
-    },
-    {
-      "id": 5,
-      "company": "CodeNest Studio",
-      "title": "Thực tập sinh Full-stack (Node.js + React)",
-      "location": "Hà Nội · Đống Đa",
-      "type": "On-site",
-      "salary": "3–5 triệu",
-      "match": 74,
-      "deadline": "10/12/2026",
-      "tags": [
-        "Node.js",
-        "React",
-        "Express",
-        "MongoDB"
-      ],
-      "description": "Tham gia phát triển ứng dụng web full-stack.",
-      "requirements": "JavaScript ES6+, React, Express cơ bản.",
-      "benefits": "Thưởng dự án, đội ngũ trẻ.",
-      "posted": "22/10/2026"
-    },
-    {
-      "id": 6,
-      "company": "NorthStar Technology",
-      "title": "Thực tập sinh DevOps / Cloud (AWS)",
-      "location": "Remote",
-      "type": "Remote",
-      "salary": "4–7 triệu",
-      "match": 60,
-      "deadline": "25/12/2026",
-      "tags": [
-        "AWS",
-        "Docker",
-        "Linux",
-        "CI/CD"
-      ],
-      "description": "Hỗ trợ infrastructure và tự động hoá CI/CD.",
-      "requirements": "Linux cơ bản, Docker, khái niệm cloud.",
-      "benefits": "Remote, chứng chỉ AWS được hỗ trợ.",
-      "posted": "22/10/2026"
-    }
-  ],
-  "applications": [
-    {
-      "id": "a1",
-      "jobId": 1,
-      "status": "reviewing",
-      "appliedDate": "20/10/2026",
-      "note": "HR đã xem hồ sơ"
-    },
-    {
-      "id": "a2",
-      "jobId": 2,
-      "status": "interview",
-      "appliedDate": "18/10/2026",
-      "note": "Online: 28/11 • 09:30"
-    },
-    {
-      "id": "a3",
-      "jobId": 4,
-      "status": "reviewing",
-      "appliedDate": "21/10/2026",
-      "note": ""
-    },
-    {
-      "id": "a4",
-      "jobId": 5,
-      "status": "rejected",
-      "appliedDate": "12/10/2026",
-      "note": "Chưa đạt tiêu chí đợt này"
-    },
-    {
-      "id": "a5",
-      "jobId": 6,
-      "status": "done",
-      "appliedDate": "10/10/2026",
-      "note": "Quy trình đã kết thúc"
-    },
-    {
-      "id": "a1793154600339",
-      "jobId": 3,
-      "status": "reviewing",
-      "appliedDate": "28/10/2026",
-      "note": ""
-    }
-  ],
-  "savedJobs": [
-    1,
-    2
-  ],
-  "profile": {
-    "name": "Nguyễn Minh Anh",
-    "email": "minhanh.nguyen@email.edu.vn",
-    "phone": "0912 345 678",
-    "university": "Đại học Thủy Lợi",
-    "major": "Công nghệ Thông tin",
-    "gpa": "3.65/4.0",
-    "graduationYear": "2026",
-    "skills": [
-      "ReactJS",
-      "JavaScript",
-      "HTML/CSS",
-      "Git",
-      "Tailwind CSS"
-    ],
-    "bio": "Sinh viên CNTT năm 4, đam mê front-end, tìm kiếm cơ hội thực tập.",
-    "avatarUrl": null,
-    "cvScore": 85,
-    "cvFileName": "CV_NguyenMinhAnh_Frontend_2026.pdf"
-  },
-  "employer": {
-    "company": "NovaTech Solutions",
-    "email": "hr@novatech.vn",
-    "industry": "Công nghệ",
-    "size": "50–200 nhân viên"
-  },
-  "postedJobs": [
-    {
-      "id": "pj1",
-      "title": "Thực tập sinh Front-end Developer (ReactJS / UI)",
-      "status": "active",
-      "applicants": 12,
-      "views": 89,
-      "deadline": "30/11/2026"
-    },
-    {
-      "id": "pj2",
-      "title": "Senior Backend Engineer (Node.js)",
-      "status": "active",
-      "applicants": 7,
-      "views": 54,
-      "deadline": "15/12/2026"
-    },
-    {
-      "id": "pj3",
-      "title": "UI/UX Designer (Figma)",
-      "status": "closed",
-      "applicants": 23,
-      "views": 130,
-      "deadline": "01/10/2026"
-    }
-  ],
-  "candidates": [
-    {
-      "id": "c1",
-      "jobId": "pj1",
-      "name": "Nguyễn Văn An",
-      "university": "BKHN",
-      "match": 85,
-      "status": "interview",
-      "appliedDate": "20/10/2026"
-    },
-    {
-      "id": "c2",
-      "jobId": "pj1",
-      "name": "Trần Thị Bình",
-      "university": "NEU",
-      "match": 78,
-      "status": "reviewing",
-      "appliedDate": "21/10/2026"
-    },
-    {
-      "id": "c3",
-      "jobId": "pj2",
-      "name": "Lê Minh Cường",
-      "university": "UET",
-      "match": 91,
-      "status": "offer",
-      "appliedDate": "19/10/2026"
-    },
-    {
-      "id": "c4",
-      "jobId": "pj1",
-      "name": "Phạm Thị Dung",
-      "university": "PTIT",
-      "match": 65,
-      "status": "rejected",
-      "appliedDate": "17/10/2026"
-    },
-    {
-      "id": "c5",
-      "jobId": "pj2",
-      "name": "Hoàng Văn Em",
-      "university": "BKHN",
-      "match": 80,
-      "status": "reviewing",
-      "appliedDate": "22/10/2026"
-    }
-  ]
+    "jobs":  [
+                 {
+                     "id":  1,
+                     "company":  "NovaTech Solutions",
+                     "title":  "ThÃ¡Â»Â±c tÃ¡ÂºÂ­p sinh Front-end Developer (ReactJS / UI)",
+                     "location":  "HÃƒÂ  NÃ¡Â»â„¢i Ã‚Â· CÃ¡ÂºÂ§u GiÃ¡ÂºÂ¥y",
+                     "type":  "Hybrid",
+                     "salary":  "3Ã¢â‚¬â€œ5 triÃ¡Â»â€¡u",
+                     "match":  85,
+                     "deadline":  "30/11/2026",
+                     "tags":  [
+                                  "HTML5",
+                                  "CSS3",
+                                  "ReactJS",
+                                  "Git",
+                                  "Tailwind CSS"
+                              ],
+                     "description":  "PhÃƒÂ¡t triÃ¡Â»Æ’n giao diÃ¡Â»â€¡n web hiÃ¡Â»â€¡n Ã„â€˜Ã¡ÂºÂ¡i vÃ¡Â»â€ºi ReactJS vÃƒÂ  Tailwind CSS.",
+                     "requirements":  "BiÃ¡ÂºÂ¿t HTML/CSS/JS, cÃ†Â¡ bÃ¡ÂºÂ£n ReactJS, Ã†Â°u tiÃƒÂªn cÃƒÂ³ kinh nghiÃ¡Â»â€¡m Tailwind.",
+                     "benefits":  "LÃ†Â°Ã†Â¡ng cÃ¡ÂºÂ¡nh tranh, mÃƒÂ´i trÃ†Â°Ã¡Â»Âng nÃ„Æ’ng Ã„â€˜Ã¡Â»â„¢ng, cÃ†Â¡ hÃ¡Â»â„¢i chÃƒÂ­nh thÃ¡Â»Â©c.",
+                     "posted":  "15/10/2026"
+                 },
+                 {
+                     "id":  2,
+                     "company":  "BlueWave Digital",
+                     "title":  "ThÃ¡Â»Â±c tÃ¡ÂºÂ­p sinh ReactJS (CÃƒÂ³ cÃ†Â¡ hÃ¡Â»â„¢i lÃƒÂªn ChÃƒÂ­nh thÃ¡Â»Â©c)",
+                     "location":  "HÃƒÂ  NÃ¡Â»â„¢i Ã‚Â· Thanh XuÃƒÂ¢n",
+                     "type":  "On-site",
+                     "salary":  "4Ã¢â‚¬â€œ6 triÃ¡Â»â€¡u",
+                     "match":  82,
+                     "deadline":  "05/12/2026",
+                     "tags":  [
+                                  "React",
+                                  "Redux Toolkit",
+                                  "REST API",
+                                  "JavaScript"
+                              ],
+                     "description":  "LÃƒÂ m viÃ¡Â»â€¡c trong team product xÃƒÂ¢y dÃ¡Â»Â±ng SaaS B2B.",
+                     "requirements":  "React hooks, Redux cÃ†Â¡ bÃ¡ÂºÂ£n, gÃ¡Â»Âi REST API.",
+                     "benefits":  "Laptop, Ã„â€˜ÃƒÂ o tÃ¡ÂºÂ¡o mentor 1:1, xÃƒÂ©t lÃƒÂªn chÃƒÂ­nh thÃ¡Â»Â©c sau 3 thÃƒÂ¡ng.",
+                     "posted":  "18/10/2026"
+                 },
+                 {
+                     "id":  3,
+                     "company":  "PixelWorks Studio",
+                     "title":  "Junior Web Developer (Next.js \u0026 Tailwind)",
+                     "location":  "Remote",
+                     "type":  "Remote",
+                     "salary":  "8Ã¢â‚¬â€œ12 triÃ¡Â»â€¡u",
+                     "match":  68,
+                     "deadline":  "15/12/2026",
+                     "tags":  [
+                                  "Next.js",
+                                  "Tailwind CSS",
+                                  "TypeScript",
+                                  "Vercel"
+                              ],
+                     "description":  "XÃƒÂ¢y dÃ¡Â»Â±ng cÃƒÂ¡c landing page vÃƒÂ  web app cho khÃƒÂ¡ch hÃƒÂ ng toÃƒÂ n cÃ¡ÂºÂ§u.",
+                     "requirements":  "Next.js 14+, TypeScript cÃ†Â¡ bÃ¡ÂºÂ£n, deploy Vercel.",
+                     "benefits":  "Remote 100%, flex giÃ¡Â»Â.",
+                     "posted":  "20/10/2026"
+                 },
+                 {
+                     "id":  4,
+                     "company":  "DataNest Solutions",
+                     "title":  "ThÃ¡Â»Â±c tÃ¡ÂºÂ­p sinh Backend Python (Django / Data Analytics)",
+                     "location":  "HÃƒÂ  NÃ¡Â»â„¢i Ã‚Â· HoÃƒÂ ng Mai",
+                     "type":  "Hybrid",
+                     "salary":  "3Ã¢â‚¬â€œ4 triÃ¡Â»â€¡u",
+                     "match":  71,
+                     "deadline":  "20/12/2026",
+                     "tags":  [
+                                  "Python",
+                                  "Django",
+                                  "SQL",
+                                  "Pandas"
+                              ],
+                     "description":  "HÃ¡Â»â€” trÃ¡Â»Â£ xÃƒÂ¢y dÃ¡Â»Â±ng pipeline data vÃƒÂ  REST API nÃ¡Â»â„¢i bÃ¡Â»â„¢.",
+                     "requirements":  "Python cÃ†Â¡ bÃ¡ÂºÂ£n, biÃ¡ÂºÂ¿t SQL, Ã†Â°u tiÃƒÂªn cÃƒÂ³ project Django.",
+                     "benefits":  "Mentoring trÃ¡Â»Â±c tiÃ¡ÂºÂ¿p, bÃƒÂ¡o cÃƒÂ¡o kÃ¡ÂºÂ¿t quÃ¡ÂºÂ£ thÃ¡Â»Â±c tÃ¡ÂºÂ­p cÃƒÂ³ giÃƒÂ¡ trÃ¡Â»â€¹.",
+                     "posted":  "21/10/2026"
+                 },
+                 {
+                     "id":  5,
+                     "company":  "CodeNest Studio",
+                     "title":  "ThÃ¡Â»Â±c tÃ¡ÂºÂ­p sinh Full-stack (Node.js + React)",
+                     "location":  "HÃƒÂ  NÃ¡Â»â„¢i Ã‚Â· Ã„ÂÃ¡Â»â€˜ng Ã„Âa",
+                     "type":  "On-site",
+                     "salary":  "3Ã¢â‚¬â€œ5 triÃ¡Â»â€¡u",
+                     "match":  74,
+                     "deadline":  "10/12/2026",
+                     "tags":  [
+                                  "Node.js",
+                                  "React",
+                                  "Express",
+                                  "MongoDB"
+                              ],
+                     "description":  "Tham gia phÃƒÂ¡t triÃ¡Â»Æ’n Ã¡Â»Â©ng dÃ¡Â»Â¥ng web full-stack.",
+                     "requirements":  "JavaScript ES6+, React, Express cÃ†Â¡ bÃ¡ÂºÂ£n.",
+                     "benefits":  "ThÃ†Â°Ã¡Â»Å¸ng dÃ¡Â»Â± ÃƒÂ¡n, Ã„â€˜Ã¡Â»â„¢i ngÃ…Â© trÃ¡ÂºÂ».",
+                     "posted":  "22/10/2026"
+                 },
+                 {
+                     "id":  6,
+                     "company":  "NorthStar Technology",
+                     "title":  "ThÃ¡Â»Â±c tÃ¡ÂºÂ­p sinh DevOps / Cloud (AWS)",
+                     "location":  "Remote",
+                     "type":  "Remote",
+                     "salary":  "4Ã¢â‚¬â€œ7 triÃ¡Â»â€¡u",
+                     "match":  60,
+                     "deadline":  "25/12/2026",
+                     "tags":  [
+                                  "AWS",
+                                  "Docker",
+                                  "Linux",
+                                  "CI/CD"
+                              ],
+                     "description":  "HÃ¡Â»â€” trÃ¡Â»Â£ infrastructure vÃƒÂ  tÃ¡Â»Â± Ã„â€˜Ã¡Â»â„¢ng hoÃƒÂ¡ CI/CD.",
+                     "requirements":  "Linux cÃ†Â¡ bÃ¡ÂºÂ£n, Docker, khÃƒÂ¡i niÃ¡Â»â€¡m cloud.",
+                     "benefits":  "Remote, chÃ¡Â»Â©ng chÃ¡Â»â€° AWS Ã„â€˜Ã†Â°Ã¡Â»Â£c hÃ¡Â»â€” trÃ¡Â»Â£.",
+                     "posted":  "22/10/2026"
+                 }
+             ],
+    "applications":  [
+                         {
+                             "id":  "a1",
+                             "jobId":  1,
+                             "status":  "reviewing",
+                             "appliedDate":  "20/10/2026",
+                             "note":  "HR Ã„â€˜ÃƒÂ£ xem hÃ¡Â»â€œ sÃ†Â¡"
+                         },
+                         {
+                             "id":  "a2",
+                             "jobId":  2,
+                             "status":  "interview",
+                             "appliedDate":  "18/10/2026",
+                             "note":  "Online: 28/11 Ã¢â‚¬Â¢ 09:30"
+                         },
+                         {
+                             "id":  "a3",
+                             "jobId":  4,
+                             "status":  "reviewing",
+                             "appliedDate":  "21/10/2026",
+                             "note":  ""
+                         },
+                         {
+                             "id":  "a4",
+                             "jobId":  5,
+                             "status":  "rejected",
+                             "appliedDate":  "12/10/2026",
+                             "note":  "ChÃ†Â°a Ã„â€˜Ã¡ÂºÂ¡t tiÃƒÂªu chÃƒÂ­ Ã„â€˜Ã¡Â»Â£t nÃƒÂ y"
+                         },
+                         {
+                             "id":  "a5",
+                             "jobId":  6,
+                             "status":  "done",
+                             "appliedDate":  "10/10/2026",
+                             "note":  "Quy trÃƒÂ¬nh Ã„â€˜ÃƒÂ£ kÃ¡ÂºÂ¿t thÃƒÂºc"
+                         }
+                     ],
+    "savedJobs":  [
+                      1,
+                      2
+                  ],
+    "profile":  {
+                    "name":  "NguyÃ¡Â»â€¦n Minh Anh",
+                    "email":  "minhanh.nguyen@email.edu.vn",
+                    "phone":  "0912 345 678",
+                    "university":  "Ã„ÂÃ¡ÂºÂ¡i hÃ¡Â»Âc ThÃ¡Â»Â§y LÃ¡Â»Â£i",
+                    "major":  "CÃƒÂ´ng nghÃ¡Â»â€¡ ThÃƒÂ´ng tin",
+                    "gpa":  "3.65/4.0",
+                    "graduationYear":  "2026",
+                    "skills":  [
+                                   "ReactJS",
+                                   "JavaScript",
+                                   "HTML/CSS",
+                                   "Git",
+                                   "Tailwind CSS"
+                               ],
+                    "bio":  "Sinh viÃƒÂªn CNTT nÃ„Æ’m 4, Ã„â€˜am mÃƒÂª front-end, tÃƒÂ¬m kiÃ¡ÂºÂ¿m cÃ†Â¡ hÃ¡Â»â„¢i thÃ¡Â»Â±c tÃ¡ÂºÂ­p.",
+                    "avatarUrl":  null,
+                    "cvScore":  85,
+                    "cvFileName":  "CV_NguyenMinhAnh_Frontend_2026.pdf"
+                },
+    "employer":  {
+                     "company":  "NovaTech Solutions",
+                     "email":  "hr@novatech.vn",
+                     "industry":  "CÃƒÂ´ng nghÃ¡Â»â€¡",
+                     "size":  "50Ã¢â‚¬â€œ200 nhÃƒÂ¢n viÃƒÂªn"
+                 },
+    "postedJobs":  [
+                       {
+                           "id":  "pj1",
+                           "title":  "ThÃ¡Â»Â±c tÃ¡ÂºÂ­p sinh Front-end Developer (ReactJS / UI)",
+                           "status":  "active",
+                           "applicants":  12,
+                           "views":  89,
+                           "deadline":  "30/11/2026"
+                       },
+                       {
+                           "id":  "pj2",
+                           "title":  "Senior Backend Engineer (Node.js)",
+                           "status":  "active",
+                           "applicants":  7,
+                           "views":  54,
+                           "deadline":  "15/12/2026"
+                       },
+                       {
+                           "id":  "pj3",
+                           "title":  "UI/UX Designer (Figma)",
+                           "status":  "closed",
+                           "applicants":  23,
+                           "views":  130,
+                           "deadline":  "01/10/2026"
+                       }
+                   ],
+    "candidates":  [
+                       {
+                           "id":  "c1",
+                           "jobId":  "pj1",
+                           "name":  "NguyÃ¡Â»â€¦n VÃ„Æ’n An",
+                           "university":  "BKHN",
+                           "match":  85,
+                           "status":  "interview",
+                           "appliedDate":  "20/10/2026"
+                       },
+                       {
+                           "id":  "c2",
+                           "jobId":  "pj1",
+                           "name":  "TrÃ¡ÂºÂ§n ThÃ¡Â»â€¹ BÃƒÂ¬nh",
+                           "university":  "NEU",
+                           "match":  78,
+                           "status":  "reviewing",
+                           "appliedDate":  "21/10/2026"
+                       },
+                       {
+                           "id":  "c3",
+                           "jobId":  "pj2",
+                           "name":  "LÃƒÂª Minh CÃ†Â°Ã¡Â»Âng",
+                           "university":  "UET",
+                           "match":  91,
+                           "status":  "offer",
+                           "appliedDate":  "19/10/2026"
+                       },
+                       {
+                           "id":  "c4",
+                           "jobId":  "pj1",
+                           "name":  "PhÃ¡ÂºÂ¡m ThÃ¡Â»â€¹ Dung",
+                           "university":  "PTIT",
+                           "match":  65,
+                           "status":  "rejected",
+                           "appliedDate":  "17/10/2026"
+                       },
+                       {
+                           "id":  "c5",
+                           "jobId":  "pj2",
+                           "name":  "HoÃƒÂ ng VÃ„Æ’n Em",
+                           "university":  "BKHN",
+                           "match":  80,
+                           "status":  "reviewing",
+                           "appliedDate":  "22/10/2026"
+                       }
+                   ]
 }
