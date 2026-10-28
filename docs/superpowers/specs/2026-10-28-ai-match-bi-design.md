@@ -2,7 +2,7 @@
 
 **Project:** CareerMatch AI — Hệ thống Tìm việc Thông minh tích hợp AI và BI  
 **Date:** 2026-10-28  
-**Status:** Revised v9 (chờ duyệt)  
+**Status:** Revised v10 (chờ duyệt)  
 **Repo:** https://github.com/tumoazat/TH3-JOB  
 **Quyết định đã chốt:** Stack không đổi (React + Vite + Tailwind + Express + JSON DB), Bearer JWT HS256 (chỉ server ký), schema rõ ràng 6 collection chính, công thức BI dựa trên trạng thái hiện tại, heuristic matching (không ML), không tự tạo mật khẩu/tài khoản giả trong migration.
 
@@ -114,10 +114,16 @@ Schema formalized (additive, backward compatible). **Trước khi triển khai p
 ### Ràng buộc toàn vẹn (đã chốt)
 
 - Khóa tham chiếu: `jobs.employerId` phải tồn tại trong `employers.id`; `applications.jobId` phải tồn tại trong `jobs.id`; `applications.candidateId` phải tồn tại trong `candidates.id`; `applications.employerId` phải tồn tại trong `employers.id`; `savedJobs.candidateId` phải tồn tại trong `candidates.id`; `savedJobs.jobId[]` mỗi phần tử phải tồn tại trong `jobs.id`.
+- **Ràng buộc duy nhất 1–1 (đã chốt):**
+  - `users.email` phải duy nhất sau khi chuẩn hóa (trim và chuyển chữ thường).
+  - Mỗi `userId` chỉ được liên kết tối đa một hồ sơ `candidates` hoặc một hồ sơ `employers`.
+  - `candidates.userId` phải thuộc tài khoản có `role = student`; `employers.userId` phải thuộc tài khoản có `role = employer`.
+  - `applications` không được trùng cặp `candidateId + jobId`, kể cả khi hai request gửi đồng thời.
 - **Chuyển đổi ID nhất quán:** tất cả ID trong schema mới là chuỗi string. Trong migration, chuyển đổi ID và khóa ngoại từ số sang chuỗi, kiểm tra trùng ID và liên kết sau khi chuyển đổi.
 - Kiểm tra ID tồn tại trước khi ghi; chống dữ liệu trùng (một ứng viên không được apply cùng một job hai lần, một job không được đăng trùng theo `employerId + title + deadline`).
 - Quy tắc cập nhật: chỉ chủ sở hữu hoặc admin được cập nhật/xóa bản ghi liên quan; cập nhật phải đi kèm kiểm tra quyền tại backend.
 - `applications.employerId` phải luôn khớp với `jobs.employerId`: backend lấy chủ sở hữu từ bản ghi `job`, **không tin `employerId` do client gửi**.
+- **Tất cả ràng buộc trên phải được kiểm tra ở backend trong cùng mutex với thao tác cập nhật DB (xem mục 3).**
 
 ### Kế hoạch migration (đã chốt)
 
@@ -249,8 +255,8 @@ Schema formalized (additive, backward compatible). **Trước khi triển khai p
 **Mã lỗi / trạng thái phản hồi:** Matching thành công về mặt xử lý nhưng thiếu dữ liệu → trả kết quả HTTP 200 với `match: null` và `dataStatus: "insufficient"`, không trả về lỗi 422. Chỉ trả lỗi khi đầu vào không hợp lệ (thiếu `candidateId` hoặc `jobId`): ID không tồn tại → `404`; ID tồn tại nhưng không có quyền → `403`.
 
 **Quyền truy cập `/api/match` theo từng role (đã chốt):**
-- `student`: chỉ được match hồ sơ ứng viên gắn với `req.user.userId` của mình với tin tuyển dụng công khai, đang mở và chưa hết hạn.
-- `employer`: chỉ được match ứng viên đã ứng tuyển vào tin tuyển dụng thuộc quyền sở hữu của nhà tuyển dụng đang đăng nhập. `employerId` phải được tra cứu từ tài khoản và đối chiếu với chủ sở hữu của bản ghi `jobs`.
+- `student`: chỉ được match hồ sơ ứng viên gắn với `req.user.userId` của mình với tin tuyển dụng công khai, đang mở và chưa hết hạn. Backend lấy hồ sơ qua `req.user.userId`; `candidateId` do client gửi **không phải căn cứ xác định quyền sở hữu**.
+- `employer`: chỉ được match ứng viên đã ứng tuyển vào tin tuyển dụng thuộc quyền sở hữu của nhà tuyển dụng đang đăng nhập. `employerId` phải được tra cứu từ tài khoản và đối chiếu với chủ sở hữu của bản ghi `jobs`. Phải kiểm tra đồng thời: tin tuyển dụng thuộc nhà tuyển dụng đang đăng nhập; đơn ứng tuyển liên kết đúng ứng viên và tin tuyển dụng; quyền xem CV đầy đủ tuân theo quy tắc PII hiện có.
 - Không sử dụng `candidateId`, `employerId` hoặc `role` do client gửi để xác định quyền sở hữu.
 - `admin`: chỉ được sử dụng matching nếu nghiệp vụ thực sự yêu cầu; không tự động cấp quyền truy cập CV đầy đủ hoặc PII chỉ vì tài khoản có role `admin`.
 - ID không tồn tại trả `404`; tài nguyên tồn tại nhưng người dùng không được phép truy cập trả `403` theo quy ước API.
@@ -264,7 +270,7 @@ Schema formalized (additive, backward compatible). **Trước khi triển khai p
 - **Loại file:** chỉ `.pdf` (kiểm tra extension, MIME type `application/pdf` và chữ ký file `%PDF-`).
 - **Dung lượng:** tối đa 5 MB mỗi file.
 - **Cơ chế upload:** giới hạn upload, không lưu file công khai, lưu vào thư mục tạm và xóa file tạm ngay cả khi trích xuất lỗi.
-- **Timeout:** cố định 30 giây cho một yêu cầu trích xuất. Khi quá hạn, API trả lỗi theo cấu trúc đã thống nhất, không ghi đè CV cũ và phải dọn file tạm. Cần kiểm tra khả năng hủy xử lý thật của thư viện; chỉ đặt timeout cho HTTP response không đảm bảo công việc phân tích PDF đã dừng. Với phạm vi đồ án, không cần xây hệ thống xử lý file phức tạp, nhưng phải có ca kiểm thử cho timeout và việc dọn file tạm.
+- **Timeout:** cố định 30 giây cho một yêu cầu trích xuất. Khi quá hạn, API trả lỗi theo cấu trúc đã thống nhất, không ghi đè CV cũ và phải dọn file tạm. **Trong giai đoạn D, phải xác minh khả năng hủy thực sự của cách gọi pdf-parse được chọn. Nếu không thể hủy an toàn, dùng tiến trình xử lý có thể kết thúc hoặc cơ chế cô lập phù hợp; không chỉ đặt timer rồi để công việc tiếp tục chạy nền.** Khi timeout, phải đảm bảo: không ghi đè `cvText` hiện tại; dọn file tạm; không để các tác vụ hết hạn tích lũy và làm cạn tài nguyên server.
 - **Xử lý lỗi:**
   - File không phải PDF, sai MIME, sai chữ ký hoặc quá lớn → `400` với thông báo rõ ràng.
   - PDF mã hóa / bị hỏng / không có văn bản đọc được → bắt lỗi từ `pdf-parse` → trả về `422` với thông báo "Không thể trích xuất văn bản từ PDF. Vui lòng nhập thông tin CV thủ công."
@@ -327,7 +333,9 @@ Aggregations từ `db.json`:
   },
   "dataQuality": {
     "invalidApplicationStatusCount": 0,
-    "excludedSalaryCount": 0
+    "excludedSalaryCount": 0,
+    "invalidJobStatusCount": 0,
+    "invalidDeadlineCount": 0
   }
 }
 ```
@@ -342,6 +350,8 @@ Aggregations từ `db.json`:
   - Nếu lương là khoảng: sử dụng trung điểm của khoảng lương để phân nhóm.
   - Nếu lương là "thỏa thuận", không hợp lệ hoặc không xác định được đơn vị: loại khỏi phân bố số học và ghi nhận số bản ghi bị loại vào `excludedSalaryCount`.
   - Nếu có lương theo năm hoặc theo giờ: chỉ quy đổi khi xác định được đơn vị và giả định quy đổi; nếu không, loại khỏi thống kê.
+- `dataQuality.invalidJobStatusCount`: số tin tuyển dụng có trạng thái không nhận diện được. Tính trên phạm vi lọc BI (theo nhà tuyển dụng đang đăng nhập hoặc toàn hệ thống với admin).
+- `dataQuality.invalidDeadlineCount`: số tin có deadline thiếu hoặc không hợp lệ. Tính trên cùng phạm vi lọc BI như trên.
 - Phân quyền BI: nhà tuyển dụng lọc theo công việc của mình ở backend (chỉ thống kê jobs/Applications của employer đó); admin mới xem thống kê toàn hệ thống nếu nghiệp vụ quy định như vậy. Thống kê theo nhà tuyển dụng không được trộn lẫn với thống kê toàn hệ thống.
 
 ---
@@ -411,7 +421,7 @@ Các endpoint hiện có giữ nguyên.
 
 **Kiểm thử bảo mật:** xác thực, phân quyền, ID giả mạo, truy cập chéo tài khoản, file PDF không hợp lệ, dữ liệu thiếu/sai, lỗi DB.
 
-**Kiểm thử nghiệp vụ:** kỹ năng/JD rỗng, band biên (0, 69, 70, 79, 80, 89, 90, 100), lương không hợp lệ, mẫu số BI bằng 0.
+**Kiểm thử nghiệp vụ:** kỹ năng/JD rỗng, band biên (0, 69, 70, 79, 80, 89, 90, 100), lương không hợp lệ, mẫu số BI bằng 0. **Ca kiểm thử hết hạn tin:** tin `open` có deadline hợp lệ đã qua không được coi là đang mở; tin `paused` đã qua deadline vẫn giữ trạng thái tạm dừng; deadline thiếu hoặc không hợp lệ không tự suy ra `expired`; tất cả endpoint phải dùng chung một hàm xác định trạng thái hiệu lực và cùng múi giờ đã cấu hình.
 
 **Kiểm thử JSON DB:** yêu cầu ghi đồng thời vì JSON DB không hỗ trợ transaction (sử dụng khóa ghi đơn giản in-memory mutex). Kiểm tra khả năng hủy xử lý PDF quá hạn và việc dọn file tạm.
 
@@ -485,7 +495,7 @@ Sau khi bạn duyệt spec v9 này, tôi sẽ gọi skill `writing-plans` để 
 
 ---
 
-## Checklist trước khi duyệt v9
+## Checklist trước khi duyệt v10
 
 | Mục | Trạng thái |
 |-----|------------|
@@ -497,6 +507,14 @@ Sau khi bạn duyệt spec v9 này, tôi sẽ gọi skill `writing-plans` để 
 | API cũ được rà soát lại quyền truy cập | [x] Bắt buộc trước khi nghiệm thu — đã chốt |
 | Quy tắc deadline, nhóm lương và match null | [x] Đã chốt |
 | Có tiêu chí kiểm thử và báo cáo kết quả thực tế | [x] Đã nêu |
+| users.email duy nhất sau khi chuẩn hóa | [x] Đã chốt |
+| Mỗi userId chỉ thuộc tối đa một hồ sơ candidate/employer | [x] Đã chốt |
+| applications không được trùng cặp candidateId + jobId | [x] Đã chốt |
+| dataQuality.invalidJobStatusCount và invalidDeadlineCount | [x] Đã chốt |
+| Quy tắc khớp từ khóa (ranh giới từ, cụm nhiều từ, tính 1 lần) | [x] Đã chốt |
+| Quyền /api/match theo từng role (student/employer/admin) | [x] Đã chốt |
+| PDF timeout 30s, dọn file tạm, không ghi đè cvText | [x] Đã chốt |
+| Quy tắc deadline/expired nhất quán mọi endpoint | [x] Đã chốt |
 
 ---
-*Vui lòng review spec v9 đã chỉnh sửa. Nếu đồng ý, tôi sẽ viết kế hoạch triển khai. Nếu cần sửa thêm, hãy chỉ ra phần cụ thể. Chưa triển khai code cho đến khi spec này được phê duyệt.*
+*Vui lòng review spec v10 đã chỉnh sửa. Nếu đồng ý, tôi sẽ viết kế hoạch triển khai. Nếu cần sửa thêm, hãy chỉ ra phần cụ thể. Chưa triển khai code cho đến khi spec này được phê duyệt.*
