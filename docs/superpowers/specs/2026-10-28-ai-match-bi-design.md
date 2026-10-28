@@ -2,7 +2,7 @@
 
 **Project:** CareerMatch AI — Hệ thống Tìm việc Thông minh tích hợp AI và BI  
 **Date:** 2026-10-28  
-**Status:** Revised v10 (chờ duyệt)  
+**Status:** Revised v11 (chờ duyệt)  
 **Repo:** https://github.com/tumoazat/TH3-JOB  
 **Quyết định đã chốt:** Stack không đổi (React + Vite + Tailwind + Express + JSON DB), Bearer JWT HS256 (chỉ server ký), schema rõ ràng 6 collection chính, công thức BI dựa trên trạng thái hiện tại, heuristic matching (không ML), không tự tạo mật khẩu/tài khoản giả trong migration.
 
@@ -103,13 +103,13 @@ Schema formalized (additive, backward compatible). **Trước khi triển khai p
 - `application` liên kết `candidate` + `job` + `employer` (để tra cứu nhanh).
 - `savedJobs` liên kết `candidateId` với mảng `jobId[]` đã lưu (mỗi `candidateId` chỉ xem được danh sách của mình).
 
-### Tương thích dữ liệu mẫu hiện có (đã chốt, cần kiểm tra trước migration)
+### Quy tắc tạo tài khoản từ dữ liệu cũ trong migration (đã chốt)
 
-- **Kiểm tra trước migration:** kiểm tra `postedJobs`, `applications`, `savedJobs`, `profile` và toàn bộ dữ liệu mẫu hiện có trước khi thay đổi schema.
-- `savedJobs` hiện là mảng số `[jobId]` chưa gắn `candidateId`. **Quyết định:** chuyển đổi sang `{ candidateId, jobId[] }`; nếu không xác định được chủ sở hữu dữ liệu cũ, **không tự gán dữ liệu cho người dùng** — đánh dấu là "chưa xác định chủ sở hữu" để xử lý sau, không bị khoá/lẫn dữ liệu của người khác. Dữ liệu chưa xác định chủ sở hữu được cách ly ở một vùng riêng, không đưa vào danh sách của bất kỳ người dùng nào, chờ xác minh thủ công.
-- `postedJobs` hiện có — giữ lại, ánh xạ sang `jobs` khi cần.
-- `applications` hiện có — bổ sung `employerId`, `matchScore`.
-- `profile` hiện có — giữ nguyên.
+- Chỉ tạo tài khoản khi có căn cứ xác minh và quy trình tạo tài khoản được phê duyệt.
+- Không tự sinh `passwordHash` cho tài khoản chưa có mật khẩu do người dùng thiết lập.
+- Hồ sơ không có tài khoản hợp lệ được giữ trong vùng cách ly hoặc vùng dữ liệu legacy riêng, không được dùng để đăng nhập.
+- Không coi việc migration thành công đồng nghĩa với việc mọi hồ sơ cũ đều có thể đăng nhập.
+- Hồ sơ cũ chưa xác định chủ sở hữu phải chờ xác minh, không tự ghép tài khoản theo tên.
 
 ### Ràng buộc toàn vẹn (đã chốt)
 
@@ -163,7 +163,7 @@ Schema formalized (additive, backward compatible). **Trước khi triển khai p
 
 - **Xác thực:** chỉ dùng **Bearer JWT do server ký**. Không dùng session/cookie, không trộn lẫn.
   - `POST /api/auth/register` (công khai): nhận `{ email, password, role }`. **Chỉ chấp nhận role `student` hoặc `employer`.** Không bao giờ tin role do client gửi nếu giá trị không nằm trong danh sách cho phép. Tài khoản admin chỉ được tạo qua quy trình thiết lập riêng, có kiểm soát. Email phải kiểm tra trùng (sau khi chuẩn hóa: trim và chuyển chữ thường); mật khẩu cần có chính sách độ dài tối thiểu và xác thực đầu vào. Đăng ký công khai **không được tạo tài khoản admin**.
-  - `POST /api/auth/login` nhận `{ email, password }`, tra cứu `users` (email đã chuẩn hóa), verify `passwordHash` (mã hóa bằng thư viện `bcryptjs` tương đương, không lưu mật khẩu rõ). Có giới hạn số lần đăng nhập sai theo IP và/hoặc tài khoản, phản hồi lỗi không tiết lộ email có tồn tại hay không.
+  - `POST /api/auth/login` nhận `{ email, password }`, tra cứu `users` (email đã chuẩn hóa), verify `passwordHash` (mã hóa bằng thư viện `bcryptjs` tương đương, không lưu mật khẩu rõ). **Chính sách mật khẩu:** tối thiểu 8 ký tự, kiểm tra ở cả frontend và backend (backend là nơi quyết định cuối cùng). **Giới hạn đăng nhập sai:** xác định ngưỡng cụ thể, thời gian khóa/thời gian chờ và cách xử lý khi vượt ngưỡng (ví dụ: khóa tạm thời sau N lần sai). Nếu dùng bộ đếm trong bộ nhớ, ghi rõ giới hạn này chỉ áp dụng cho một tiến trình và sẽ mất khi server khởi động lại. Phản hồi lỗi không tiết lộ email có tồn tại hay không.
   - Server ký JWT với thuật toán `HS256`, khóa lấy từ biến môi trường `JWT_SECRET` (**bắt buộc thiết lập**; nếu `JWT_SECRET` chưa cấu hình, server phải dừng khởi động với thông báo rõ ràng, không tự dùng secret mặc định), thời hạn token `24h`, payload chứa `userId`, `email`, `role`, `exp`. Trường `role` trong payload chỉ giữ để tiện nhận diện, phải đối chiếu với DB; không sử dụng role trong JWT làm nguồn sự thật cuối cùng cho phân quyền.
   - Phản hồi login: `{ user: { id, email, role }, token }`. **Không trả `passwordHash` hoặc secret token trong phản hồi/log.**
   - Frontend lưu `token` vào `localStorage`, gửi kèm header `Authorization: Bearer <token>` trên mọi yêu cầu cần xác thực. **Giới hạn:** localStorage có rủi ro XSS; tránh render HTML không an toàn và không lưu token trong log.
@@ -244,9 +244,14 @@ Schema formalized (additive, backward compatible). **Trước khi triển khai p
 **Xuất ra:** `{ jobId, match, band, reason: string[], matchedSkills[], missingSkills[], dataStatus }`.
 
 - `dataStatus`: `"complete"` (có đủ dữ liệu), `"partial"` (chỉ tính được một thành phần), `"insufficient"` (không đủ dữ liệu).
+- **Bảng ý nghĩa `dataStatus` (đã chốt):**
+  - `complete`: tính được cả `skillScore` và `keywordScore`.
+  - `partial`: chỉ tính được một trong hai thành phần.
+  - `insufficient`: không tính được thành phần nào; `match = null`.
 - `reason`: liệt kê thực tế từ kết quả (ví dụ: "Khớp 3/5 kỹ năng yêu cầu: ReactJS, Node.js, PostgreSQL").
 - `matchedSkills`: kỹ năng thực sự xuất hiện cả trong `candidate.skills` và `job.tags`.
 - `missingSkills`: kỹ năng trong `job.tags` nhưng không có trong `candidate.skills` (chỉ diễn giải là kỹ năng không có trong hồ sơ ghi chép, không khẳng định ứng viên hoàn toàn không biết kỹ năng đó).
+- `matchedSkills` và `missingSkills` vẫn phải dựa trên `candidate.skills` đối chiếu với `job.tags`, không lấy trực tiếp từ `cvText`. Khi thiếu một trong hai nguồn, giao diện phải thể hiện đúng rằng phần kỹ năng hoặc từ khóa chưa đủ dữ liệu.
 - **Ghi rõ:** `skillScore` dùng `candidate.skills`, còn `keywordScore` dùng `cvText`; hai nguồn này có thể khác nhau và cần xử lý khi dữ liệu mâu thuẫn (ưu tiên hiển thị cả hai nguồn riêng biệt, không hợp nhất thành một danh sách kỹ năng đơn).
 - **Giao diện:** cần hiển thị `dataStatus` để người dùng phân biệt kết quả đầy đủ, một phần và không đủ dữ liệu.
 
@@ -277,6 +282,13 @@ Schema formalized (additive, backward compatible). **Trước khi triển khai p
   - Kết quả trích xuất rỗng hoặc quá ngắn (không phải CV hữu ích) → không ghi đè `cvText` hiện tại bằng chuỗi rỗng; giữ giá trị cũ và thông báo người dùng nhập lại.
   - Fallback: cho phép người dùng nhập `cvText` thủ công qua form khi extraction thất bại.
 - **Giới hạn tài nguyên xử lý file:** thời gian xử lý tối đa, không cho phép file quá lớn làm treo server.
+- **Xác định hồ sơ từ token (đã chốt):**
+  - Backend lấy `userId` từ JWT đã xác minh.
+  - Tìm hồ sơ bằng `candidates.find(c => c.userId === req.user.userId)`.
+  - Không dùng `candidateId` do client gửi để quyết định hồ sơ nào được ghi đè.
+  - Chỉ cập nhật `cvText` sau khi trích xuất thành công và xác minh hồ sơ vẫn thuộc người dùng hiện tại.
+  - Việc cập nhật `cvText` phải đi qua mutex chung; lỗi hoặc timeout không được ghi đè CV hiện tại.
+  - Người dùng không thể thay đổi ID trong request để ghi CV vào hồ sơ của người khác.
 
 ---
 
@@ -312,10 +324,12 @@ Aggregations từ `db.json`:
 - Trạng thái tin tuyển dụng: `open`, `paused`, `expired`.
 - `expired` được suy ra từ `deadline` (nếu `deadline` đã qua và status vẫn là `open`, hệ thống coi là đã hết hạn khi thống kê). Không để trạng thái `open` nhưng deadline đã qua vẫn bị thống kê là tin đang mở. Quy tắc này áp dụng đồng nhất ở mọi nơi, không chỉ ở biểu đồ BI.
 - **Quy tắc xử lý `deadline` và `expired` (đã chốt):**
-  - Deadline hợp lệ đã qua: quy tắc hết hạn phải nhất quán trong danh sách việc làm công khai, matching, thống kê BI và xử lý ứng tuyển.
-  - Deadline thiếu hoặc không hợp lệ: không tự suy ra đã hết hạn; ghi nhận dữ liệu cần xử lý và không cho phép áp dụng logic hết hạn dựa trên ngày không hợp lệ.
-  - Deadline được so sánh theo múi giờ của dự án (định nghĩa rõ trong cài đặt hệ thống), đồng nhất ở mọi endpoint.
-  - Với trạng thái `paused` đã quá deadline: hệ thống giữ trạng thái `tạm dừng` (không tự chuyển sang `expired`); bất kỳ thay đổi trạng thái nào phải đi qua quy trình xác minh rõ ràng.
+  - **Múi giờ thống nhất:** Asia/Ho_Chi_Minh.
+  - **Deadline phải được parse và kiểm tra hợp lệ bằng một hàm dùng chung**, không cho phép mỗi endpoint tự xử lý riêng.
+  - Deadline hợp lệ đã qua: quy tắc hết hạn phải nhất quán trong danh sách việc làm công khai, matching, thống kê BI và xử lý ứng tuyển. Tin `open` có deadline hợp lệ đã qua được coi là hết hạn trong mọi endpoint.
+  - Deadline thiếu hoặc không hợp lệ: không tự suy ra đã hết hạn; ghi nhận dữ liệu cần xử lý và tạm ẩn tin khỏi danh sách công khai, không cho matching hoặc ứng tuyển cho đến khi deadline được sửa.
+  - Tin `paused` đã qua deadline: hệ thống giữ trạng thái `tạm dừng` (không tự chuyển sang `expired`); bất kỳ thay đổi trạng thái nào phải đi qua quy trình xác minh rõ ràng.
+  - Quy tắc này áp dụng đồng nhất ở mọi nơi, không chỉ ở biểu đồ BI.
 - Xử lý giá trị cũ hoặc không hợp lệ: **chỉ ánh xạ giá trị cũ khi có quy tắc chuyển đổi được xác minh.** Trạng thái không nhận diện được phải được ghi nhận để xử lý; **không tự gán thành `rejected`.** Không đưa trạng thái không hợp lệ vào các mẫu số thống kê cho đến khi được xử lý, đồng thời báo cáo số bản ghi bị loại.
 
 **Schema đầu ra thống nhất của `/api/bi/stats`:**
@@ -435,6 +449,13 @@ Các endpoint hiện có giữ nguyên.
 
 ## 12. Kế hoạch triển khai (đã chốt thứ tự)
 
+**Lưu ý khi bắt đầu triển khai:** đừng bắt đầu bằng cách tạo ngay toàn bộ API và giao diện. Giai đoạn A cần thực sự kiểm tra repository và dữ liệu hiện có, đặc biệt:
+- Cấu trúc `postedJobs`, `applications`, `savedJobs`, `profile` trong `server/data/db.json`.
+- Các API hiện tại đang đọc và ghi dữ liệu nào.
+- Cách `window.VL` được khởi tạo và đồng bộ.
+- Các route, trang đăng nhập và thư viện đã có trong dự án.
+- Các trường PII đang được trả về từ những endpoint cũ.
+
 Mỗi giai đoạn phải có tiêu chí hoàn thành và kết quả kiểm chứng. Có thể chia việc song song nhưng phải có một API contract và schema thống nhất trước.
 
 | Giai đoạn | Công việc | Tiêu chí hoàn thành |
@@ -515,6 +536,10 @@ Sau khi bạn duyệt spec v9 này, tôi sẽ gọi skill `writing-plans` để 
 | Quyền /api/match theo từng role (student/employer/admin) | [x] Đã chốt |
 | PDF timeout 30s, dọn file tạm, không ghi đè cvText | [x] Đã chốt |
 | Quy tắc deadline/expired nhất quán mọi endpoint | [x] Đã chốt |
+| Mật khẩu tối thiểu 8 ký tự và giới hạn đăng nhập sai | [x] Đã chốt |
+| dataStatus ý nghĩa (complete/partial/insufficient) | [x] Đã chốt |
+| matchedSkills/missingSkills lấy từ candidate.skills vs job.tags | [x] Đã chốt |
+| Kiểm tra repository và dữ liệu thực tế ở giai đoạn A | [x] Đã chốt |
 
 ---
-*Vui lòng review spec v10 đã chỉnh sửa. Nếu đồng ý, tôi sẽ viết kế hoạch triển khai. Nếu cần sửa thêm, hãy chỉ ra phần cụ thể. Chưa triển khai code cho đến khi spec này được phê duyệt.*
+*Vui lòng review spec v11 đã chỉnh sửa. Nếu đồng ý, tôi sẽ viết kế hoạch triển khai. Nếu cần sửa thêm, hãy chỉ ra phần cụ thể. Chưa triển khai code cho đến khi spec này được phê duyệt.*
