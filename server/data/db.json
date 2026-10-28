@@ -1,265 +1,1396 @@
 {
-    "jobs":  [
-                 {
-                     "id":  1,
-                     "company":  "NovaTech Solutions",
-                     "title":  "ThÃ¡Â»Â±c tÃ¡ÂºÂ­p sinh Front-end Developer (ReactJS / UI)",
-                     "location":  "HÃƒÂ  NÃ¡Â»â„¢i Ã‚Â· CÃ¡ÂºÂ§u GiÃ¡ÂºÂ¥y",
-                     "type":  "Hybrid",
-                     "salary":  "3Ã¢â‚¬â€œ5 triÃ¡Â»â€¡u",
-                     "match":  85,
-                     "deadline":  "30/11/2026",
-                     "tags":  [
-                                  "HTML5",
-                                  "CSS3",
-                                  "ReactJS",
-                                  "Git",
-                                  "Tailwind CSS"
-                              ],
-                     "description":  "PhÃƒÂ¡t triÃ¡Â»Æ’n giao diÃ¡Â»â€¡n web hiÃ¡Â»â€¡n Ã„â€˜Ã¡ÂºÂ¡i vÃ¡Â»â€ºi ReactJS vÃƒÂ  Tailwind CSS.",
-                     "requirements":  "BiÃ¡ÂºÂ¿t HTML/CSS/JS, cÃ†Â¡ bÃ¡ÂºÂ£n ReactJS, Ã†Â°u tiÃƒÂªn cÃƒÂ³ kinh nghiÃ¡Â»â€¡m Tailwind.",
-                     "benefits":  "LÃ†Â°Ã†Â¡ng cÃ¡ÂºÂ¡nh tranh, mÃƒÂ´i trÃ†Â°Ã¡Â»Âng nÃ„Æ’ng Ã„â€˜Ã¡Â»â„¢ng, cÃ†Â¡ hÃ¡Â»â„¢i chÃƒÂ­nh thÃ¡Â»Â©c.",
-                     "posted":  "15/10/2026"
-                 },
-                 {
-                     "id":  2,
-                     "company":  "BlueWave Digital",
-                     "title":  "ThÃ¡Â»Â±c tÃ¡ÂºÂ­p sinh ReactJS (CÃƒÂ³ cÃ†Â¡ hÃ¡Â»â„¢i lÃƒÂªn ChÃƒÂ­nh thÃ¡Â»Â©c)",
-                     "location":  "HÃƒÂ  NÃ¡Â»â„¢i Ã‚Â· Thanh XuÃƒÂ¢n",
-                     "type":  "On-site",
-                     "salary":  "4Ã¢â‚¬â€œ6 triÃ¡Â»â€¡u",
-                     "match":  82,
-                     "deadline":  "05/12/2026",
-                     "tags":  [
-                                  "React",
-                                  "Redux Toolkit",
-                                  "REST API",
-                                  "JavaScript"
-                              ],
-                     "description":  "LÃƒÂ m viÃ¡Â»â€¡c trong team product xÃƒÂ¢y dÃ¡Â»Â±ng SaaS B2B.",
-                     "requirements":  "React hooks, Redux cÃ†Â¡ bÃ¡ÂºÂ£n, gÃ¡Â»Âi REST API.",
-                     "benefits":  "Laptop, Ã„â€˜ÃƒÂ o tÃ¡ÂºÂ¡o mentor 1:1, xÃƒÂ©t lÃƒÂªn chÃƒÂ­nh thÃ¡Â»Â©c sau 3 thÃƒÂ¡ng.",
-                     "posted":  "18/10/2026"
-                 },
-                 {
-                     "id":  3,
-                     "company":  "PixelWorks Studio",
-                     "title":  "Junior Web Developer (Next.js \u0026 Tailwind)",
-                     "location":  "Remote",
-                     "type":  "Remote",
-                     "salary":  "8Ã¢â‚¬â€œ12 triÃ¡Â»â€¡u",
-                     "match":  68,
-                     "deadline":  "15/12/2026",
-                     "tags":  [
-                                  "Next.js",
-                                  "Tailwind CSS",
-                                  "TypeScript",
-                                  "Vercel"
-                              ],
-                     "description":  "XÃƒÂ¢y dÃ¡Â»Â±ng cÃƒÂ¡c landing page vÃƒÂ  web app cho khÃƒÂ¡ch hÃƒÂ ng toÃƒÂ n cÃ¡ÂºÂ§u.",
-                     "requirements":  "Next.js 14+, TypeScript cÃ†Â¡ bÃ¡ÂºÂ£n, deploy Vercel.",
-                     "benefits":  "Remote 100%, flex giÃ¡Â»Â.",
-                     "posted":  "20/10/2026"
-                 },
-                 {
-                     "id":  4,
-                     "company":  "DataNest Solutions",
-                     "title":  "ThÃ¡Â»Â±c tÃ¡ÂºÂ­p sinh Backend Python (Django / Data Analytics)",
-                     "location":  "HÃƒÂ  NÃ¡Â»â„¢i Ã‚Â· HoÃƒÂ ng Mai",
-                     "type":  "Hybrid",
-                     "salary":  "3Ã¢â‚¬â€œ4 triÃ¡Â»â€¡u",
-                     "match":  71,
-                     "deadline":  "20/12/2026",
-                     "tags":  [
-                                  "Python",
-                                  "Django",
-                                  "SQL",
-                                  "Pandas"
-                              ],
-                     "description":  "HÃ¡Â»â€” trÃ¡Â»Â£ xÃƒÂ¢y dÃ¡Â»Â±ng pipeline data vÃƒÂ  REST API nÃ¡Â»â„¢i bÃ¡Â»â„¢.",
-                     "requirements":  "Python cÃ†Â¡ bÃ¡ÂºÂ£n, biÃ¡ÂºÂ¿t SQL, Ã†Â°u tiÃƒÂªn cÃƒÂ³ project Django.",
-                     "benefits":  "Mentoring trÃ¡Â»Â±c tiÃ¡ÂºÂ¿p, bÃƒÂ¡o cÃƒÂ¡o kÃ¡ÂºÂ¿t quÃ¡ÂºÂ£ thÃ¡Â»Â±c tÃ¡ÂºÂ­p cÃƒÂ³ giÃƒÂ¡ trÃ¡Â»â€¹.",
-                     "posted":  "21/10/2026"
-                 },
-                 {
-                     "id":  5,
-                     "company":  "CodeNest Studio",
-                     "title":  "ThÃ¡Â»Â±c tÃ¡ÂºÂ­p sinh Full-stack (Node.js + React)",
-                     "location":  "HÃƒÂ  NÃ¡Â»â„¢i Ã‚Â· Ã„ÂÃ¡Â»â€˜ng Ã„Âa",
-                     "type":  "On-site",
-                     "salary":  "3Ã¢â‚¬â€œ5 triÃ¡Â»â€¡u",
-                     "match":  74,
-                     "deadline":  "10/12/2026",
-                     "tags":  [
-                                  "Node.js",
-                                  "React",
-                                  "Express",
-                                  "MongoDB"
-                              ],
-                     "description":  "Tham gia phÃƒÂ¡t triÃ¡Â»Æ’n Ã¡Â»Â©ng dÃ¡Â»Â¥ng web full-stack.",
-                     "requirements":  "JavaScript ES6+, React, Express cÃ†Â¡ bÃ¡ÂºÂ£n.",
-                     "benefits":  "ThÃ†Â°Ã¡Â»Å¸ng dÃ¡Â»Â± ÃƒÂ¡n, Ã„â€˜Ã¡Â»â„¢i ngÃ…Â© trÃ¡ÂºÂ».",
-                     "posted":  "22/10/2026"
-                 },
-                 {
-                     "id":  6,
-                     "company":  "NorthStar Technology",
-                     "title":  "ThÃ¡Â»Â±c tÃ¡ÂºÂ­p sinh DevOps / Cloud (AWS)",
-                     "location":  "Remote",
-                     "type":  "Remote",
-                     "salary":  "4Ã¢â‚¬â€œ7 triÃ¡Â»â€¡u",
-                     "match":  60,
-                     "deadline":  "25/12/2026",
-                     "tags":  [
-                                  "AWS",
-                                  "Docker",
-                                  "Linux",
-                                  "CI/CD"
-                              ],
-                     "description":  "HÃ¡Â»â€” trÃ¡Â»Â£ infrastructure vÃƒÂ  tÃ¡Â»Â± Ã„â€˜Ã¡Â»â„¢ng hoÃƒÂ¡ CI/CD.",
-                     "requirements":  "Linux cÃ†Â¡ bÃ¡ÂºÂ£n, Docker, khÃƒÂ¡i niÃ¡Â»â€¡m cloud.",
-                     "benefits":  "Remote, chÃ¡Â»Â©ng chÃ¡Â»â€° AWS Ã„â€˜Ã†Â°Ã¡Â»Â£c hÃ¡Â»â€” trÃ¡Â»Â£.",
-                     "posted":  "22/10/2026"
-                 }
-             ],
-    "applications":  [
-                         {
-                             "id":  "a1",
-                             "jobId":  1,
-                             "status":  "reviewing",
-                             "appliedDate":  "20/10/2026",
-                             "note":  "HR Ã„â€˜ÃƒÂ£ xem hÃ¡Â»â€œ sÃ†Â¡"
-                         },
-                         {
-                             "id":  "a2",
-                             "jobId":  2,
-                             "status":  "interview",
-                             "appliedDate":  "18/10/2026",
-                             "note":  "Online: 28/11 Ã¢â‚¬Â¢ 09:30"
-                         },
-                         {
-                             "id":  "a3",
-                             "jobId":  4,
-                             "status":  "reviewing",
-                             "appliedDate":  "21/10/2026",
-                             "note":  ""
-                         },
-                         {
-                             "id":  "a4",
-                             "jobId":  5,
-                             "status":  "rejected",
-                             "appliedDate":  "12/10/2026",
-                             "note":  "ChÃ†Â°a Ã„â€˜Ã¡ÂºÂ¡t tiÃƒÂªu chÃƒÂ­ Ã„â€˜Ã¡Â»Â£t nÃƒÂ y"
-                         },
-                         {
-                             "id":  "a5",
-                             "jobId":  6,
-                             "status":  "done",
-                             "appliedDate":  "10/10/2026",
-                             "note":  "Quy trÃƒÂ¬nh Ã„â€˜ÃƒÂ£ kÃ¡ÂºÂ¿t thÃƒÂºc"
-                         }
-                     ],
-    "savedJobs":  [
-                      1,
-                      2
-                  ],
-    "profile":  {
-                    "name":  "NguyÃ¡Â»â€¦n Minh Anh",
-                    "email":  "minhanh.nguyen@email.edu.vn",
-                    "phone":  "0912 345 678",
-                    "university":  "Ã„ÂÃ¡ÂºÂ¡i hÃ¡Â»Âc ThÃ¡Â»Â§y LÃ¡Â»Â£i",
-                    "major":  "CÃƒÂ´ng nghÃ¡Â»â€¡ ThÃƒÂ´ng tin",
-                    "gpa":  "3.65/4.0",
-                    "graduationYear":  "2026",
-                    "skills":  [
-                                   "ReactJS",
-                                   "JavaScript",
-                                   "HTML/CSS",
-                                   "Git",
-                                   "Tailwind CSS"
-                               ],
-                    "bio":  "Sinh viÃƒÂªn CNTT nÃ„Æ’m 4, Ã„â€˜am mÃƒÂª front-end, tÃƒÂ¬m kiÃ¡ÂºÂ¿m cÃ†Â¡ hÃ¡Â»â„¢i thÃ¡Â»Â±c tÃ¡ÂºÂ­p.",
-                    "avatarUrl":  null,
-                    "cvScore":  85,
-                    "cvFileName":  "CV_NguyenMinhAnh_Frontend_2026.pdf"
-                },
-    "employer":  {
-                     "company":  "NovaTech Solutions",
-                     "email":  "hr@novatech.vn",
-                     "industry":  "CÃƒÂ´ng nghÃ¡Â»â€¡",
-                     "size":  "50Ã¢â‚¬â€œ200 nhÃƒÂ¢n viÃƒÂªn"
-                 },
-    "postedJobs":  [
-                       {
-                           "id":  "pj1",
-                           "title":  "ThÃ¡Â»Â±c tÃ¡ÂºÂ­p sinh Front-end Developer (ReactJS / UI)",
-                           "status":  "active",
-                           "applicants":  12,
-                           "views":  89,
-                           "deadline":  "30/11/2026"
-                       },
-                       {
-                           "id":  "pj2",
-                           "title":  "Senior Backend Engineer (Node.js)",
-                           "status":  "active",
-                           "applicants":  7,
-                           "views":  54,
-                           "deadline":  "15/12/2026"
-                       },
-                       {
-                           "id":  "pj3",
-                           "title":  "UI/UX Designer (Figma)",
-                           "status":  "closed",
-                           "applicants":  23,
-                           "views":  130,
-                           "deadline":  "01/10/2026"
-                       }
-                   ],
-    "candidates":  [
-                       {
-                           "id":  "c1",
-                           "jobId":  "pj1",
-                           "name":  "NguyÃ¡Â»â€¦n VÃ„Æ’n An",
-                           "university":  "BKHN",
-                           "match":  85,
-                           "status":  "interview",
-                           "appliedDate":  "20/10/2026"
-                       },
-                       {
-                           "id":  "c2",
-                           "jobId":  "pj1",
-                           "name":  "TrÃ¡ÂºÂ§n ThÃ¡Â»â€¹ BÃƒÂ¬nh",
-                           "university":  "NEU",
-                           "match":  78,
-                           "status":  "reviewing",
-                           "appliedDate":  "21/10/2026"
-                       },
-                       {
-                           "id":  "c3",
-                           "jobId":  "pj2",
-                           "name":  "LÃƒÂª Minh CÃ†Â°Ã¡Â»Âng",
-                           "university":  "UET",
-                           "match":  91,
-                           "status":  "offer",
-                           "appliedDate":  "19/10/2026"
-                       },
-                       {
-                           "id":  "c4",
-                           "jobId":  "pj1",
-                           "name":  "PhÃ¡ÂºÂ¡m ThÃ¡Â»â€¹ Dung",
-                           "university":  "PTIT",
-                           "match":  65,
-                           "status":  "rejected",
-                           "appliedDate":  "17/10/2026"
-                       },
-                       {
-                           "id":  "c5",
-                           "jobId":  "pj2",
-                           "name":  "HoÃƒÂ ng VÃ„Æ’n Em",
-                           "university":  "BKHN",
-                           "match":  80,
-                           "status":  "reviewing",
-                           "appliedDate":  "22/10/2026"
-                       }
-                   ]
+  "jobs": [
+    {
+      "id": 1,
+      "company": "NovaTech Solutions",
+      "title": "ThÃ¡Â»Â±c tÃ¡ÂºÂ­p sinh Front-end Developer (ReactJS / UI)",
+      "location": "HÃƒÂ  NÃ¡Â»â„¢i Ã‚Â· CÃ¡ÂºÂ§u GiÃ¡ÂºÂ¥y",
+      "type": "Hybrid",
+      "salary": "3Ã¢â‚¬â€œ5 triÃ¡Â»â€¡u",
+      "match": 85,
+      "deadline": "30/11/2026",
+      "tags": [
+        "HTML5",
+        "CSS3",
+        "ReactJS",
+        "Git",
+        "Tailwind CSS"
+      ],
+      "description": "PhÃƒÂ¡t triÃ¡Â»Æ’n giao diÃ¡Â»â€¡n web hiÃ¡Â»â€¡n Ã„â€˜Ã¡ÂºÂ¡i vÃ¡Â»â€ºi ReactJS vÃƒÂ  Tailwind CSS.",
+      "requirements": "BiÃ¡ÂºÂ¿t HTML/CSS/JS, cÃ†Â¡ bÃ¡ÂºÂ£n ReactJS, Ã†Â°u tiÃƒÂªn cÃƒÂ³ kinh nghiÃ¡Â»â€¡m Tailwind.",
+      "benefits": "LÃ†Â°Ã†Â¡ng cÃ¡ÂºÂ¡nh tranh, mÃƒÂ´i trÃ†Â°Ã¡Â»Âng nÃ„Æ’ng Ã„â€˜Ã¡Â»â„¢ng, cÃ†Â¡ hÃ¡Â»â„¢i chÃƒÂ­nh thÃ¡Â»Â©c.",
+      "posted": "15/10/2026"
+    },
+    {
+      "id": 2,
+      "company": "BlueWave Digital",
+      "title": "ThÃ¡Â»Â±c tÃ¡ÂºÂ­p sinh ReactJS (CÃƒÂ³ cÃ†Â¡ hÃ¡Â»â„¢i lÃƒÂªn ChÃƒÂ­nh thÃ¡Â»Â©c)",
+      "location": "HÃƒÂ  NÃ¡Â»â„¢i Ã‚Â· Thanh XuÃƒÂ¢n",
+      "type": "On-site",
+      "salary": "4Ã¢â‚¬â€œ6 triÃ¡Â»â€¡u",
+      "match": 82,
+      "deadline": "05/12/2026",
+      "tags": [
+        "React",
+        "Redux Toolkit",
+        "REST API",
+        "JavaScript"
+      ],
+      "description": "LÃƒÂ m viÃ¡Â»â€¡c trong team product xÃƒÂ¢y dÃ¡Â»Â±ng SaaS B2B.",
+      "requirements": "React hooks, Redux cÃ†Â¡ bÃ¡ÂºÂ£n, gÃ¡Â»Âi REST API.",
+      "benefits": "Laptop, Ã„â€˜ÃƒÂ o tÃ¡ÂºÂ¡o mentor 1:1, xÃƒÂ©t lÃƒÂªn chÃƒÂ­nh thÃ¡Â»Â©c sau 3 thÃƒÂ¡ng.",
+      "posted": "18/10/2026"
+    },
+    {
+      "id": 3,
+      "company": "PixelWorks Studio",
+      "title": "Junior Web Developer (Next.js & Tailwind)",
+      "location": "Remote",
+      "type": "Remote",
+      "salary": "8Ã¢â‚¬â€œ12 triÃ¡Â»â€¡u",
+      "match": 68,
+      "deadline": "15/12/2026",
+      "tags": [
+        "Next.js",
+        "Tailwind CSS",
+        "TypeScript",
+        "Vercel"
+      ],
+      "description": "XÃƒÂ¢y dÃ¡Â»Â±ng cÃƒÂ¡c landing page vÃƒÂ  web app cho khÃƒÂ¡ch hÃƒÂ ng toÃƒÂ n cÃ¡ÂºÂ§u.",
+      "requirements": "Next.js 14+, TypeScript cÃ†Â¡ bÃ¡ÂºÂ£n, deploy Vercel.",
+      "benefits": "Remote 100%, flex giÃ¡Â»Â.",
+      "posted": "20/10/2026"
+    },
+    {
+      "id": 4,
+      "company": "DataNest Solutions",
+      "title": "ThÃ¡Â»Â±c tÃ¡ÂºÂ­p sinh Backend Python (Django / Data Analytics)",
+      "location": "HÃƒÂ  NÃ¡Â»â„¢i Ã‚Â· HoÃƒÂ ng Mai",
+      "type": "Hybrid",
+      "salary": "3Ã¢â‚¬â€œ4 triÃ¡Â»â€¡u",
+      "match": 71,
+      "deadline": "20/12/2026",
+      "tags": [
+        "Python",
+        "Django",
+        "SQL",
+        "Pandas"
+      ],
+      "description": "HÃ¡Â»â€” trÃ¡Â»Â£ xÃƒÂ¢y dÃ¡Â»Â±ng pipeline data vÃƒÂ  REST API nÃ¡Â»â„¢i bÃ¡Â»â„¢.",
+      "requirements": "Python cÃ†Â¡ bÃ¡ÂºÂ£n, biÃ¡ÂºÂ¿t SQL, Ã†Â°u tiÃƒÂªn cÃƒÂ³ project Django.",
+      "benefits": "Mentoring trÃ¡Â»Â±c tiÃ¡ÂºÂ¿p, bÃƒÂ¡o cÃƒÂ¡o kÃ¡ÂºÂ¿t quÃ¡ÂºÂ£ thÃ¡Â»Â±c tÃ¡ÂºÂ­p cÃƒÂ³ giÃƒÂ¡ trÃ¡Â»â€¹.",
+      "posted": "21/10/2026"
+    },
+    {
+      "id": 5,
+      "company": "CodeNest Studio",
+      "title": "ThÃ¡Â»Â±c tÃ¡ÂºÂ­p sinh Full-stack (Node.js + React)",
+      "location": "HÃƒÂ  NÃ¡Â»â„¢i Ã‚Â· Ã„ÂÃ¡Â»â€˜ng Ã„Âa",
+      "type": "On-site",
+      "salary": "3Ã¢â‚¬â€œ5 triÃ¡Â»â€¡u",
+      "match": 74,
+      "deadline": "10/12/2026",
+      "tags": [
+        "Node.js",
+        "React",
+        "Express",
+        "MongoDB"
+      ],
+      "description": "Tham gia phÃƒÂ¡t triÃ¡Â»Æ’n Ã¡Â»Â©ng dÃ¡Â»Â¥ng web full-stack.",
+      "requirements": "JavaScript ES6+, React, Express cÃ†Â¡ bÃ¡ÂºÂ£n.",
+      "benefits": "ThÃ†Â°Ã¡Â»Å¸ng dÃ¡Â»Â± ÃƒÂ¡n, Ã„â€˜Ã¡Â»â„¢i ngÃ…Â© trÃ¡ÂºÂ».",
+      "posted": "22/10/2026"
+    },
+    {
+      "id": 6,
+      "company": "NorthStar Technology",
+      "title": "ThÃ¡Â»Â±c tÃ¡ÂºÂ­p sinh DevOps / Cloud (AWS)",
+      "location": "Remote",
+      "type": "Remote",
+      "salary": "4Ã¢â‚¬â€œ7 triÃ¡Â»â€¡u",
+      "match": 60,
+      "deadline": "25/12/2026",
+      "tags": [
+        "AWS",
+        "Docker",
+        "Linux",
+        "CI/CD"
+      ],
+      "description": "HÃ¡Â»â€” trÃ¡Â»Â£ infrastructure vÃƒÂ  tÃ¡Â»Â± Ã„â€˜Ã¡Â»â„¢ng hoÃƒÂ¡ CI/CD.",
+      "requirements": "Linux cÃ†Â¡ bÃ¡ÂºÂ£n, Docker, khÃƒÂ¡i niÃ¡Â»â€¡m cloud.",
+      "benefits": "Remote, chÃ¡Â»Â©ng chÃ¡Â»â€° AWS Ã„â€˜Ã†Â°Ã¡Â»Â£c hÃ¡Â»â€” trÃ¡Â»Â£.",
+      "posted": "22/10/2026"
+    },
+    {
+      "id": 7,
+      "company": "DNSE",
+      "title": "Senior Backend Developer (Golang)",
+      "location": "Hà Nội",
+      "type": "On-site",
+      "salary": "Thỏa thuận",
+      "tags": [
+        "Golang",
+        "API",
+        "Docker",
+        "MySQL",
+        "Microservices",
+        "SQL"
+      ],
+      "description": "Thiết kế và phát triển RESTful API cho các ứng dụng web và mobile; xây dựng hệ thống backend an toàn, mở rộng tốt; cải thiện chất lượng code qua testing và review.",
+      "requirements": "3-5 năm kinh nghiệm Backend với Golang; tư duy system design và xử lý bất đồng bộ; thành thạo Git; kinh nghiệm RESTful API và hệ thống tải cao; kiến thức SQL (Postgres/MySQL).",
+      "benefits": "Lương cạnh tranh, bảo hiểm, môi trường sản phẩm tài chính.",
+      "deadline": "31/12/2026",
+      "status": "open",
+      "posted": "28/10/2026",
+      "source": "https://itviec.com/it-jobs/senior-backend-developer-golang-dnse-1612"
+    },
+    {
+      "id": 8,
+      "company": "CodeHQ",
+      "title": "Senior Manual QA/QC Testers (Playwright)",
+      "location": "TP. Hồ Chí Minh",
+      "type": "On-site",
+      "salary": "Thỏa thuận",
+      "tags": [
+        "Tester",
+        "Playwright",
+        "API",
+        "TestRail",
+        "QA QC",
+        "English"
+      ],
+      "description": "Tham gia team CodeHQ Việt Nam, làm việc trên nhiều công nghệ cho các dự án phần mềm của khách hàng New Zealand; đảm bảo chất lượng qua lập kế hoạch và thực thi kiểm thử.",
+      "requirements": "Tối thiểu 5 năm kinh nghiệm kiểm thử phần mềm; mạnh về manual testing; quen công cụ quản lý test như Xray, TestRail; tiếng Anh tốt (ưu tiên IELTS).",
+      "benefits": "Dự án quốc tế, môi trường chuyên nghiệp.",
+      "deadline": "31/12/2026",
+      "status": "open",
+      "posted": "28/10/2026",
+      "source": "https://itviec.com/it-jobs/senior-manual-qa-qc-testers-playwright-codehq-2705"
+    },
+    {
+      "id": 9,
+      "company": "ETC Technology Systems",
+      "title": "Data Analyst (SQL, PowerBI, Looker)",
+      "location": "Hà Nội",
+      "type": "On-site",
+      "salary": "Thỏa thuận",
+      "tags": [
+        "Data Analysis",
+        "Data modeling",
+        "SQL",
+        "Power BI",
+        "Looker"
+      ],
+      "description": "Khảo sát, thu thập và phân tích dữ liệu để tài liệu hóa nguồn dữ liệu nghiệp vụ; phối hợp xây dựng và tối ưu data model, dashboard tự động bằng BI tools; đưa ra khuyến nghị dựa trên dữ liệu.",
+      "requirements": "Tốt nghiệp đại học ngành liên quan; tối thiểu 1 năm kinh nghiệm BA/Data Analyst; ưu tiên Bank/Fintech; tiếng Anh (IELTS 6.0+); quen PowerBI/Looker; SQL vững; hiểu data governance.",
+      "benefits": "Lộ trình phát triển dữ liệu, dự án tài chính.",
+      "deadline": "31/12/2026",
+      "status": "open",
+      "posted": "28/10/2026",
+      "source": "https://itviec.com/it-jobs/data-analyst-sql-powerbi-looker-etc-technology-systems-3448"
+    },
+    {
+      "id": 10,
+      "company": "GeoComply",
+      "title": "Senior iOS Engineer",
+      "location": "TP. Hồ Chí Minh",
+      "type": "Hybrid",
+      "salary": "Thỏa thuận",
+      "tags": [
+        "iOS",
+        "Swift",
+        "Objective C",
+        "CI/CD",
+        "English"
+      ],
+      "description": "Tham gia hiện đại hóa dịch vụ định vị địa lý; tối ưu iOS SDK, phối hợp team client để nâng cao trải nghiệm và độ tin cậy sản phẩm.",
+      "requirements": "5+ năm lập trình; thành thạo Objective-C và Swift; kinh nghiệm CI/CD; tư duy phân tích và giải quyết vấn đề tốt; tiếng Anh kỹ thuật trung cấp.",
+      "benefits": "Sản phẩm quốc tế, hybrid.",
+      "deadline": "31/12/2026",
+      "status": "open",
+      "posted": "28/10/2026",
+      "source": "https://itviec.com/it-jobs/senior-ios-engineer-fluent-in-english-geocomply-geotech-hub-vietnam-3355"
+    },
+    {
+      "id": 11,
+      "company": "Saigon Technology",
+      "title": "Java Developer (Middle/Senior)",
+      "location": "Đà Nẵng",
+      "type": "On-site",
+      "salary": "Thỏa thuận",
+      "tags": [
+        "Java",
+        "Spring",
+        "Database",
+        "Kafka",
+        "AWS",
+        "SOLID"
+      ],
+      "description": "Thiết kế, xây dựng và bảo trì API, service và hệ thống giữa các team; xử lý thách thức kỹ thuật và quản lý kỳ vọng khách hàng.",
+      "requirements": "3+ năm xây dựng ứng dụng web; hiểu vững database và thiết kế DB; mạnh Java; kinh nghiệm microservices Java trên AWS; nắm SOLID và design pattern; tiếng Anh tốt.",
+      "benefits": "Dự án outsourcing, đào tạo.",
+      "deadline": "31/12/2026",
+      "status": "open",
+      "posted": "28/10/2026",
+      "source": "https://itviec.com/it-jobs/java-developer-middle-senior-saigon-technology-2159"
+    },
+    {
+      "id": 12,
+      "company": "LG CNS Việt Nam",
+      "title": "Frontend ReactJS Developer",
+      "location": "Hà Nội",
+      "type": "On-site",
+      "salary": "Thỏa thuận",
+      "tags": [
+        "ReactJS",
+        "TypeScript",
+        "JavaScript",
+        "CSS",
+        "HTML",
+        "Figma"
+      ],
+      "description": "Tham gia dự án lớn từ Hàn Quốc; thiết kế UI theo tiêu chuẩn khách hàng, tối ưu hiệu năng và viết unit test.",
+      "requirements": "React.js; HTML/CSS/JavaScript; Figma; CI/CD; ưu tiên TypeScript, Node.js, kiến thức backend, thư viện chart.",
+      "benefits": "Dự án quốc tế, môi trường chuyên nghiệp.",
+      "deadline": "31/12/2026",
+      "status": "open",
+      "posted": "28/10/2026",
+      "source": "https://itviec.com/it-jobs/frontend-reactjs-developer-lg-cns-viet-nam-1045"
+    },
+    {
+      "id": 13,
+      "company": "NEXLAB IT Solutions",
+      "title": "Senior Frontend Developer (ReactJS/NextJS/TypeScript)",
+      "location": "TP. Hồ Chí Minh",
+      "type": "On-site",
+      "salary": "Thỏa thuận",
+      "tags": [
+        "ReactJS",
+        "Figma",
+        "GraphQL",
+        "JavaScript",
+        "TypeScript",
+        "NextJS"
+      ],
+      "description": "Dẫn dắt phát triển ứng dụng web an toàn, hiệu năng cao trên Next.js và React.js; sở hữu kiến trúc frontend và hiệu năng, phối hợp chặt với design và backend.",
+      "requirements": "Chuyên sâu React.js và Next.js; TypeScript/JavaScript vững; REST/GraphQL/WebSockets; quen design system Figma; dùng AI coding tools; 5+ năm kinh nghiệm frontend.",
+      "benefits": "Sản phẩm quốc tế.",
+      "deadline": "31/12/2026",
+      "status": "open",
+      "posted": "28/10/2026",
+      "source": "https://itviec.com/it-jobs/senior-frontend-developer-cong-ty-tnhh-nexlab-it-solutions-5550"
+    },
+    {
+      "id": 14,
+      "company": "Netcompany",
+      "title": "Software Developer (Fresher/Junior, Good English)",
+      "location": "TP. Hồ Chí Minh",
+      "type": "On-site",
+      "salary": "Thỏa thuận",
+      "tags": [
+        ".NET",
+        "TypeScript",
+        "JavaScript",
+        "Java",
+        "C#",
+        "English"
+      ],
+      "description": "You will get the chance to work on different programming languages and technologies as this will vary from project to project. A large part of our projects uses technologies like AngularJS, Sass, React and Node.js on Java and .NET. Besides that, we work with SharePoint, Microsoft Dynamics CRM, Salesforce, Microsoft SQL-Server, Sitecore, Oracle and Weblogic to name just a few.",
+      "requirements": "Bachelor or Master degree within a relevant IT specialization. Final-year students are eligible to apply only if you have completed all required coursework at the university; Good English skills both in writing and communication.; Basic understanding of and practical experience with object-oriented programming and data modelling.; Familiar with various design, architectural patterns and modern system development.; Open towards and able to quickly learn new technologies.; Ability to work both independently and collaboratively as part of an international team.; Professional pro-active attitude, taking responsibility and initiative.; Effectively estimate work and produce deliverables on time.",
+      "benefits": "",
+      "deadline": "31/12/2026",
+      "status": "open",
+      "posted": "28/10/2026",
+      "source": "https://itviec.com/it-jobs/software-developer-fresher-junior-good-english-netcompany-0141"
+    },
+    {
+      "id": 15,
+      "company": "Usol Vietnam",
+      "title": "Software Developer (Java, C#, .NET) - Japanese N3+",
+      "location": "Hà Nội",
+      "type": "On-site",
+      "salary": "Thỏa thuận",
+      "tags": [
+        "Java",
+        "C#",
+        "Japanese",
+        "Git",
+        ".NET",
+        "SQL"
+      ],
+      "description": "Tham gia dự án hiện đại hóa hệ thống nghiệp vụ cho khách hàng Nhật Bản trong lĩnh vực in ấn và xử lý dữ liệu doanh nghiệp. Phân tích hệ thống hiện hành, đọc hiểu source code/tài liệu liên quan để nắm bắt logic xử lý, luồng dữ liệu và rule nghiệp vụ. Tạo tài liệu Detail Design dựa trên hệ thống hiện tại và guideline của dự án.",
+      "requirements": "Có từ 02 năm kinh nghiệm phát triển phần mềm với ngôn ngữ lập trình như Java hoặc C#/.NET.; Có tiếng Nhật từ N3 trở lên, có thể sử dụng tiếng Nhật để giao tiếp trong công việc.; Có kinh nghiệm làm việc với khách hàng Nhật hoặc dự án outsourcing của Nhật.; Có kinh nghiệm quản lý dự án (Project Manager hoặc Sub Project Manager) hoặc từng đảm nhiệm vị trí key technical/technical leader trong các dự án phát triển phần mềm.; Nắm vững lập trình hướng đối tượng, xử lý dữ liệu, xử lý file, exception handling và clean code.; Có tư duy phân tích tốt, cẩn thận với logic nghiệp vụ, điều kiện rẽ nhánh, xử lý dữ liệu và các trường hợp ngoại lệ.; Có kinh nghiệm làm việc với SQL Server, Oracle, MySQL hoặc các CSDL tương đương.; Có kinh nghiệm unit test, debug, fix bug, code review và kiểm tra tính đúng đắn của chương trình.",
+      "benefits": "",
+      "deadline": "31/12/2026",
+      "status": "open",
+      "posted": "28/10/2026",
+      "source": "https://itviec.com/it-jobs/software-developer-java-c-net-japanese-n3-usol-vietnam-3414"
+    },
+    {
+      "id": 16,
+      "company": "LG CNS Việt Nam",
+      "title": "Back End Developer (Java, MySQL, Spring)",
+      "location": "Hà Nội",
+      "type": "On-site",
+      "salary": "Thỏa thuận",
+      "tags": [
+        "Java",
+        "MySQL",
+        "Spring"
+      ],
+      "description": "Leading the way in IT service market in Korea, we now seek to expand our expertise to the APAC Participation in R&D AI Agent development Project Solution Development Backend Java Development Requirements analysis and design Ensuring own program quality",
+      "requirements": "Web application development experience; Java programming experience (Spring, Spring Boot, Spring MVC); RDBMS (MySQL, PostgreSQL, MariaDB) & SQL; Experience with collaboration tools such as Git, Jira and Confluence; Have Python programming experience; Solid understanding of RESTful API design and implementation; Good knowledge of SQL database management and optimization; Good knowledge of backend security, cryptography, and authentication protocols",
+      "benefits": "",
+      "deadline": "31/12/2026",
+      "status": "open",
+      "posted": "28/10/2026",
+      "source": "https://itviec.com/it-jobs/back-end-developer-java-mysql-spring-lg-cns-viet-nam-0628"
+    },
+    {
+      "id": 17,
+      "company": "MONEY FORWARD VIETNAM CO.,LTD",
+      "title": "Principal Java/Kotlin Engineer (Spring Security & Auth)",
+      "location": "TP. Hồ Chí Minh",
+      "type": "On-site",
+      "salary": "Thỏa thuận",
+      "tags": [
+        "Java",
+        "English",
+        "API",
+        "AWS",
+        "Security",
+        "Spring Boot"
+      ],
+      "description": "We're building the Authentication & Authorization platform for a new FSA-regulated digital bank in Japan. The platform powers OAuth 2.0/OIDC-based login, token lifecycle, and identity management across four banking channels — officer dashboards, customer-facing apps, BaaS APIs, and third-party service provider integrations. The team is located in Vietnam HCM city with high ownership.",
+      "requirements": "Over 10 years in server-side engineering, including 5 to 7 years specializing in Kotlin or Java with Spring Boot development.; Redis — session management, distributed locking, caching; PostgreSQL — schema design, migrations; REST API design and HTTP security headers; English proficiency (reading, writing, and verbal) — the primary working language across the team and organization for daily communication, code reviews, and technical documentation.; Strong Spring Security expertise — filter chains, OAuth2 Resource Server; Working knowledge of OAuth 2.0 / OIDC — authorization code, client credentials, token exchange, introspection; Understanding at least one: DPoP (RFC 9449), mTLS (RFC 8705), PKCE, FIDO2/WebAuthn",
+      "benefits": "",
+      "deadline": "31/12/2026",
+      "status": "open",
+      "posted": "28/10/2026",
+      "source": "https://itviec.com/it-jobs/principal-java-kotlin-engineer-spring-security-auth-money-forward-vietnam-co-ltd-1048"
+    },
+    {
+      "id": 18,
+      "company": "NAB Innovation Centre Vietnam",
+      "title": "Lead Java Engineer",
+      "location": "TP. Hồ Chí Minh",
+      "type": "On-site",
+      "salary": "Thỏa thuận",
+      "tags": [
+        "Java",
+        "Spring Boot",
+        "Microservices",
+        "Spring",
+        "AWS",
+        "English"
+      ],
+      "description": "We are seeking motivated Lead Java Engineer who are passionate, results focused contributing to the transformation of NAB’s payment acceptance experience through innovation, digitisation, and integration. You will be part of our delivery team and will be responsible for providing technical leadership throughout all phases of the software delivery life cycle as we initiate a transformation of NAB technology.",
+      "requirements": "Minimum of 10+ years' experience as a similar role (Technical Lead, Technical Architect, Principal Engineer,...) in Software Development in a complex, enterprise-level development environment; solid in architecting, developing, and deploying modern architectural patterns/techniques (microservices, DDD, TDD ...); Solid experience in Java 11+, Java open-source frameworks, including developing using modern frameworks, e.g. Spring Boot, Spring Cloud,...; Solid experience in designing & developing RESTful APIs and microservices-based system; Experience supporting a production service in a DevOps friendly environment with solid experience in Cloud-based services (AWS/Azure/...); Well-versed in writing structured, well-documented, maintainable, and clean code;; Excellence in problem-solving and analytical skills;; Strong understanding of standard Software Engineering processes, Testing, and Agile methodology;; Strong understanding of secure coding practices and application security;",
+      "benefits": "",
+      "deadline": "31/12/2026",
+      "status": "open",
+      "posted": "28/10/2026",
+      "source": "https://itviec.com/it-jobs/lead-java-engineer-nab-innovation-centre-vietnam-3220"
+    },
+    {
+      "id": 19,
+      "company": "TPIsoftware Co., Ltd",
+      "title": "Senior Software Engineer (Java, J2EE, SQL)",
+      "location": "TP. Hồ Chí Minh",
+      "type": "On-site",
+      "salary": "Thỏa thuận",
+      "tags": [
+        "Java",
+        "English",
+        "Scrum",
+        "J2EE",
+        "AWS",
+        "SQL"
+      ],
+      "description": "Participate in the design and development of high-quality, scalable, and maintainable systems to support business objectives. Conduct system analysis, contribute to architecture design, and implement technical solutions based on project requirements. Develop and maintain software applications using backend technologies, ensuring best practices in clean code, design patterns, and software engineering principles.",
+      "requirements": "Bachelor's degree or higher in Computer Science or related fields.; 5+ years of hands-on software development experience with strong expertise backend technologies.; Passionate and familiar with AI adaptability in not only daily task but also system workflow.; Prior experience leading technical initiatives or mentoring small development teams is highly preferred.; Strong understanding of software architecture, system design, and engineering best practices.; Hands-on experience with RDBMS such as PostgreSQL, Oracle, or MS SQL Server.; Experience in developing and deploying applications on Cloud platforms (GCP, AWS, or Azure).; Familiar with Git, Docker, and Kubernetes (preferred).",
+      "benefits": "",
+      "deadline": "31/12/2026",
+      "status": "open",
+      "posted": "28/10/2026",
+      "source": "https://itviec.com/it-jobs/senior-software-engineer-java-j2ee-sql-tpisoftware-co-ltd-1928"
+    },
+    {
+      "id": 20,
+      "company": "Goline Corporation",
+      "title": "Java Developer (SpringBoot, Oracle, Kafka, PostgreSQL)",
+      "location": "Hà Nội",
+      "type": "On-site",
+      "salary": "Thỏa thuận",
+      "tags": [
+        "Java",
+        "API",
+        "Kafka",
+        "PostgreSql",
+        "Oracle",
+        "Spring Boot"
+      ],
+      "description": "Thiết kế, phát triển và tối ưu các backend services sử dụng Java/Spring Boot cho các hệ thống yêu cầu cao về hiệu năng, độ ổn định và khả năng mở rộng. Tham gia phân tích yêu cầu, thiết kế giải pháp kỹ thuật và kiến trúc hệ thống; xây dựng API, microservices và các luồng xử lý nghiệp vụ phức tạp. Phát triển và tích hợp các thành phần sử dụng Oracle/PostgreSQL, Kafka, Redis và các nền tảng liên quan.",
+      "requirements": "Có từ 4 năm kinh nghiệm phát triển phần mềm.; Có kinh nghiệm thiết kế và phát triển các hệ thống Microservices / Distributed Systems; hiểu các nguyên tắc và bài toán liên quan đến High Availability, Scalability, Fault Tolerance và vận hành hệ thống trong môi trường production.; Có kinh nghiệm chuyên sâu trong phát triển backend với Java/Spring Boot, từ thiết kế API, xử lý business logic đến tối ưu hiệu năng, độ ổn định và khả năng bảo trì của hệ thống; Có khả năng phân tích yêu cầu nghiệp vụ, thiết kế giải pháp kỹ thuật và xử lý các bài toán hệ thống phức tạp; có khả năng chủ động tham gia technical design và đưa ra các quyết định kỹ thuật phù hợp.; Có kinh nghiệm làm việc với Oracle, PostgreSQL hoặc các hệ quản trị cơ sở dữ liệu quan hệ tương đương; hiểu về Transaction, indexing, concurrency và tối ưu truy vấn.; Có kinh nghiệm áp dụng Agentic Development Workflow trong phát triển phần mềm, sử dụng các AI Coding Agents như Claude Code, Codex, Cursor, GitHub Copilot hoặc tương đương cho các hoạt động phân tích codebase, implementation, testing, code review, refactoring và troubleshooting; có khả năng phân rã task, quản lý context, kiểm soát phạm vi thay đổi, review và validate kết quả do Agent tạo ra.; Có kinh nghiệm với Kubernetes (K8s), Kafka, Redis và observability/monitoring trong các hệ thống backend thực tế.; Có tinh thần ownership, chủ động xác định và giải quyết vấn đề; chịu trách nhiệm với chất lượng, độ ổn định và khả năng vận hành của hệ thống",
+      "benefits": "",
+      "deadline": "31/12/2026",
+      "status": "open",
+      "posted": "28/10/2026",
+      "source": "https://itviec.com/it-jobs/java-developer-springboot-oracle-kafka-postgresql-goline-corporation-0412"
+    },
+    {
+      "id": 21,
+      "company": "ITviec Recruitment Consulting",
+      "title": "Technical Lead (Java)",
+      "location": "TP. Hồ Chí Minh",
+      "type": "On-site",
+      "salary": "Thỏa thuận",
+      "tags": [
+        "Java",
+        "GraphQL",
+        "AI",
+        "GCP",
+        "Azure",
+        "AWS"
+      ],
+      "description": "We are looking for experienced and forward‑thinking Technical Leads – Backend to lead the design and development of backend services for large‑scale digital banking and financial platforms.",
+      "requirements": "Bachelor’s or Master’s degree in Computer Science, Engineering, or a related field; 8+ years of backend development experience.; 3+ years in a Technical Lead or senior engineering role.; Strong experience with Java and backend frameworks (e.g. Spring Boot).; Experience designing and implementing microservices, API-driven systems, event-driven architectures or messaging systems (e.g., Kafka), RDBMS and SQL.; Solid experience working with containerization (Docker, Kubernetes).; Strong understanding of CI/CD, version control (Git), and automated pipelines.; Experience working in Agile delivery environments.",
+      "benefits": "",
+      "deadline": "31/12/2026",
+      "status": "open",
+      "posted": "28/10/2026",
+      "source": "https://itviec.com/it-jobs/technical-lead-java-itviec-recruitment-consulting-3800"
+    },
+    {
+      "id": 22,
+      "company": "LG CNS Việt Nam",
+      "title": "Fullstack Java Developer (Good At English)",
+      "location": "Hà Nội",
+      "type": "On-site",
+      "salary": "Thỏa thuận",
+      "tags": [
+        "Java",
+        "Spring Boot",
+        "Spring",
+        "JavaScript",
+        "HTML5",
+        "English"
+      ],
+      "description": "You will be responsible for the enhancement and development of an insurance company’s Digital Distribution Channels (online and mobile insurance sales platforms). Working closely with business stakeholders, UX designers, and architecture teams, you will help build a stable, scalable, and customer-centric digital insurance platform.",
+      "requirements": "5+ years of experience in Java Full Stack development; Strong experience with Java, Spring, and Spring Boot for back-end development; Experience with front-end technologies such as JavaScript, HTML5, CSS, and at least one modern framework (React, Vue, or Angular); Hands-on experience in RESTful API design and integration; Experience in RDBMS-based system design and development; Business-level English communication skills (mandatory); Proficiency in English (Toeic 700+, business communication), sufficient for business discussions, technical meetings, and documentation; Experience working in global or multicultural collaboration environments",
+      "benefits": "",
+      "deadline": "31/12/2026",
+      "status": "open",
+      "posted": "28/10/2026",
+      "source": "https://itviec.com/it-jobs/fullstack-java-developer-good-at-english-lg-cns-viet-nam-2117"
+    },
+    {
+      "id": 23,
+      "company": "Công Ty TNHH Clever Creations Tech",
+      "title": "Project Manager (Java, Chinese, English, MySQL, SQL)",
+      "location": "TP. Hồ Chí Minh",
+      "type": "On-site",
+      "salary": "Thỏa thuận",
+      "tags": [
+        "Java",
+        "Spring Boot",
+        "MySQL",
+        "Project Management",
+        "SQL",
+        "English"
+      ],
+      "description": "1. Serve as a project staff member of the IT team, responsible for technology, management, and coordination of internal development projects 2. Analyze and organize the requirements of each task, and control project time 3.",
+      "requirements": "Kỹ năng: Java, Spring Boot, MySQL, Project Management, SQL, English.",
+      "benefits": "",
+      "deadline": "31/12/2026",
+      "status": "open",
+      "posted": "28/10/2026",
+      "source": "https://itviec.com/it-jobs/project-manager-java-chinese-english-mysql-sql-cong-ty-tnhh-clever-creations-tech-2329"
+    },
+    {
+      "id": 24,
+      "company": "LG CNS Việt Nam",
+      "title": "Senior Fullstack Developer (Java / Vue)",
+      "location": "Hà Nội",
+      "type": "On-site",
+      "salary": "Thỏa thuận",
+      "tags": [
+        "Java",
+        "VueJS",
+        "Spring Boot"
+      ],
+      "description": "We are looking for a Senior Full Stack Developer (Java/Vue) with 3+ years of experience to participate in the development and operation of large-scale enterprise applications. The candidate will play a key role in building reliable, scalable, and high-performance systems that support critical business operations. Analyze requirements and design technical solutions for enterprise applications.",
+      "requirements": "At least 3 years of software development experience.; Experience in developing and operating enterprise systems with large user volumes and complex business processes.; Strong experience with:; Java, Spring Boot; MyBatis; PostgreSQL; Vue.js; Experience developing RESTful APIs.",
+      "benefits": "",
+      "deadline": "31/12/2026",
+      "status": "open",
+      "posted": "28/10/2026",
+      "source": "https://itviec.com/it-jobs/senior-fullstack-developer-java-vue-lg-cns-viet-nam-2951"
+    },
+    {
+      "id": 25,
+      "company": "Rakuten Fintech Vietnam Co., Ltd.",
+      "title": "Mid/Sr Java Developer (English Required) - Up to 3200$",
+      "location": "TP. Hồ Chí Minh",
+      "type": "On-site",
+      "salary": "Up to 3200$",
+      "tags": [
+        "Java",
+        "Unit test",
+        "Spring Boot",
+        "Spring",
+        "SQL",
+        "English"
+      ],
+      "description": "This position will have responsibility to develop Web application, Web API and more for our Fintech services such as “Rakuten Card”, “Rakuten Pay”, \"Rakuten Bank” etc. Perform requirement analysis, design and technical documentation Design, build, and maintain efficient, reusable, and reliable Java code Work to improve and enhance quality in automated testing, etc Work with leader and teammates to estimate and plan for projects",
+      "requirements": "At least 5+ years working in Java API/Web development; Intermediate-level in English communication; Strong experience in SQL, especially Oracle; Strong knowledge in Java Web & Enterprise (EE) technologies; Good knowledge with source control and defect tracking tool; Good experience with unit testing: JUnit, mock; Must be independent, responsible, and self-motivated with the ability to learn and achieve superior results; Strong communication skills with proven ability to present complex ideas and document in a clear and concise way.",
+      "benefits": "",
+      "deadline": "31/12/2026",
+      "status": "open",
+      "posted": "28/10/2026",
+      "source": "https://itviec.com/it-jobs/mid-sr-java-developer-english-required-up-to-3200-rakuten-fintech-vietnam-co-ltd-4807"
+    },
+    {
+      "id": 26,
+      "company": "ONE Tech Stop Vietnam Company Ltd",
+      "title": "[Da Nang] Full-Stack Developer (ReactJS/ NodeJS)",
+      "location": "Đà Nẵng",
+      "type": "On-site",
+      "salary": "Thỏa thuận",
+      "tags": [
+        "NodeJS",
+        "MongoDB",
+        "ReactJS",
+        "NextJS",
+        "TypeScript",
+        "SQL"
+      ],
+      "description": "The developer will be involved in all phases of the product development cycle including requirements analysis, project estimation, detailed design, software development, testing, and deployment. He/she has A Good Mindset for Development schedule/Quality/Self-Study and is willing to learn new technologies. Perform development & testing features/bugs from backlog items.",
+      "requirements": "Having experience in Web Front-end (HTML/CSS/JS), NextJS or ReactJS; Having experience in backend technology of Nodejs and TypeScrip t and frameworks available for Nest.js; Database programming or design skills, including relational database skills (SQL, etc.) and non-relational database skills (MongoDB, Redis, Cassandra, etc.).; CODING: The code should be well documented and compliant with good practices, as well as the testing skill (Unit Test, Integration Test, User Acceptance Test, Automation Regression Test.; RESTful API; Knowledge of Programming Principles, Design Patterns, etc;; Willing to learn new technology and have a product mindset.; Experience in cloud architecture/infrastructure, especially on GCP",
+      "benefits": "",
+      "deadline": "31/12/2026",
+      "status": "open",
+      "posted": "28/10/2026",
+      "source": "https://itviec.com/it-jobs/da-nang-full-stack-developer-reactjs-nodejs-one-tech-stop-vietnam-company-ltd-5855"
+    },
+    {
+      "id": 27,
+      "company": "ONE Tech Stop Vietnam Company Ltd",
+      "title": "[Da Nang] Technical Architect",
+      "location": "Đà Nẵng",
+      "type": "On-site",
+      "salary": "Thỏa thuận",
+      "tags": [
+        "Software Architecture",
+        "ReactJS",
+        "NestJS",
+        "Cloud",
+        "DevOps",
+        "NodeJS"
+      ],
+      "description": "Development Oversight: Lead the software development life cycle, ensuring project delivery aligns with organizational objectives. Technical Solutions Design: Collaborate with stakeholders to design efficient software solutions and verify technical feasibility. Architectural Guidance & Design: Define system architecture, establish coding standards, and ensure alignment with non-functional requirements.",
+      "requirements": "Full-stack Development Expertise: Extensive experience in both backend (Node.js/NestJS) and frontend (React/Next.js) development.; Communication: Fluency in English is required.; Experience: 3-5 years of experience in a similar Technical Architect role.; Cloud Infrastructure: Advanced knowledge of cloud platforms (preferably Google Cloud), with expertise in Kubernetes, Service Mesh, and optimizing infrastructure for large-scale, secure, and resilient systems.; Application Architecture: Expertise in designing, evaluating, and validating modern software architectures such as Microservices, Domain-Driven Design (DDD), Clean Architecture.; Data Architecture: Expertise in designing and managing data models, with a strong focus on PostgreSQL, as well as other SQL/NoSQL databases, ensuring optimal performance and scalability.; Non-Functional Requirements: Proven expertise in managing and optimizing system non-functional requirements, including performance, security, and scalability.; Technical Troubleshooting: Strong problem-solving skills for diagnosing and resolving technical and production incidents effectively.",
+      "benefits": "",
+      "deadline": "31/12/2026",
+      "status": "open",
+      "posted": "28/10/2026",
+      "source": "https://itviec.com/it-jobs/da-nang-technical-architect-one-tech-stop-vietnam-company-ltd-5915"
+    },
+    {
+      "id": 28,
+      "company": "Doraverse JSC - Tech & AI",
+      "title": "AI Agent - Tech Lead (Golang, ReactJS, Python, NodeJS)",
+      "location": "Đà Nẵng",
+      "type": "On-site",
+      "salary": "Thỏa thuận",
+      "tags": [
+        "Team Management",
+        "Golang",
+        "ReactJS",
+        "AI",
+        "Python",
+        "NodeJS"
+      ],
+      "description": "Doraverse builds a secure, integrated AI platform for businesses worldwide, with a focus on Japan. Our products support AI chat, meeting notes, content creation, and automation of legal and HR workflows, including reviewing contracts, analyzing documents, and answering domain-specific questions. You will lead the technical development of one or more products or product areas within the Doraverse ecosystem.",
+      "requirements": "You have at least 5 years of software development experience, including at least 2 years as a Tech Lead or technical owner of a product, and hold a university degree.; You have a product mindset, use data to set priorities, and are willing to challenge requirements. You can write PRDs for nontechnical readers and technical documentation and API contracts for developers.; You are proficient with AI coding tools such as Claude Code and Codex. You can write effective prompts, review AI-generated code, and help the team use these tools effectively.; You have production-level expertise in at least one of the following backend stacks and can read and modify code in the others: Go (Echo, concurrency, gRPC), Node.js/TypeScript (Express/NestJS), and Python (async programming, FastAPI).; You understand frontend development well enough to review code and make technical decisions involving React, TypeScript, Next.js, Zustand/Redux, and TanStack Query.; You have experience with PostgreSQL, MongoDB, and Redis, including schema design, migrations, query optimization, caching, queues, and locks. You understand the trade-offs involved in selecting these technologies.; You understand microservice architecture, REST, gRPC, Kafka, SSE/WebSocket, and Docker, and have experience using structured logging, Sentry, and OpenTelemetry for system observability.; You have integrated LLM/AI providers, worked with multiple providers and streaming responses, and managed costs and output quality.",
+      "benefits": "",
+      "deadline": "31/12/2026",
+      "status": "open",
+      "posted": "28/10/2026",
+      "source": "https://itviec.com/it-jobs/da-nang-tech-lead-ai-agent-products-doraverse-jsc-tech-ai-3653"
+    },
+    {
+      "id": 29,
+      "company": "Robust Tech House",
+      "title": "Web Developer (NodeJS/ Ruby on Rails/ ReactJS/ VueJS)",
+      "location": "TP. Hồ Chí Minh",
+      "type": "On-site",
+      "salary": "Thỏa thuận",
+      "tags": [
+        "NodeJS",
+        "VueJS",
+        "ReactJS",
+        "Ruby on Rails",
+        "Project Management",
+        "English"
+      ],
+      "description": "We believe that robust software engineering is the backbone of exceptional digital products. As a Web Developer, your work directly impacts how thousands of users interact with our scalable web applications, ensuring seamless performance, high availability, and delightful user experiences. Design, develop, and maintain high-performance, scalable web applications using NodeJS, Ruby on Rails, ReactJS, VueJS or Python.",
+      "requirements": "Degree in Computer Science or a related field; Good technical knowledge and hands-on experience in NodeJS/ Ruby on Rails/ VueJS/ ReactJS/ Python; Solid understanding of core web fundamentals and database management systems; Good command of the English language (reading, written and spoken); Eager to learn and hone your skills. Able to pick up new skills quickly.; Great work attitude - proactive, responsible, diligent and independent; Strong problem-solving ability; Detail-oriented, logical-minded and takes pride in creating robust software",
+      "benefits": "",
+      "deadline": "31/12/2026",
+      "status": "open",
+      "posted": "28/10/2026",
+      "source": "https://itviec.com/it-jobs/web-developer-nodejs-ruby-on-rails-reactjs-vuejs-robust-tech-house-0039"
+    },
+    {
+      "id": 30,
+      "company": "kSynerX Vietnam",
+      "title": "Junior/Middle FullStack Engineer (Python, Java, NodeJS)",
+      "location": "TP. Hồ Chí Minh",
+      "type": "On-site",
+      "salary": "Thỏa thuận",
+      "tags": [
+        "Python",
+        "JavaScript",
+        "NodeJS",
+        "SQL",
+        "Java",
+        "C++"
+      ],
+      "description": "Bachelor's or master's degree in computer science, Software Engineering, Information Systems, or other relevant technical disciplines. Operating systems: UNIX/Linux Programming languages: Python, C++, Java, Bash scripts, Node JS & React JS… Databases, Data Storage and Data Platforms: SQL (PostgreSQL), CockroachDB, DuckDB, S3 Storage Messaging systems and workflow integration: Kafka, AMQP, Apache Airflow, Temporal, N8N Cloud services and infrastru.",
+      "requirements": "Work experience as a Python, C++, Java, Node JS Developer; Expertise in at least one popular Python framework (like Django, Flask or Pyramid); Knowledge of object-relational mapping (ORM) and Pydantic Models; Familiarity with front-end technologies (like JavaScript and HTML5) React JS, Net JS; Strong programming skills in React.js and Node.js, Java and Python; A strong interest in Product Ownership, with the ability to understand product requirements, prioritize tasks, and collaborate with cross-functional teams with DevOps practices to deliver business value.; Good knowledge for optimizing applications for performance and user experience; Good experience with database related to SQL, NoSQL",
+      "benefits": "",
+      "deadline": "31/12/2026",
+      "status": "open",
+      "posted": "28/10/2026",
+      "source": "https://itviec.com/it-jobs/full-stack-engineering-position-junior-middle-level-ksynerx-vietnam-2426"
+    },
+    {
+      "id": 31,
+      "company": "Eventista",
+      "title": "Senior Backend Developer (NodeJS, TypeScript, AWS)",
+      "location": "TP. Hồ Chí Minh",
+      "type": "On-site",
+      "salary": "Salary (Gross): 35 - 45 millions",
+      "tags": [
+        "NodeJS",
+        "Docker",
+        "AWS",
+        "PostgreSql",
+        "API",
+        "TypeScript"
+      ],
+      "description": "Eventista is a fan engagement platform that helps businesses maximize event revenue from the community, with a diverse ecosystem of solutions: online voting platform, ticket distribution platform and merchandise platform, an interactive application between artists and fans.",
+      "requirements": "5+ years in back-end development, including 3+ years with Node.js in production.; Proven experience building and operating high-traffic, high-concurrency systems.; Bachelor's degree in Computer Science, Software Engineering, or equivalent practical experience.; Node.js and TypeScript: strong expertise, including the event loop, async patterns, and memory/CPU profiling.; NestJS: production experience (modules, dependency injection, guards, interceptors, microservice patterns).; Redis: in-depth experience with caching strategies, atomic operations and Lua scripts, distributed locks, rate limiting, and pub/sub or streams. You understand eviction, persistence, and failover trade-offs.; MongoDB: in-depth experience with schema design, indexing, the aggregation pipeline, transactions, and query profiling.; DynamoDB: hands-on experience with partition key design, secondary indexes, and conditional writes.",
+      "benefits": "",
+      "deadline": "31/12/2026",
+      "status": "open",
+      "posted": "28/10/2026",
+      "source": "https://itviec.com/it-jobs/senior-backend-developer-nodejs-typescript-aws-eventista-1455"
+    },
+    {
+      "id": 32,
+      "company": "MONEY FORWARD VIETNAM CO.,LTD",
+      "title": "Principal Software Engineer (Node.js/TypeScript)",
+      "location": "TP. Hồ Chí Minh",
+      "type": "On-site",
+      "salary": "Thỏa thuận",
+      "tags": [
+        "TypeScript",
+        "AWS",
+        "English",
+        "ReactJS",
+        "NestJS",
+        "NodeJS"
+      ],
+      "description": "Money Forward i, Inc. (MFi) is a subsidiary of the Money Forward group and was created in February 2021 to develop a new and intuitive SaaS management platform for the global market, called \"Admina\". We focused on creating a service that was more in tune with the needs of global users by starting with an international product team and committing to a simple and intuitive design.",
+      "requirements": "Bachelor's or higher degree in Computer Science, Software Engineering etc; Deep knowledge in computer science or related field; 7 years of professional experience in backend development; Experience with Node.js/TypeScript and Node.js frameworks like NestJS (or other generalized programming languages such as Java, C#, Golang...etc ); Experiences in designing tables/working with relational databases such as MySQL; Experience with Docker or similar, AWS or similar.; Experiences with asynchronous programming and architecture; Experience with Agentic coding tools",
+      "benefits": "",
+      "deadline": "31/12/2026",
+      "status": "open",
+      "posted": "28/10/2026",
+      "source": "https://itviec.com/it-jobs/principal-software-engineer-node-js-typescript-money-forward-vietnam-co-ltd-4158"
+    },
+    {
+      "id": 33,
+      "company": "IONAH",
+      "title": "Fullstack Developer (NodeJS, NestJS, Angular, MongoDB)",
+      "location": "Hà Nội",
+      "type": "On-site",
+      "salary": "Thỏa thuận",
+      "tags": [
+        "Fullstack",
+        "MongoDB",
+        "Angular",
+        "ReactJS",
+        "NestJS",
+        "NodeJS"
+      ],
+      "description": "Developing and maintaining e-commerce, ERP system Phát triển và duy trì thương mại điện tử, hệ thống ERP Integrating with third-party about shipping, payment, warehouse, ERP Tích hợp với bên thứ ba về vận chuyển, thanh toán, kho bãi, ERP. Developing tools for retail operations and business development. Phát triển các công cụ phục vụ hoạt động bán lẻ và phát triển kinh doanh.",
+      "requirements": "At least 4 years of experience with NestJS.; At least 4 years of experience with Angular.; At least 2 years of experience with MongoDB.; At least 7 years of relevant work experience.; Experience in Retail, Warehouse Management, and Delivery/Logistics is preferred.",
+      "benefits": "",
+      "deadline": "31/12/2026",
+      "status": "open",
+      "posted": "28/10/2026",
+      "source": "https://itviec.com/it-jobs/fullstack-developer-nodejs-nestjs-angular-mongodb-ionah-4925"
+    },
+    {
+      "id": 34,
+      "company": "Saafehouse",
+      "title": "Mid/Sr NodeJS Fullstack Developer (ReactJS, TypeScript)",
+      "location": "Đà Nẵng",
+      "type": "On-site",
+      "salary": "Thỏa thuận",
+      "tags": [
+        "NodeJS",
+        "English",
+        "Database",
+        "AWS",
+        "TypeScript",
+        "ReactJS"
+      ],
+      "description": "Saafehouse builds technology that supports secure cash, asset and client-money operations, including reconciliations, approvals, payments, reporting, document management and integrations for developed financial markets. We are looking for a Senior Fullstack Engineer to join our growing in-house engineering team in Vietnam.",
+      "requirements": "Deliver full-stack features across frontend, backend, data and deployment.; Work with the Product Owner and Head of Engineering to turn product goals into clear scope, technical tasks and acceptance criteria.; Learn the existing platform and work alongside our engineering partner during the handover.; Build new product modules while protecting the reliability of the core financial system.; Write maintainable code, automated tests and useful technical documentation.; Contribute to CI/CD, observability and release safety as part of normal delivery.; Support releases and production issues with the wider engineering team.; Review and take responsibility for all code you submit, including code produced with approved AI tools.",
+      "benefits": "",
+      "deadline": "31/12/2026",
+      "status": "open",
+      "posted": "28/10/2026",
+      "source": "https://itviec.com/it-jobs/mid-senior-node-js-fullstack-engineer-saafehouse-3924"
+    },
+    {
+      "id": 35,
+      "company": "Everfit",
+      "title": "Backend Engineer (Nodejs)",
+      "location": "Hà Nội",
+      "type": "On-site",
+      "salary": "Thỏa thuận",
+      "tags": [
+        "NodeJS",
+        "Database",
+        "AWS",
+        "System Architecture",
+        "Microservices",
+        "AI"
+      ],
+      "description": "Our Vietnam team is the engine of Everfit. Currently around 170 people, roughly 150 in Da Nang and 20 in Hanoi, who built the product that’s made us a category leader in 6 years since launch . The next chapter is about unlocking what this team is capable of moving faster but with extreme precision, building with AI in every workflow, and operating at the level of the best companies in the world.",
+      "requirements": "5+ years of professional experience working with Node.js (ES6).; Intermediate English communication skills — you're willing to grow with us.; Experienced with microservices and distributed systems.; Solid understanding of RESTful API design and backend architecture.; Experienced with Express.js, MongoDB, Redis, and PostgreSQL.; Familiar with unit testing frameworks like Jest or Mocha, and passionate about code quality.; Able to write clean, maintainable, and well-documented code.; Comfortable working in an Agile/Scrum development environment.",
+      "benefits": "",
+      "deadline": "31/12/2026",
+      "status": "open",
+      "posted": "28/10/2026",
+      "source": "https://itviec.com/it-jobs/backend-engineer-nodejs-everfit-4026"
+    },
+    {
+      "id": 36,
+      "company": "SAVILLS VIETNAM",
+      "title": "Fabric Data Engineer (ETL/ELT, PySpark, Python, Azure)",
+      "location": "TP. Hồ Chí Minh",
+      "type": "On-site",
+      "salary": "Thỏa thuận",
+      "tags": [
+        "Data Engineer",
+        "Power BI",
+        "Azure",
+        "Python",
+        "SQL",
+        "ETL"
+      ],
+      "description": "Scope: The Fabric Data Engineer will lead the design, development, integration and optimisation of enterprise data solutions across cloud and on-premises platforms. The role is responsible for building robust ETL/ELT pipelines, managing structured and semi-structured data assets, supporting analytics and reporting outcomes, and partnering with Business Analysts and stakeholders to translate business needs into secure, scalable and supportable dat.",
+      "requirements": "Bachelor’s or master’s degree in information technology, Computer Science, Engineering, Data Science or a related discipline.; Data engineering, cloud or Microsoft technology certifications will be an advantage; 3+ Years of experience in leading enterprise data solution design and implementation experience across cloud and on-premises systems.; Data Engineering: ETL/ELT design, data transformation, data modelling, data mining and segmentation techniques.; Microsoft Cloud Data Stack: Azure Data Factory / Data Pipeline, Dataflows Gen2, SSIS, Azure Functions / Function App, Azure SQL, Azure Blob Storage and Microsoft Fabric.; Database & Querying: Strong SQL skills, database design, performance tuning and hands-on experience with relational database platforms.; Programming: Working knowledge of Python (Notebook - PySpark) and C# for data processing, automation and integration use cases.; Reporting & Analytics: Experience with SSRS and exposure to BI / analytics reporting environments.",
+      "benefits": "",
+      "deadline": "31/12/2026",
+      "status": "open",
+      "posted": "28/10/2026",
+      "source": "https://itviec.com/it-jobs/fabric-data-engineer-etl-elt-pyspark-python-azure-savills-vietnam-1301"
+    },
+    {
+      "id": 37,
+      "company": "TNEX",
+      "title": "Digital Credit Risk Model Validation (Python, R, SQL)",
+      "location": "Hà Nội",
+      "type": "On-site",
+      "salary": "Thỏa thuận",
+      "tags": [
+        "Risk Management",
+        "Machine Learning",
+        "SQL",
+        "R",
+        "Python",
+        "Statistical Analysis"
+      ],
+      "description": "Tham gia góp ý độc lập đối với đề bài xây dựng mô hình (model requirement) cùng team Chính sách & Danh mục Tham gia review sớm (early engagement) nhằm giảm model risk ngay từ giai đoạn thiết kế Đảm bảo các giả định, biến đầu vào và mục tiêu mô hình phù hợp với khẩu vị rủi ro và mục đích sử dụng Thực hiện kiểm định độc lập sau khi mô hình được phát triển Lý do bổ sung: Nếu validation không tham gia từ đầu => dẫn tới model ra xong mới reject => do.",
+      "requirements": "Phân tích dữ liệu: SQL, Excel nâng cao, Matlab, Python, R.; Mô hình hóa rủi ro: Logistic Regression, Decision Tree, Random Forest, XGBoost.; Tối thiểu 2–3 năm kinh nghiệm trong kiểm định hoặc xây dựng mô hình rủi ro tín dụng.; Có hiểu biết sâu về: Quản trị rủi ro tín dụng; Mô hình định lượng (PD, LGD, EAD); Kỹ năng: Phân tích dữ liệu, phản biện logic; Viết báo cáo kiểm định; Tốt nghiệp từ Đại học trở lên, chuyên ngành Toán kinh tế/ Toán/ Toán tin ứng dụng/ Kinh tế/ Ngân hàng/ Tài chính.; Kỹ thuật, phương pháp luận xây dựng và kiểm định mô hình.; Kiến thức chuyên môn, thông lệ các mô hình rủi ro: nhận diện, đo lường, giám sát, và giảm thiểu rủi ro.",
+      "benefits": "",
+      "deadline": "31/12/2026",
+      "status": "open",
+      "posted": "28/10/2026",
+      "source": "https://itviec.com/it-jobs/digital-credit-risk-model-validation-python-r-sql-tnex-5213"
+    },
+    {
+      "id": 38,
+      "company": "VietinBank",
+      "title": "AI Engineer (LLM, Python, Docker, API, RAG)",
+      "location": "Hà Nội",
+      "type": "On-site",
+      "salary": "Thỏa thuận",
+      "tags": [
+        "Generative AI",
+        "API",
+        "Docker",
+        "Python",
+        "RAG",
+        "LLM"
+      ],
+      "description": "Làm việc với các đơn vị nghiệp vụ để tiếp nhận yêu cầu, đánh giá khả năng ứng dụng GenAI và đề xuất hướng tiếp cận kỹ thuật phù hợp. Phân tích bối cảnh sử dụng, dữ liệu đầu vào/đầu ra và rủi ro để thiết kế kiến trúc GenAI khả thi, an toàn. Lựa chọn mô hình, nền tảng và phương thức triển khai (on-premise, private cloud, hybrid, API service) phù hợp với từng bài toán.",
+      "requirements": "Tốt nghiệp Đại học trở lên các chuyên ngành Công nghệ thông tin, Khoa học máy tính, Trí tuệ nhân tạo, Khoa học dữ liệu hoặc các chuyên ngành liên quan.; Ưu tiên ứng viên có chứng chỉ quốc tế về GenAI, LLM, AI Engineering, MLOps, NLP hoặc AI Platform trên các nền tảng cloud/hybrid.; Tối thiểu 02 năm kinh nghiệm phát triển các giải pháp AI/GenAI đối với CV/CVC; từ 04 năm kinh nghiệm đối với CVCC.; Ưu tiên ứng viên có kinh nghiệm triển khai GenAI, RAG, AI Agent trong môi trường doanh nghiệp hoặc ngân hàng.; Có kinh nghiệm đưa các giải pháp AI từ giai đoạn POC đến triển khai thực tế.; Thành thạo Python; có kinh nghiệm làm việc với LLM và các framework GenAI.; Có khả năng triển khai RAG, prompt engineering và AI Agent orchestration.; Có khả năng đóng gói và triển khai dịch vụ GenAI dưới dạng API; có kiến thức về Docker và RESTful API.",
+      "benefits": "",
+      "deadline": "31/12/2026",
+      "status": "open",
+      "posted": "28/10/2026",
+      "source": "https://itviec.com/it-jobs/ai-engineer-llm-python-docker-api-rag-vietinbank-0426"
+    },
+    {
+      "id": 39,
+      "company": "ARSEN Kawaijuku Tech Vietnam Co.,Ltd",
+      "title": "Data Scientist (Python, SQL, Azure)",
+      "location": "TP. Hồ Chí Minh",
+      "type": "On-site",
+      "salary": "Thỏa thuận",
+      "tags": [
+        "Database",
+        "Power BI",
+        "Data Analysis",
+        "Azure",
+        "SQL",
+        "Python"
+      ],
+      "description": "Job Description Your role and responsibilities: Participate in data science projects from problem definition through solution delivery. Analyze business requirements and translate them into data-driven solutions and actionable insights. Collect, clean, validate, and prepare structured and unstructured datasets for analysis.",
+      "requirements": "At least 3+ years of experience in data science or a related field, with strong programming skills in Python, R, or similar languages.; Experience applying statistical analysis, machine learning, and predictive modeling to solve real-world business problems.; Strong understanding of statistics, probability, hypothesis testing, experimental design (A/B testing), and data analysis techniques.; Experience with the end-to-end data science lifecycle, including data collection, preprocessing, feature engineering, model development, evaluation, and interpretation.; Experience working with SQL and relational or NoSQL databases.; Experience working with cloud computing platforms (e.g., AWS, Azure, or Google Cloud) is preferred.; Experience using large language models (LLMs) and generative AI for analytical or business applications is a plus.; Familiarity with data visualization tools and libraries (e.g., Matplotlib, Plotly, Tableau, or Power BI) is an advantage.",
+      "benefits": "",
+      "deadline": "31/12/2026",
+      "status": "open",
+      "posted": "28/10/2026",
+      "source": "https://itviec.com/it-jobs/data-scientist-python-sql-azure-arsen-kawaijuku-tech-vietnam-co-ltd-4606"
+    },
+    {
+      "id": 40,
+      "company": "ABBANK",
+      "title": "Senior Pentester (Red Team, Python, PowerShell, Tester)",
+      "location": "Hà Nội",
+      "type": "On-site",
+      "salary": "Thỏa thuận",
+      "tags": [
+        "Penetration Testing",
+        "Tester",
+        "Cybersecurity",
+        "C++",
+        "PowerShell",
+        "Python"
+      ],
+      "description": "Thiết kế, quản lý và điều phối các chiến dịch kiểm thử xâm nhập cho toàn hệ thống (web, mobile, API, cloud, AD). Thực hiện Red Team / Adversary Simulation mô phỏng các hình thức tấn công APT thực tế. Phân tích, khai thác các lỗ hổng 0-day hoặc logic flaw.",
+      "requirements": "Tốt nghiệp đại học hoặc thạc sĩ theo các chuyên ngành: An ninh thông tin, Công nghệ thông tin, Kỹ thuật phần mềm, Khoa học máy tính.; Kiến thức về Công nghệ thông tin: Hiểu biết sâu; Kiến thức về An ninh thông tin: Hiểu biết sâu; Kiến thức về An toàn trong phát triển phần mềm: Hiểu biết sâu; Kiến thức Kiểm thử xâm nhập: Hiểu sâu về MITRE ATT&CK Framework, Cyber Kill Chain.; Kiến thức về công cụ: thành thạo công cụ chuyên biệt như Cobalt Strike, Metasploit, Burp Suite, Nmap, BloodHound, Mimikatz; Kiến thức về Attack vector: Hiểu rõ về Active Directory attack, Privilege Escalation, Lateral Movement, C2 (Command & Control).; Kiến thức về AI: tùy chỉnh kịch bản Redteam sử dụng AI theo mục tiêu kinh doanh.",
+      "benefits": "",
+      "deadline": "31/12/2026",
+      "status": "open",
+      "posted": "28/10/2026",
+      "source": "https://itviec.com/it-jobs/senior-pentester-red-team-python-powershell-ai-abbank-5426"
+    },
+    {
+      "id": 41,
+      "company": "Pyramid Technical Vietnam",
+      "title": "QC Manager (QA QC/Python/Automation Test) Up to 55m",
+      "location": "Đà Nẵng",
+      "type": "On-site",
+      "salary": "Mức lương: 45.000.000–55.000.000 đồng/tháng (Gross)",
+      "tags": [
+        "QA QC",
+        "Automation Test",
+        "Python",
+        "Embedded",
+        "AI",
+        "Team Management"
+      ],
+      "description": "Xây dựng và dẫn dắt chiến lược kiểm thử xuyên suốt vòng đời sản phẩm, từ linh kiện đầu vào, phát triển đến xuất xưởng và hỗ trợ khách hàng. Dẫn đầu ứng dụng AI và automation Thiết lập tiêu chí sẵn sàng kiểm thử; gắn từng thay đổi kỹ thuật với hoạt động xác minh và kiểm thử hồi quy phù hợp mức độ rủi ro. Chịu trách nhiệm về phương pháp kiểm thử để đáp ứng tiêu chí do QA thiết lập.",
+      "requirements": "Trên 5 năm kinh nghiệm kiểm thử/xác minh trong công ty phần mềm, có kinh nghiệm quản lý hoặc dẫn dắt đội ngũ; ưu tiên môi trường điện tử, thiết bị đo lường.; Thành thạo sử dụng AI trong công việc: biết đặt câu hỏi, viết câu lệnh hiệu quả và có tư duy ưu tiên tự động hóa. Ưu tiên mạnh ứng viên có bằng chứng thực tế về việc dùng AI nâng cao hiệu quả.; Có nền tảng điện tử, hệ thống nhúng và hiểu cách giao tiếp với thiết bị đo qua giao diện lập trình ứng dụng (API).; Có khả năng lập trình phục vụ kiểm thử tự động, chẳng hạn Python; quen với công cụ quản lý kiểm thử. Không yêu cầu lập trình chuyên sâu như lập trình viên.; Vững về kiểm thử theo yêu cầu, giá trị biên, ngoại lệ, hồi quy và độ tin cậy; chủ động tìm phương pháp kiểm thử khi chưa có giải pháp sẵn.; Có đủ chiều sâu chuyên môn để trao đổi ngang tầm với đội ngũ kỹ sư và trực tiếp kiểm thử khi cần.; Giao tiếp ngắn gọn, đúng trọng tâm; thuyết phục và tạo đồng thuận bằng uy tín chuyên môn, giữ đúng cam kết.; Có khả năng phát triển đội ngũ và xây dựng năng lực kiểm thử bền vững, đồng thời duy trì trách nhiệm đối với chiến lược tổng thể.",
+      "benefits": "",
+      "deadline": "31/12/2026",
+      "status": "open",
+      "posted": "28/10/2026",
+      "source": "https://itviec.com/it-jobs/qc-manager-qa-qc-python-automation-test-up-to-55m-pyramid-technical-vietnam-2917"
+    },
+    {
+      "id": 42,
+      "company": "Bosch Global Software Technologies Company Limited",
+      "title": "Embedded Firmware Engineer (Linux/C++/Python)",
+      "location": "TP. Hồ Chí Minh",
+      "type": "On-site",
+      "salary": "Thỏa thuận",
+      "tags": [
+        "Embedded",
+        "Python",
+        "C++",
+        "AUTOSAR",
+        "Firmware",
+        "Linux"
+      ],
+      "description": "Role Overview You will join our embedded-software team to design, develop and integrate real-time applications on Linux and QNX, and to build user-space components for MC-Gateway development. Key Responsibilities Architect, implement and maintain embedded applications on Linux using CMake for cross-platform builds Develop inter-process communication modules on POSIX (named pipes, shared memory) Implement and integrate communication protocols (e.",
+      "requirements": "Bachelor’s or higher degree in Computer Science, Electrical/Electronic Engineering or related field; 4+ years’ professional experience in embedded development; Nice to have:; Adaptive Autosar; CMake (project configuration, tooling, custom modules); POSIX IPC (named pipes, shared memory, semaphores); C++ (modern standards, STL, concurrency); Python scripting (automation, testing, data processing)",
+      "benefits": "",
+      "deadline": "31/12/2026",
+      "status": "open",
+      "posted": "28/10/2026",
+      "source": "https://itviec.com/it-jobs/embedded-firmware-engineer-linux-c-python-bosch-global-software-technologies-company-limited-2650"
+    },
+    {
+      "id": 43,
+      "company": "MAKINAROCKS",
+      "title": "Middle/Senior Backend Engineer (Golang, Python)",
+      "location": "TP. Hồ Chí Minh",
+      "type": "On-site",
+      "salary": "Thỏa thuận",
+      "tags": [
+        "Golang",
+        "SSO",
+        "GitHub",
+        "CI/CD",
+        "Python",
+        "Kubernetes"
+      ],
+      "description": "Biến các các tính năng trên nền tảng (platform) AI thành dạng ứng dụng tiện lợi cho người dùng cuối. Thiết kế, phát triển REST API, DB schema và tối ưu hóa hiệu năng hệ thống. Tích hợp cơ chế xác thực và phân quyền (Authentication/Authorization) dựa trên OIDC/OAuth2; áp dụng các chính sách bảo mật.",
+      "requirements": "Tối thiểu 5 năm kinh nghiệm làm việc liên quan hoặc sở hữu năng lực tương đương.; Nền tảng Khoa học máy tính (CS) vững chắc (cấu trúc dữ liệu, hệ điều hành, kiến trúc máy tính...) và thành thạo quản lý mã nguồn, cộng tác qua Git.; Hiểu sâu về REST API; thành thạo thiết kế API và cơ sở dữ liệu cho ứng dụng.; Kinh nghiệm thực tế trong việc phát triển và vận hành ứng dụng trên nền tảng Container và Kubernetes.; Nắm vững nguyên lý SSO dựa trên OIDC/OAuth2; có khả năng tích hợp luồng xác thực từ các Identity Provider bên ngoài (như Keycloak) vào backend.; Kinh nghiệm triển khai dịch vụ tới người dùng cuối thông qua các pipeline CI/CD (GitHub Actions, GitLab CI, v.v.).; Thành thạo Python, có kinh nghiệm phát triển Async API server với FastAPI.; Hiểu rõ cơ chế hoạt động và biết cách ứng dụng Service Mesh dựa trên Istio.",
+      "benefits": "",
+      "deadline": "31/12/2026",
+      "status": "open",
+      "posted": "28/10/2026",
+      "source": "https://itviec.com/it-jobs/middle-senior-backend-engineer-golang-k8s-makinarocks-4923"
+    },
+    {
+      "id": 44,
+      "company": "GHN",
+      "title": "Senior Staff AI Engineer (Golang, Python)",
+      "location": "TP. Hồ Chí Minh",
+      "type": "On-site",
+      "salary": "Thỏa thuận",
+      "tags": [
+        "Golang",
+        "Redis",
+        "Design Systems",
+        "Microservices",
+        "Kafka",
+        "Python"
+      ],
+      "description": "Design, build and operate LLM-powered features end to end: agents with tool or function calling, RAG over internal data and documents, and structured outputs. Integrate them into Go microservices over gRPC/REST. Build evaluation into every AI feature: offline eval sets, regression tests, LLM-as-judge where it fits.",
+      "requirements": "Bachelor's degree in Computer Science, IT or equivalent.; 4+ years of backend development, including at least 3 years building production Go applications.; Strong distributed-systems fundamentals: microservices, event-driven architecture, Kafka or a similar message broker, gRPC/REST, concurrency and parallel programming.; Solid database skills: PostgreSQL (query design, indexing, performance tuning), at least one NoSQL database, and distributed caching such as Redis.; Hands-on experience shipping at least one LLM-based feature to production, not only a prototype. That includes prompt design, tool or function calling, RAG and structured outputs, plus a clear understanding of the limits: hallucination, latency, token cost.; Hands-on experience with agent frameworks, Model Context Protocol (MCP) and multi-agent systems, and with vector search (e.g. pgvector) for retrieval.; A measure-first mindset: you prove an AI or algorithm change with data and evaluation before calling it done.; Good data skills (SQL, Python) to analyse data, build datasets and run backtests.",
+      "benefits": "",
+      "deadline": "31/12/2026",
+      "status": "open",
+      "posted": "28/10/2026",
+      "source": "https://itviec.com/it-jobs/senior-staff-ai-engineer-golang-python-ghn-0210"
+    },
+    {
+      "id": 45,
+      "company": "OpenCommerce Group",
+      "title": "Quality engineer/Tester (Manual + auto)- Upto 28M net",
+      "location": "Hà Nội",
+      "type": "On-site",
+      "salary": "Upto 28M net",
+      "tags": [
+        "Automation Test",
+        "SQL",
+        "QA QC",
+        "JavaScript",
+        "Python",
+        "Tester"
+      ],
+      "description": "Analyze business and system requirements to identify testing scope and create effective test scenarios and test cases. Execute manual testing for web/mobile applications, including Functional, Regression, Integration, Smoke, and UAT testing. Detect, document, track, and verify software defects throughout the development lifecycle.",
+      "requirements": "At least 1,5 years of experience in Software Testing, both in Manual & Auto test with a strong QA mindset.; Background in Computer Science, Information Technology, Software Engineering, or related fields.; Good understanding of the Software Development Life Cycle (SDLC) and Software Testing Life Cycle (STLC).; Experience in designing test scenarios, writing test cases, executing test plans, and managing defects.; Familiarity with bug tracking and project management tools such as Jira, Azure DevOps, Redmine, or similar.; Basic knowledge of databases and SQL for data validation.; Basic understanding of RESTful APIs and experience using tools such as Postman for API testing is a plus.; Experience working in an Agile/Scrum environment.",
+      "benefits": "",
+      "deadline": "31/12/2026",
+      "status": "open",
+      "posted": "28/10/2026",
+      "source": "https://itviec.com/it-jobs/quality-engineer-tester-manual-auto-upto-28m-net-opencommerce-group-2243"
+    },
+    {
+      "id": 46,
+      "company": "Saafehouse",
+      "title": "Mid/Senior Automation Test (Tester, Automation QA)",
+      "location": "Đà Nẵng",
+      "type": "On-site",
+      "salary": "Thỏa thuận",
+      "tags": [
+        "Automation Test",
+        "Integration test",
+        "Cypress",
+        "Playwright",
+        "English",
+        "Tester"
+      ],
+      "description": "Saafehouse builds technology that supports secure cash, asset and client-money operations, including reconciliations, approvals, payments, reporting, document management and integrations for developed financial markets. We are looking for a Senior QA Automation Engineer to join our growing in-house engineering team in Vietnam.",
+      "requirements": "Implement internal QA workflows that work alongside our engineering partner, then gradually build a reliable automated testing pipeline.; Define a practical automation strategy, select the right E2E framework and establish maintainable standards.; Prioritise and automate critical user journeys while retaining exploratory and manual testing where it adds value.; Integrate reliable automated testing into CI/CD to improve release confidence and feedback speed.; Own the approach to test environments, test data, failure diagnosis and automation stability.; Partner with developers, QA, the Product Owner and Head of Engineering to improve quality across the delivery lifecycle.; Remain hands-on while mentoring junior QA engineers, sharing knowledge and distributing work effectively.; Strong experience testing production web applications and building maintainable automation suites.",
+      "benefits": "",
+      "deadline": "31/12/2026",
+      "status": "open",
+      "posted": "28/10/2026",
+      "source": "https://itviec.com/it-jobs/mid-senior-automation-qa-engineer-saafehouse-4947"
+    },
+    {
+      "id": 47,
+      "company": "Thai Son Soft",
+      "title": "Nhân viên Kiểm thử phần mềm (Tester)",
+      "location": "Hà Nội",
+      "type": "On-site",
+      "salary": "Mức lương: 8-11M net",
+      "tags": [
+        "Tester",
+        "Automation Test",
+        "QA QC"
+      ],
+      "description": "Xây dựng kế hoạch, kịch bản kiểm thử phần mềm, tính năng cho sản phẩm. Kiểm soát, đánh giá về quy trình phát triển phần mềm; đánh giá chất lượng sản phẩm trước khi triển khai chính thức. Đề xuất các tiêu chí và giải pháp thực hiện để đảm bảo chất lượng phần mềm.",
+      "requirements": "Giới tính: Nữ; Tốt nghiệp Đại học các chuyên ngành về Công nghệ thông tin, Công nghệ phần mềm, Hệ thống thông tin,...; Có 01 năm kinh nghiệm trở lên trong vị trí QA – Tester; ứng viên có kinh nghiệm về nghiệp vụ Hóa đơn điện tử là 1 lợi thế; Có khả năng phân tích, đọc hiểu yêu cầu;; Nắm vững các Quy trình và kỹ thuật Test;; Có khả năng lên kế hoạch cho giai đoạn test;; Có khả năng tạo test case, test script theo yêu cầu hệ thống;; Có khả năng phối hợp với Developer trong quá trình fix bug;",
+      "benefits": "",
+      "deadline": "31/12/2026",
+      "status": "open",
+      "posted": "28/10/2026",
+      "source": "https://itviec.com/it-jobs/nhan-vien-kiem-thu-phan-mem-tester-thai-son-soft-5308"
+    },
+    {
+      "id": 48,
+      "company": "Restaff – House Of Norway",
+      "title": "Quality Control Engineer (Manual & Automation Tester)",
+      "location": "TP. Hồ Chí Minh",
+      "type": "On-site",
+      "salary": "Thỏa thuận",
+      "tags": [
+        "QA QC",
+        "Automation Test",
+        "Selenium",
+        "Tester",
+        "Playwright"
+      ],
+      "description": "CodeIT AS is a leader in innovative labelling, marking, and traceability solutions, empowering manufacturers globally to enhance automation, improve data monitoring, and achieve cost efficiencies through our versatile CodeIT Enterprise™ platform. As a Quality Control (QC) Engineer, you will play a key role in ensuring the quality of our solutions through both manual and automated testing.",
+      "requirements": "Manual Testing – Initial Focus:; Design, execute, and document comprehensive manual test cases based on system specifications, user stories, and requirements.; Perform various types of testing, including System, Integration, Performance, Load, Smoke, and Regression tests.; Identify, document, and track defects to resolution using tools like Azure DevOps.; Collaborate with developers to reproduce and resolve issues, ensuring product quality.; Create detailed test plans, test designs, and test result reports for stakeholders.; Automation Testing – Gradual Transition:; Automate select manual test cases using tools like Telerik Test Studio, Playwright, or similar to enhance testing efficiency.",
+      "benefits": "",
+      "deadline": "31/12/2026",
+      "status": "open",
+      "posted": "28/10/2026",
+      "source": "https://itviec.com/it-jobs/quality-control-engineer-manual-automation-tester-restaff-house-of-norway-4945"
+    },
+    {
+      "id": 49,
+      "company": "KMS Technology",
+      "title": "Junior/ Senior Full-stack Tester (Auto & Manual)",
+      "location": "Đà Nẵng",
+      "type": "On-site",
+      "salary": "Thỏa thuận",
+      "tags": [
+        "Tester",
+        "Playwright",
+        "Selenium",
+        "Automation Test",
+        "AI",
+        "English"
+      ],
+      "description": "Execute all testing activities (manual and automation) to improve product quality, work closely with the team (developers, business analysis, customer service, operation, etc.) to deliver the product success Address the test automation needs in a methodical, detail-oriented manner with the help of robust analytical skills and problem-solving capacity Automate functional, regression and/or performance acceptance tests Have complete responsibility.",
+      "requirements": "Bachelor’s degree in IT, Computer Science or a related field.; Likely having 5+ YOE for Senior level and 2+ YOE for Junior level in software testing depending on how fast your learning and developing technical capability; Able to self-learn and quickly adapt to new technologies; Familiar with the Agile development methodologies; Hands-on experience in leading test teams and managing sprint-based manual and automation testing tasks.; Able to perform tasks under high pressure; Upper-Intermediate English (verbal and written), able to work directly with clients.; Good domain knowledge of software development process, especially the software testing process",
+      "benefits": "",
+      "deadline": "31/12/2026",
+      "status": "open",
+      "posted": "28/10/2026",
+      "source": "https://itviec.com/it-jobs/junior-senior-full-stack-tester-auto-manual-kms-technology-2011"
+    },
+    {
+      "id": 50,
+      "company": "Trung tâm công nghệ thông tin MobiFone",
+      "title": "3 Chuyên viên kiểm thử phần mềm (Tester, Agile, Scrum)",
+      "location": "Hà Nội",
+      "type": "On-site",
+      "salary": "Thỏa thuận",
+      "tags": [
+        "Tester",
+        "Team Management",
+        "API",
+        "SQL",
+        "Scrum",
+        "Agile"
+      ],
+      "description": "Xây dựng Test Strategy, Test Plan, Test Schedule; xác định phạm vi kiểm thử và ước lượng effort, nguồn lực cho dự án. Phân công, điều phối, giám sát công việc và workload của các thành viên trong team; kèm cặp, đào tạo thành viên. Review Test Scenario, Test Case và kết quả kiểm thử.",
+      "requirements": "Tốt nghiệp đại học chính quy trở lên, chuyên ngành Công nghệ thông tin, Toán tin, An toàn thông tin hoặc tương đương; Tiếng Anh trình độ B. Ưu tiên thí sinh có chứng chỉ tiếng Anh quốc tế: TOEIC, IELTS,… và các chứng chỉ quốc tế khác.; Dưới 35 tuổi; Tối thiểu 4 năm kinh nghiệm Software Testing, trong đó ít nhất 1–2 năm ở vị trí Test Lead.; Am hiểu SDLC, Agile/Scrum.; Nắm vững các loại kiểm thử: Functional, Non-functional, Regression, API, Integration.; Có kiến thức về API Testing, SQL/Database và kiểm thử trên các nền tảng (Web, Mobile).; Sử dụng thành thạo các công cụ quản lý test và bug: Jira, …",
+      "benefits": "",
+      "deadline": "31/12/2026",
+      "status": "open",
+      "posted": "28/10/2026",
+      "source": "https://itviec.com/it-jobs/3-chuyen-vien-kiem-thu-phan-mem-tester-agile-scrum-trung-tam-cong-nghe-thong-tin-mobifone-5225"
+    },
+    {
+      "id": 51,
+      "company": "OL Vietnam",
+      "title": "Senior QA Engineer (Tester/ QA QC)",
+      "location": "TP. Hồ Chí Minh",
+      "type": "On-site",
+      "salary": "Thỏa thuận",
+      "tags": [
+        "QA QC",
+        "Tester",
+        "English"
+      ],
+      "description": "As a QAE, you will help to ensure that the product systematically meets and exceeds our users’ expectations. You will contribute by designing & executing the most efficient manual testing strategy to ensure that: 1. 90+% of defects are identified & documented before reaching the end-users Exclusive of defects that can only be detected in the client environment 2.",
+      "requirements": "Significant experience with manual testing of complex applications required; Proficiency in English (both verbal and written); A strong fundamental understanding of software development.; Strong self-discipline for delivering well-tested, complete features/modules under a tight schedule and the capability for rational thinking.; Experience in accessibility testing (familiarity with WCAG, accessibility shortcuts, keystrokes; WAS certification) is a plus, but not mandatory.; Experience in test automation with knowledge of automation frameworks (e.g. Cypress, Selenium) and scripting languages (e.g., TypeScript, Java, JavaScript, C#).",
+      "benefits": "",
+      "deadline": "31/12/2026",
+      "status": "open",
+      "posted": "28/10/2026",
+      "source": "https://itviec.com/it-jobs/senior-qa-engineer-tester-qa-qc-ol-vietnam-4058"
+    },
+    {
+      "id": 52,
+      "company": "FPT IS",
+      "title": "Tester Intern",
+      "location": "Hà Nội",
+      "type": "On-site",
+      "salary": "Thỏa thuận",
+      "tags": [
+        "Tester",
+        "API",
+        "Integration test",
+        "SQL"
+      ],
+      "description": "Lập kịch bản kiểm thử dựa trên Tài liệu thiết kế. Viết Script kiểm thử Thực hiện kiểm thử Quản lý và phân tích kết quả kiểm thử. Tạo báo cáo kiểm thử, biên bản kiểm thử.",
+      "requirements": "Tốt nghiệp Đại học hoặc Cao đẳng chuyên ngành CNTT phần mềm,… hoặc tốt nghiệp chuyên ngành tương đương.; Có khả năng lập kế hoạch kiểm thử và viết các trường hợp kiểm thử, tổng hợp kết quả kiểm thử.; Hiểu biết về kiểm thử phần mềm như các giai đoạn kiểm thử (Unit test, Integration test, Functional test, System test…).; Có khả năng đọc hiểu tài liệu Tiếng Anh.; Có khả năng truyền đạt và xử lý vấn đề tốt.; Năng động, sáng tạo, nhiệt tình, chủ động trong công việc.; Có thể làm việc độc lập hoặc theo nhóm.; Ưu tiên các bạn có thể làm việc Fulltime (Thứ 2 - Thứ 6).",
+      "benefits": "",
+      "deadline": "31/12/2026",
+      "status": "open",
+      "posted": "28/10/2026",
+      "source": "https://itviec.com/it-jobs/tester-intern-fpt-is-2357"
+    },
+    {
+      "id": 53,
+      "company": "ANDPAD VietNam Co., Ltd",
+      "title": "Principal Frontend Engineer (ReactJS/ VueJS)",
+      "location": "Hà Nội",
+      "type": "On-site",
+      "salary": "Thỏa thuận",
+      "tags": [
+        "ReactJS",
+        "Unit test",
+        "VueJS",
+        "Microservices",
+        "JavaScript",
+        "English"
+      ],
+      "description": "We are looking for a Principal Frontend Developer (ReactJS/ VueJS) who can join to our team and develop the application in cooperation with the product manager, working in the form of Squad, a small team can quickly and consistently engage in everything from design to development, testing and operation. Also, there are a lot of opportunities to work with new languages ​​and FWs other than the main language in an international environment.",
+      "requirements": "Empathy for Andpad's mission and values; 10+ years of experience in a software development role: Frontend Developer; Experience in TypeScript language; Experience in frontend frameworks ( ReactJS, VueJS, etc.); Knowledge and ability to explain principles of web operation and differences of browsers; Experience as a technical lead throughout the full project development lifecycle; Basic knowledge of Web application security; Skills of development and operation using various frameworks",
+      "benefits": "",
+      "deadline": "31/12/2026",
+      "status": "open",
+      "posted": "28/10/2026",
+      "source": "https://itviec.com/it-jobs/principal-frontend-engineer-reactjs-vuejs-andpad-vietnam-co-ltd-4134"
+    },
+    {
+      "id": 54,
+      "company": "CÔNG TY TNHH QNAP VIỆT NAM",
+      "title": "Full-stack Engineer (ReactJS, Laravel, VueJS, PHP)",
+      "location": "Hà Nội",
+      "type": "On-site",
+      "salary": "Thỏa thuận",
+      "tags": [
+        "ReactJS",
+        "API",
+        "MySQL",
+        "PHP",
+        "Laravel",
+        "VueJS"
+      ],
+      "description": "Phát triển tính năng (Chủ chốt): Chịu trách nhiệm phát triển và bảo trì cả mặt Front-end và Back-end cho hệ thống Partner Portal phục vụ các đối tác và đội ngũ kinh doanh toàn cầu. Tối ưu hóa core flows: Tham gia xây dựng, tối ưu hóa các quy trình cốt lõi như đăng ký case, tra cứu kho bãi/hàng tồn, và quy trình xét duyệt hồ sơ đối tác.",
+      "requirements": "Học vấn: Tốt nghiệp đại học chuyên ngành Công nghệ thông tin, Khoa học máy tính hoặc các ngành liên quan.; Kinh nghiệm: Từ 1 năm kinh nghiệm trở lên trong vai trò phát triển Full-stack hoặc Back-end, từng tham gia vào các dự án đã chạy thực tế (shipped projects).; Kỹ năng Back-end: Thành thạo PHP 8+ và có kinh nghiệm thực chiến với framework Laravel (hiểu sâu về OOP và mô hình MVC).; Kỹ năng Front-end: Nắm vững HTML5, CSS3, JavaScript (ES6+), có kinh nghiệm làm việc thực tế với Vue.js hoặc React.js. Có khả năng tích hợp tốt với Laravel Blade template.; Cơ sơ dữ liệu & API: Sử dụng tốt MySQL / MariaDB (hiểu về cách tối ưu hóa Index và Query); thành thạo thiết kế và tích hợp RESTful API.; Ngoại ngữ (Bắt buộc): Đọc hiểu tốt tài liệu kỹ thuật bằng tiếng Anh. Biết tiếng Trung và có thể ứng dụng vào công việc là 1 lợi thế.; Điểm cộng lớn (Nice-to-have): Có kinh nghiệm với hệ thống B2B/E-commerce; có kiến thức về Docker/CI-CD; quen thuộc với các công cụ hỗ trợ code bằng AI (Cursor, Claude Code, Copilot).",
+      "benefits": "",
+      "deadline": "31/12/2026",
+      "status": "open",
+      "posted": "28/10/2026",
+      "source": "https://itviec.com/it-jobs/full-stack-engineer-reactjs-laravel-vuejs-php-cong-ty-tnhh-qnap-viet-nam-5942"
+    },
+    {
+      "id": 55,
+      "company": "Nam Viet JSC",
+      "title": "Backend .NET Developer (Microservices/API)",
+      "location": "Hà Nội",
+      "type": "On-site",
+      "salary": "Thỏa thuận",
+      "tags": [
+        ".NET",
+        "Microsoft SQL Server",
+        "ReactJS",
+        "Docker",
+        "Microservices"
+      ],
+      "description": "Phát triển hệ thống web phục vụ trục tích hợp, kho dữ liệu, nền tảng dịch vụ microservice. Thiết kế API chuẩn REST, xử lý authentication (JWT, OAuth2, SSO), xây dựng hệ thống backend phục vụ web/app. Tham gia vào các dự án phát triển sản phẩm của công ty, chỉnh sửa theo yêu cầu đặc thù của khách hàng.",
+      "requirements": "Tốt nghiệp Đại học chuyên ngành: CNTT, Khoa học máy tính, Hệ thống thông tin hoặc tương đương.; Nắm vững nền tảng lập trình hướng đối tượng (OOP), cấu trúc dữ liệu và giải thuật.; Có kiến thức về kiến trúc hệ thống phân tán.; Có kinh nghiệm lập trình Website (Core Skill), thành thạo C# (.NET Core / .NET 6/7/8), SQL Server, thành thạo phát triển Web API (RESTful API, gRPC), cơ bản về ReactJs.; Hiểu rõ kiến trúc Microservice, tách service theo domain nghiệp vụ, sử dụng các công nghệ API Gateway (Ocelot, Nginx), Message Queue (RabbitMQ, Kafka), Service Communication (REST, gRPC).; Hiểu mô hình tích hợp hệ thống (ESB, API Gateway, Middleware); có kinh nghiệm kết nối WebService (SOAP, REST), hệ thống bên thứ 3, hệ thống liên thông dữ liệu; xử lý mapping dữ liệu, chuẩn hóa dữ liệu.; Có kỹ năng về Cơ sở dữ liệu & Kho dữ liệu bao gồm: thành thạo SQL Server/PostgreSQL/MySQL, thiết kế Database chuẩn hóa (3NF), viết Stored Procedure, tối ưu query. Ưu tiên cao có kinh nghiệm Data Warehouse, ETL (SSIS, Talend, Airflow), xử lý dữ liệu lớn (Big Data là lợi thế).; Có kinh nghiệm cơ bản CI/CD (GitLab CI, Azure DevOps); sử dụng Docker, Docker Compose; hiểu Kubernetes (là lợi thế lớn); triển khai hệ thống trên Linux Server, Window Server, Cloud (AWS, Azure, Viettel Cloud, VNPT Cloud).",
+      "benefits": "",
+      "deadline": "31/12/2026",
+      "status": "open",
+      "posted": "28/10/2026",
+      "source": "https://itviec.com/it-jobs/backend-net-developer-microservices-api-nam-viet-jsc-3740"
+    },
+    {
+      "id": 56,
+      "company": "CellphoneS",
+      "title": "Automation Tester (ERP)",
+      "location": "TP. Hồ Chí Minh",
+      "type": "On-site",
+      "salary": "Thỏa thuận",
+      "tags": [
+        "Automation Test",
+        "ERP",
+        "TypeScript",
+        "QA QC",
+        "Tester"
+      ],
+      "description": "Tham gia xây dựng và hoàn thiện Automation Testing Platform cho hệ thống ERP / Retail. Phát triển và mở rộng API & Scenario automation: Request, Scenario (DAG), Transform/Assert, Suite, Release train. Xây dựng và maintain automated test cho các nghiệp vụ ERP quan trọng (API-first; E2E qua Scenario/Suite).",
+      "requirements": "Tối thiểu 3 năm Software Testing / Automation Testing.; Ít nhất 2 năm phát triển Automation Test (viết framework / engine, không chỉ record-playback).; Có kinh nghiệm xây dựng hoặc đóng góp Automation Framework / Platform.; Có kinh nghiệm API Automation mạnh (REST, auth, assertion, data validation).; Có kinh nghiệm với ERP hoặc hệ thống nghiệp vụ lớn là lợi thế.; Có kinh nghiệm hệ thống nhiều module, integration, dữ liệu lớn là lợi thế.; Thành thạo TypeScript (core).; Java / Python / C#: chấp nhận nếu có nền tảng OOP tốt và sẵn sàng làm việc chủ yếu trên TypeScript.",
+      "benefits": "",
+      "deadline": "31/12/2026",
+      "status": "open",
+      "posted": "28/10/2026",
+      "source": "https://itviec.com/it-jobs/automation-tester-erp-cellphones-2524"
+    }
+  ],
+  "applications": [
+    {
+      "id": "a1",
+      "jobId": 1,
+      "status": "reviewing",
+      "appliedDate": "20/10/2026",
+      "note": "HR Ã„â€˜ÃƒÂ£ xem hÃ¡Â»â€œ sÃ†Â¡"
+    },
+    {
+      "id": "a2",
+      "jobId": 2,
+      "status": "interview",
+      "appliedDate": "18/10/2026",
+      "note": "Online: 28/11 Ã¢â‚¬Â¢ 09:30"
+    },
+    {
+      "id": "a3",
+      "jobId": 4,
+      "status": "reviewing",
+      "appliedDate": "21/10/2026",
+      "note": ""
+    },
+    {
+      "id": "a4",
+      "jobId": 5,
+      "status": "rejected",
+      "appliedDate": "12/10/2026",
+      "note": "ChÃ†Â°a Ã„â€˜Ã¡ÂºÂ¡t tiÃƒÂªu chÃƒÂ­ Ã„â€˜Ã¡Â»Â£t nÃƒÂ y"
+    },
+    {
+      "id": "a5",
+      "jobId": 6,
+      "status": "done",
+      "appliedDate": "10/10/2026",
+      "note": "Quy trÃƒÂ¬nh Ã„â€˜ÃƒÂ£ kÃ¡ÂºÂ¿t thÃƒÂºc"
+    }
+  ],
+  "savedJobs": [
+    1,
+    2
+  ],
+  "profile": {
+    "name": "NguyÃ¡Â»â€¦n Minh Anh",
+    "email": "minhanh.nguyen@email.edu.vn",
+    "phone": "0912 345 678",
+    "university": "Ã„ÂÃ¡ÂºÂ¡i hÃ¡Â»Âc ThÃ¡Â»Â§y LÃ¡Â»Â£i",
+    "major": "CÃƒÂ´ng nghÃ¡Â»â€¡ ThÃƒÂ´ng tin",
+    "gpa": "3.65/4.0",
+    "graduationYear": "2026",
+    "skills": [
+      "ReactJS",
+      "JavaScript",
+      "HTML/CSS",
+      "Git",
+      "Tailwind CSS"
+    ],
+    "bio": "Sinh viÃƒÂªn CNTT nÃ„Æ’m 4, Ã„â€˜am mÃƒÂª front-end, tÃƒÂ¬m kiÃ¡ÂºÂ¿m cÃ†Â¡ hÃ¡Â»â„¢i thÃ¡Â»Â±c tÃ¡ÂºÂ­p.",
+    "avatarUrl": null,
+    "cvScore": 85,
+    "cvFileName": "CV_NguyenMinhAnh_Frontend_2026.pdf"
+  },
+  "employer": {
+    "company": "NovaTech Solutions",
+    "email": "hr@novatech.vn",
+    "industry": "CÃƒÂ´ng nghÃ¡Â»â€¡",
+    "size": "50Ã¢â‚¬â€œ200 nhÃƒÂ¢n viÃƒÂªn"
+  },
+  "postedJobs": [
+    {
+      "id": "pj1",
+      "title": "ThÃ¡Â»Â±c tÃ¡ÂºÂ­p sinh Front-end Developer (ReactJS / UI)",
+      "status": "active",
+      "applicants": 12,
+      "views": 89,
+      "deadline": "30/11/2026"
+    },
+    {
+      "id": "pj2",
+      "title": "Senior Backend Engineer (Node.js)",
+      "status": "active",
+      "applicants": 7,
+      "views": 54,
+      "deadline": "15/12/2026"
+    },
+    {
+      "id": "pj3",
+      "title": "UI/UX Designer (Figma)",
+      "status": "closed",
+      "applicants": 23,
+      "views": 130,
+      "deadline": "01/10/2026"
+    }
+  ],
+  "candidates": [
+    {
+      "id": "c1",
+      "jobId": "pj1",
+      "name": "NguyÃ¡Â»â€¦n VÃ„Æ’n An",
+      "university": "BKHN",
+      "match": 85,
+      "status": "interview",
+      "appliedDate": "20/10/2026"
+    },
+    {
+      "id": "c2",
+      "jobId": "pj1",
+      "name": "TrÃ¡ÂºÂ§n ThÃ¡Â»â€¹ BÃƒÂ¬nh",
+      "university": "NEU",
+      "match": 78,
+      "status": "reviewing",
+      "appliedDate": "21/10/2026"
+    },
+    {
+      "id": "c3",
+      "jobId": "pj2",
+      "name": "LÃƒÂª Minh CÃ†Â°Ã¡Â»Âng",
+      "university": "UET",
+      "match": 91,
+      "status": "offer",
+      "appliedDate": "19/10/2026"
+    },
+    {
+      "id": "c4",
+      "jobId": "pj1",
+      "name": "PhÃ¡ÂºÂ¡m ThÃ¡Â»â€¹ Dung",
+      "university": "PTIT",
+      "match": 65,
+      "status": "rejected",
+      "appliedDate": "17/10/2026"
+    },
+    {
+      "id": "c5",
+      "jobId": "pj2",
+      "name": "HoÃƒÂ ng VÃ„Æ’n Em",
+      "university": "BKHN",
+      "match": 80,
+      "status": "reviewing",
+      "appliedDate": "22/10/2026"
+    }
+  ]
 }
