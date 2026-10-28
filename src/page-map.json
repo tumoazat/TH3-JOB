@@ -1,0 +1,74 @@
+[
+  {
+    "file": "01_landing_page.html",
+    "component": "Page01LandingPage",
+    "title": "CareerMatch AI - Nền tảng AI tuyển dụng số 1 cho sinh viên Việt Nam",
+    "bodyClass": "bg-background text-on-surface font-body-md antialiased selection:bg-surface-variant selection:text-primary"
+  },
+  {
+    "file": "03_student_dashboard.html",
+    "component": "Page03StudentDashboard",
+    "title": "03 - Tổng quan sinh viên | CareerMatch AI",
+    "bodyClass": "bg-background text-on-surface antialiased flex min-h-screen"
+  },
+  {
+    "file": "04_job_search.html",
+    "component": "Page04JobSearch",
+    "title": "CareerMatch AI - Khám phá việc làm & Tìm kiếm cơ hội thực tập",
+    "bodyClass": "bg-background text-on-surface antialiased min-h-screen flex flex-col"
+  },
+  {
+    "file": "05_job_detail.html",
+    "component": "Page05JobDetail",
+    "title": "Chi tiết việc làm - Thực tập sinh Front-end Developer | CareerMatch AI",
+    "bodyClass": "bg-background text-on-surface antialiased min-h-screen flex selection:bg-secondary-fixed selection:text-on-secondary-fixed"
+  },
+  {
+    "file": "06_cv_analysis.html",
+    "component": "Page06CvAnalysis",
+    "title": "CareerMatch AI - Phân tích CV bằng AI (CV Analysis)",
+    "bodyClass": "bg-surface text-on-surface font-body-md antialiased min-h-screen flex flex-row"
+  },
+  {
+    "file": "07_matched_jobs.html",
+    "component": "Page07MatchedJobs",
+    "title": "07 - Việc làm phù hợp với tôi (AI Matched Jobs) | CareerMatch AI",
+    "bodyClass": "bg-background text-on-surface antialiased font-body-md min-h-screen flex flex-col"
+  },
+  {
+    "file": "08_application_tracker.html",
+    "component": "Page08ApplicationTracker",
+    "title": "08 - Hồ sơ ứng tuyển (Application Tracker) | CareerMatch AI",
+    "bodyClass": "bg-background text-on-surface antialiased font-body-md min-h-screen flex selection:bg-surface-container selection:text-secondary"
+  },
+  {
+    "file": "09_h_s_c_nh_n_student_profile.html",
+    "component": "Page09HSCNhNStudentProfile",
+    "title": "Hồ sơ cá nhân & CV - CareerMatch AI",
+    "bodyClass": "bg-background text-on-surface font-body-md antialiased min-h-screen flex selection:bg-primary selection:text-white"
+  },
+  {
+    "file": "10_dashboard_nh_tuy_n_d_ng_employer_dashboard.html",
+    "component": "Page10DashboardNhTuyNDNgEmployerDashboard",
+    "title": "Bảng điều khiển Nhà tuyển dụng | CareerMatch AI",
+    "bodyClass": "bg-background text-on-surface antialiased min-h-screen flex selection:bg-secondary-fixed selection:text-on-secondary-fixed font-body-md text-body-md"
+  },
+  {
+    "file": "11_ng_tin_tuy_n_d_ng_post_a_job.html",
+    "component": "Page11NgTinTuyNDNgPostAJob",
+    "title": "Đăng tin tuyển dụng mới | CareerMatch AI - NovaTech Solutions",
+    "bodyClass": "bg-background text-on-surface antialiased flex min-h-screen"
+  },
+  {
+    "file": "12.12 - Quản lý ứng viên (Candidate Management).html",
+    "component": "Page1212QuNLNgViNCandidateManagement",
+    "title": "Quản lý ứng viên - NovaTech Solutions | CareerMatch AI",
+    "bodyClass": "min-h-full font-body-md text-on-surface antialiased bg-background flex"
+  },
+  {
+    "file": "13_design_system_components.html",
+    "component": "Page13DesignSystemComponents",
+    "title": "CareerMatch AI - Design System & UI Components Guide v1.2",
+    "bodyClass": "min-h-full font-body-md text-on-surface antialiased flex flex-col bg-surface"
+  }
+]

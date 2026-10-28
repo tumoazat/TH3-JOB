@@ -1,0 +1,89 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-width: 320px;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  font-size: 20px;
+  line-height: 1;
+  letter-spacing: normal;
+  text-transform: none;
+  display: inline-block;
+  white-space: nowrap;
+  word-wrap: normal;
+  direction: ltr;
+  -webkit-font-feature-settings: 'liga';
+  -webkit-font-smoothing: antialiased;
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+}
+
+.material-symbols-outlined.fill-icon {
+  font-variation-settings: 'FILL' 1, 'wght' 500, 'GRAD' 0, 'opsz' 24;
+}
+
+.vl-active {
+  font-weight: 600 !important;
+}
+
+.vl-active > span[class*='material'] {
+  font-variation-settings: 'FILL' 1 !important;
+}
+
+.vl-tab-active {
+  font-weight: 700 !important;
+  border-bottom: 2px solid currentColor !important;
+}
+
+#vl-toast-wrap {
+  position: fixed;
+  z-index: 9999;
+  right: 1.5rem;
+  bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.vl-toast {
+  max-width: 20rem;
+  border-radius: 0.5rem;
+  padding: 0.75rem 1rem;
+  color: white;
+  box-shadow: 0 4px 12px rgb(0 0 0 / 15%);
+  opacity: 0;
+  transform: translateY(0.5rem);
+  transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.vl-toast.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.vl-toast-success { background: #16a34a; }
+.vl-toast-info { background: #2563eb; }
+.vl-toast-error { background: #dc2626; }
+
+@media (max-width: 767px) {
+  aside.fixed.left-0 {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    height: auto;
+  }
+
+  body > #root > div > aside.fixed.left-0 {
+    position: relative;
+  }
+}
