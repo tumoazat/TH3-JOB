@@ -1,0 +1,28 @@
+{
+  "_schema": "SDD golden dataset scaffold — labels are NOT filled yet. labelSource/labelScore/labelBand are null until a group reviewer assigns them per rubric.md. This is NOT an evaluation result.",
+  "_status": "insufficient_training_data",
+  "_target": 20,
+  "_labeled": 0,
+  "pairs": [
+    { "pairId": "pair_0001", "candidateId": "c1", "jobId": 1, "labelScore": null, "labelBand": null, "labelSource": null, "reviewerCount": 0 },
+    { "pairId": "pair_0002", "candidateId": "c2", "jobId": 1, "labelScore": null, "labelBand": null, "labelSource": null, "reviewerCount": 0 },
+    { "pairId": "pair_0003", "candidateId": "c4", "jobId": 1, "labelScore": null, "labelBand": null, "labelSource": null, "reviewerCount": 0 },
+    { "pairId": "pair_0004", "candidateId": "c1", "jobId": 2, "labelScore": null, "labelBand": null, "labelSource": null, "reviewerCount": 0 },
+    { "pairId": "pair_0005", "candidateId": "c3", "jobId": 2, "labelScore": null, "labelBand": null, "labelSource": null, "reviewerCount": 0 },
+    { "pairId": "pair_0006", "candidateId": "c5", "jobId": 2, "labelScore": null, "labelBand": null, "labelSource": null, "reviewerCount": 0 },
+    { "pairId": "pair_0007", "candidateId": "c2", "jobId": 3, "labelScore": null, "labelBand": null, "labelSource": null, "reviewerCount": 0 },
+    { "pairId": "pair_0008", "candidateId": "c4", "jobId": 3, "labelScore": null, "labelBand": null, "labelSource": null, "reviewerCount": 0 },
+    { "pairId": "pair_0009", "candidateId": "c3", "jobId": 4, "labelScore": null, "labelBand": null, "labelSource": null, "reviewerCount": 0 },
+    { "pairId": "pair_0010", "candidateId": "c5", "jobId": 4, "labelScore": null, "labelBand": null, "labelSource": null, "reviewerCount": 0 },
+    { "pairId": "pair_0011", "candidateId": "c1", "jobId": 5, "labelScore": null, "labelBand": null, "labelSource": null, "reviewerCount": 0 },
+    { "pairId": "pair_0012", "candidateId": "c5", "jobId": 5, "labelScore": null, "labelBand": null, "labelSource": null, "reviewerCount": 0 },
+    { "pairId": "pair_0013", "candidateId": "c2", "jobId": 5, "labelScore": null, "labelBand": null, "labelSource": null, "reviewerCount": 0 },
+    { "pairId": "pair_0014", "candidateId": "c4", "jobId": 6, "labelScore": null, "labelBand": null, "labelSource": null, "reviewerCount": 0 },
+    { "pairId": "pair_0015", "candidateId": "c3", "jobId": 6, "labelScore": null, "labelBand": null, "labelSource": null, "reviewerCount": 0 },
+    { "pairId": "pair_0016", "candidateId": "c1", "jobId": 3, "labelScore": null, "labelBand": null, "labelSource": null, "reviewerCount": 0 },
+    { "pairId": "pair_0017", "candidateId": "c5", "jobId": 1, "labelScore": null, "labelBand": null, "labelSource": null, "reviewerCount": 0 },
+    { "pairId": "pair_0018", "candidateId": "c3", "jobId": 1, "labelScore": null, "labelBand": null, "labelSource": null, "reviewerCount": 0 },
+    { "pairId": "pair_0019", "candidateId": "c2", "jobId": 6, "labelScore": null, "labelBand": null, "labelSource": null, "reviewerCount": 0 },
+    { "pairId": "pair_0020", "candidateId": "c4", "jobId": 2, "labelScore": null, "labelBand": null, "labelSource": null, "reviewerCount": 0 }
+  ]
+}
