@@ -49,7 +49,7 @@ Extend the existing React + Vite + Tailwind frontend and Express backend to sati
 - Single server (Express) already running on port 5000; frontend proxies to `API_BASE = 'http://localhost:5000/api'`.
 - No new frameworks/languages. AI = deterministic heuristic in Node (stdlib + `pdf-parse` for PDF text). BI = aggregation over the same JSON DB.
 - UI additions: 2 new routes (`/ai-match.html`, `/bi-dashboard.html`) + updated employer dashboard charts.
-- **Auth:** thêm session/cookie đơn giản (express-session) hoặc Bearer token trong demo, role chỉ được gán bởi server khi login, client không thể tự thiết lập role.
+- **Auth:** thêm xác thực bằng **Bearer token** (JSON Web Token đơn giản do server ký, lưu trong `localStorage` của trình duyệt). Frontend gửi kèm header `Authorization: Bearer <token>` trên mọi yêu cầu API cần đăng nhập. Role chỉ được gán bởi server khi login, **client không thể tự thiết lập hoặc đổi role**.
 
 ---
 
@@ -75,11 +75,11 @@ Schema formalized (additive, backward compatible). **Trước khi triển khai p
 - `candidate` 1→N `applications` qua `candidateId` (một ứng viên ứng tuyển nhiều tin).
 - `job` 1→N `applications` qua `jobId` (một tin có nhiều đơn ứng tuyển).
 - `application` liên kết `candidate` + `job` + `employer` (để tra cứu nhanh).
-- `savedJobs` liên kết `candidateId` với mảng `jobId[]` đã lưu.
+- `savedJobs` liên kết `candidateId` với mảng `jobId[]` đã lưu (**mỗi candidateId chỉ xem được danh sách lưu của chính mình**).
 - `cvText` là nội dung trích xuất từ file PDF, dùng để tính match (không lưu PII nhạy cảm ngoài email/phone cần bảo vệ).
 
 **Tương thích dữ liệu mẫu hiện có:**
-- Kiểm tra `savedJobs` hiện đang là mảng số `[jobId]` — cần đổi thành `{ candidateId, jobId[] }` hoặc giữ mảng số và liên kết qua session userId hiện tại. **Quyết định:** giữ `savedJobs` là mảng số `[jobId]` gắn với `userId` của candidate đang đăng nhập (đã có trong session), không thay đổi cấu trúc để giảm rủi ro.
+- `savedJobs` hiện đang là mảng số `[jobId]` chưa gắn `candidateId` — **cần chuyển đổi sang `{ candidateId, jobId[] }`** và backfill `candidateId` từ session/tài khoản hiện có, hoặc tạm giữ `[jobId]` nhưng API **lọc theo candidateId của người đăng nhập** trước khi trả về, để ứng viên A không thể nhìn thấy danh sách lưu của ứng viên B. **Quyết định ưu tiên:** đổi schema thành `{ candidateId, jobId[] }` và migration one-time; nếu thời gian chật, giữ `[jobId]` nhưng bắt buộc API lọc theo `candidateId` từ session.
 - `postedJobs` hiện có sẵn — giữ lại, ánh xạ sang `jobs` khi cần.
 - `applications` hiện có sẵn — bổ sung `employerId`, `matchScore`.
 
@@ -87,9 +87,11 @@ Schema formalized (additive, backward compatible). **Trước khi triển khai p
 
 ## 5. Xác thực & Phân quyền (bảo đảm không tự đổi role)
 
-- **Đăng nhập thực tế:** thêm endpoint `POST /api/auth/login` nhận `{ email, password }`, tra cứu trong `users`, verify password hash, tạo session (express-session) hoặc trả về token, lưu `role` vào session/server-side. **Không để client tự đặt role.**
-- **Middleware `requireRole(roles)`:** kiểm tra `req.session.user.role` trước khi cho truy cập endpoint. Role chỉ thay đổi khi admin can thiệp trực tiếp vào DB, không có endpoint cho user tự đổi role của mình.
+- **Đăng nhập thực tế:** thêm endpoint `POST /api/auth/login` nhận `{ email, password }`, tra cứu trong `users`, verify password hash, ký **Bearer token** (chứa `userId`, `role`, `exp`) và trả về `{ user, role, token }`. Frontend lưu `token` vào `localStorage` và gửi kèm header `Authorization: Bearer <token>` trên mọi yêu cầu cần đăng nhập. **Không để client tự đặt role.**
+- **Middleware `requireAuth`:** kiểm tra token hợp lệ trước khi cho truy cập endpoint cần đăng nhập; gán `req.user` từ payload token.
+- **Middleware `requireRole(roles)`:** kiểm tra `req.user.role` trước khi cho truy cập theo role. Role chỉ thay đổi khi admin can thiệp trực tiếp vào DB, không có endpoint cho user tự đổi role của mình.
 - **PII protection:** `email`, `phone`, `cvFileName`, `cvText` chỉ hiển thị đầy đủ với (a) chủ sở hữu ứng viên, (b) nhà tuyển dụng đã có đơn ứng tuyển đối với ứng viên đó. Các trường khác bị mask (`****@****.com`, `09xx xxxx xx`).
+- **Quyền truy cập `/api/match`:** ứng viên chỉ được tính match trên hồ sơ của chính mình (`candidateId` phải bằng `req.user.userId`); nhà tuyển dụng chỉ được tính match trên tin tuyển dụng mà mình sở hữu (`job.employerId` phải bằng `req.user.userId` thông qua `employers` bảng). Nếu không thỏa mãn → trả về `403`.
 - **Access log:** ghi nhận `userId`, `endpoint`, `timestamp`, `ip` cho mỗi truy cập PII.
 - **Rate limit:** giới hạn số lần gọi `/api/cv/extract` và `/api/match` mỗi IP để tránh lạm dụng.
 
@@ -104,9 +106,9 @@ Inputs: `candidate.skills[]`, `candidate.cvText` (từ PDF), `job.tags[]`, `job.
 Algorithm:
 1. **PDF extraction:** `POST /api/cv/extract` nhận file PDF, dùng `pdf-parse` trích xuất văn bản thô → lưu vào `candidate.cvText`.
 2. Normalize text (lowercase, trim, bỏ dấu tiếng Việt qua bảng ánh xạ đơn giản).
-3. Tokenize kỹ năng/tags thành tập từ.
-4. `skillScore = |candidate.skills ∩ job.tags| / |job.tags|` (0–1).
-5. `keywordScore` = số từ khóa trong JD xuất hiện trong `cvText` / tổng từ khóa JD (0–1).
+3. Tokenize kỹ năng/tags thành tập từ (chuẩn hóa cụm từ nhiều từ: "React JS" → "reactjs", "Node JS" → "nodejs", xóa ký tự đặc biệt).
+4. `skillScore = |candidate.skills ∩ job.tags| / |job.tags|` (0–1). **Nếu `job.tags` rỗng → `skillScore = 0` (tránh chia cho không).**
+5. `keywordScore` = số từ khóa trong JD xuất hiện trong `cvText` / tổng từ khóa JD (0–1). **Nếu không có từ khóa JD → `keywordScore = 0`.**
 6. `match = round((skillScore * 0.6 + keywordScore * 0.4) * 100)` → thang **0–100**.
 7. Band: ≥90 "Rất khớp", ≥80 "Khớp tốt", ≥70 "Khớp tiềm năng", <70 "Cần bổ sung".
 
@@ -141,11 +143,13 @@ Aggregations từ `db.json`:
 | Ứng viên theo trường | `candidates[].university` | Đếm theo trường ĐH | Bar chart |
 | Tin đang mở / tạm dừng / hết hạn | `jobs[].status`, `deadline` | Đếm theo trạng thái | Stat cards |
 
-**Công thức tỷ lệ chuyển đổi (thống nhất):**
-- `countTổngĐơn = count(status IN ['applied','reviewing','interview','offer','rejected'])` — tất cả đơn đã nộp (không chỉ status='applied' hiện tại, tránh mẫu số co fühl khi đơn đã chuyển sang trạng thái khác).
-- `CR1 = count(status='interview') / countTổngĐơn` (ứng tuyển → phỏng vấn)
-- `CR2 = count(status='offer') / count(status='interview')` (phỏng vấn → offer)
+**Công thức tỷ lệ chuyển đổi (thống nhất, dựa trên trạng thái hiện tại của đơn — không lưu lịch sử chuyển trạng thái trong demo):**
+- `countTổngĐơn = count(status IN ['applied','reviewing','interview','offer','rejected'])` — tất cả đơn đã nộp (không chỉ status='applied' hiện tại, tránh mẫu số co cảm khi đơn đã chuyển sang trạng thái khác).
+- `CR1 = count(status='interview') / countTổngĐơn` — **tỷ lệ đơn đang ở vòng phỏng vấn so với tổng đơn** (chú ý: đây là tỷ lệ trạng thái hiện tại, không phải funnel lịch sử; vì demo không lưu lịch sử chuyển trạng thái, không thể tính "đã từng chuyển sang phỏng vấn").
+- `CR2 = count(status='offer') / count(status='interview')` (phỏng vấn → offer, nếu có đơn ở vòng phỏng vấn)
 - `CR3 = count(status='offer') / countTổngĐơn` (ứng tuyển → offer)
+
+**Lưu ý:** Nếu muốn tính funnel thực sự (số đơn đã từng qua từng vòng), cần bổ sung bảng `applicationStatusHistory` lưu từng thay đổi trạng thái — điều này nằm ngoài phạm vi demo hiện tại.
 
 Frontend: trang `/bi-dashboard.html` vẽ bằng **Chart.js** (thêm vào `package.json`), stat cards, lọc theo nhà tuyển dụng.
 
@@ -155,10 +159,10 @@ Frontend: trang `/bi-dashboard.html` vẽ bằng **Chart.js** (thêm vào `packa
 
 | Endpoint | Method | Input | Output | Quyền truy cập |
 |----------|--------|-------|--------|----------------|
-| `/api/auth/login` | POST | `{ email, password }` | `{ user, role, token }` | public |
-| `/api/auth/me` | GET | session/token | `{ user, role }` | authenticated |
+| `/api/auth/login` | POST | `{ email, password }` | `{ user, role, token }` (Bearer token) | public |
+| `/api/auth/me` | GET | header `Authorization: Bearer <token>` | `{ user, role }` | authenticated |
 | `/api/cv/extract` | POST | file PDF | `{ cvText: string }` | candidate owner |
-| `/api/match` | POST | `{ candidateId, jobId }` | `{ match, band, reason[], matchedSkills[], missingSkills[] }` | candidate/employer |
+| `/api/match` | POST | `{ candidateId, jobId }` | `{ match, band, reason[], matchedSkills[], missingSkills[] }` | candidate (chỉ match hồ sơ của mình) hoặc employer (chỉ match job do mình sở hữu) |
 | `/api/match/all` | GET | `?candidateId=` | list `{ jobId, match, band }` giảm dần | candidate |
 | `/api/bi/stats` | GET | none | `{ skillsDistribution, salaryDistribution, statusDistribution, universityDistribution, conversionRates }` | employer/admin |
 | `/api/candidates/:id` | GET | none | candidate profile (PII masked unless owner/employer with application) | candidate/employer/admin |
@@ -173,7 +177,7 @@ Các endpoint hiện có giữ nguyên.
 - `src/pages/PageBIDashboard.tsx` — `/bi-dashboard.html`: biểu đồ từ `/api/bi/stats`, thẻ chỉ số, lọc theo nhà tuyển dụng.
 - `src/main.tsx`: đăng ký 2 route mới + ánh xạ `routeByText` ("dashboard BI", "ai match", "xem báo cáo BI").
 - Dashboard nhà tuyển dụng (trang 10): thêm liên kết "Xem báo cáo BI" → `/bi-dashboard.html`.
-- Thêm trang đăng nhập đơn giản (nếu chưa có) và gắn session vào mọi yêu cầu API.
+- Thêm trang đăng nhập đơn giản (nếu chưa có) và gắn header `Authorization: Bearer <token>` vào mọi yêu cầu API cần đăng nhập.
 
 ---
 
@@ -181,7 +185,7 @@ Các endpoint hiện có giữ nguyên.
 
 **Dữ liệu mẫu:** seed `db.json` với ≥10 công việc, ≥15 ứng viên, trộn trạng thái đơn (áp dụng, phỏng vấn, offer, từ chối).
 
-**Bộ dữ liệu chuẩn (golden dataset):** 20 cặp CV-JD có điểm/band dự kiến đã định sẵn (do nhân viên HR đánh giá trước). **Ràng buộc:** đây chỉ là demo internship, 20 cặp chưa đủ để khẳng định độ chính xác của mô hình trên thực tế; báo cáo phải nêu rõ hạn chế này.
+**Bộ dữ liệu chuẩn (golden dataset):** 20 cặp CV-JD được chọn theo các nhóm kỹ năng phổ biến (Frontend, Backend, Design, Data) với điểm/band dự kiến đã định sẵn (do nhân viên HR đánh giá trước). **Cách chọn:** mỗi nhóm có 4–5 cặp, đảm bảo phân bố các mức band (Rất khớp, Khớp tốt, Khớp tiềm năng, Cần bổ sung). **Cách gán điểm chuẩn:** HR đánh giá thủ công mức độ phù hợp dựa trên kỹ năng và kinh nghiệm, sau đó quy thang 0–100. **Ràng buộc:** đây chỉ là demo internship, 20 cặp chưa đủ để khẳng định độ chính xác của mô hình trên thực tế; báo cáo phải nêu rõ hạn chế này và **không tuyên bố mô hình đạt độ chính xác thực tế chỉ từ bộ dữ liệu này**.
 
 **Chỉ số đo:**
 - `accuracy@band`: tỷ lệ cặp dự đoán đúng band so với golden dataset.
@@ -198,7 +202,7 @@ Các endpoint hiện có giữ nguyên.
 
 | Giai đoạn | Công việc | Đại lý |
 |-----------|-----------|--------|
-| A | Kiểm tra tương thích dữ liệu mẫu + formalize schema CSDL | backend |
+| A | Kiểm tra tương thích dữ liệu mẫu + formalize schema CSDL (bao gồm kiểm tra API hiện có có cô isolates dữ liệu savedJobs theo tài khoản hay chưa) | backend |
 | B | Đăng nhập / session + middleware phân quyền (không tự đổi role) | backend |
 | C | Endpoint `/api/cv/extract` (pdf-parse + giới hạn/lỗi) | backend |
 | D | Endpoint `/api/match` + `/api/match/all` | backend |
