@@ -4,6 +4,13 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { v4 as uuidv4 } from 'uuid';
+import {
+  normalizeSkill,
+  computeSkillScore,
+  computeKeywordScore,
+  computeMatch,
+  classifyBand,
+} from '../src/lib/matching';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -187,6 +194,107 @@ app.put('/api/candidates/:id/status', (req, res) => {
   const db = readDB();
   const { status } = req.body;
   db.candidates = db.candidates.map((c: any) => c.id === req.params.id ? { ...c, status } : c);
+  writeDB(db);
+  res.json({ success: true });
+});
+
+// Matching engine (Level 1 baseline)
+function buildMatchResult(job: any, candidate: any) {
+  const jobTags: string[] = Array.isArray(job?.tags) ? job.tags : [];
+  const skills: string[] = Array.isArray(candidate?.skills) ? candidate.skills : [];
+  const cvText: string = candidate?.cvText || candidate?.bio || '';
+  const jdText = [job?.title, job?.description, job?.requirements].filter(Boolean).join(' ');
+
+  const skillScore = computeSkillScore(skills, jobTags);
+  const keywordScore = computeKeywordScore(cvText, jdText);
+  const match = computeMatch(skillScore, keywordScore);
+  const dataStatus =
+    skillScore != null && keywordScore != null
+      ? 'complete'
+      : skillScore != null || keywordScore != null
+      ? 'partial'
+      : 'insufficient';
+
+  const cSet = new Set(skills.map(normalizeSkill).filter(Boolean));
+  const seen = new Set<string>();
+  const matchedSkills: string[] = [];
+  const missingSkills: string[] = [];
+  for (const tag of jobTags) {
+    const n = normalizeSkill(tag);
+    if (!n || seen.has(n)) continue;
+    seen.add(n);
+    if (cSet.has(n)) matchedSkills.push(tag);
+    else missingSkills.push(tag);
+  }
+
+  return {
+    jobId: job?.id,
+    match,
+    band: classifyBand(match),
+    method: 'baseline',
+    modelVersion: null,
+    dataStatus,
+    matchedSkills,
+    missingSkills,
+    explanation: {
+      skillScore,
+      keywordScore,
+      summary:
+        match == null
+          ? 'Chưa đủ dữ liệu để đánh giá.'
+          : `Khớp ${matchedSkills.length}/${matchedSkills.length + missingSkills.length} kỹ năng yêu cầu.`,
+    },
+  };
+}
+
+app.post('/api/match', (req, res) => {
+  const db = readDB();
+  const { jobId, candidateId } = req.body || {};
+  const job = db.jobs.find((j: any) => j.id === Number(jobId));
+  if (!job) {
+    return res.status(404).json({ error: { code: 404, message: 'Công việc không tồn tại' } });
+  }
+  const candidate = candidateId
+    ? db.candidates.find((c: any) => c.id === candidateId)
+    : db.profile;
+  if (!candidate) {
+    return res.status(404).json({ error: { code: 404, message: 'Ứng viên không tồn tại' } });
+  }
+  res.json(buildMatchResult(job, candidate));
+});
+
+app.get('/api/match/all', (req, res) => {
+  const db = readDB();
+  const { candidateId } = req.query;
+  const candidate = candidateId
+    ? db.candidates.find((c: any) => c.id === candidateId)
+    : db.profile;
+  if (!candidate) {
+    return res.status(404).json({ error: { code: 404, message: 'Ứng viên không tồn tại' } });
+  }
+  const results = db.jobs.map((job: any) => {
+    const r = buildMatchResult(job, candidate);
+    return { jobId: r.jobId, match: r.match, band: r.band, dataStatus: r.dataStatus };
+  });
+  results.sort((a: any, b: any) => (b.match ?? -1) - (a.match ?? -1));
+  res.json(results);
+});
+
+app.put('/api/cv/manual', (req, res) => {
+  const db = readDB();
+  const { cvText, candidateId } = req.body || {};
+  if (typeof cvText !== 'string' || cvText.trim() === '') {
+    return res.status(400).json({ error: { code: 400, message: 'Nội dung CV không được rỗng' } });
+  }
+  if (candidateId) {
+    const idx = db.candidates.findIndex((c: any) => c.id === candidateId);
+    if (idx === -1) {
+      return res.status(404).json({ error: { code: 404, message: 'Ứng viên không tồn tại' } });
+    }
+    db.candidates[idx] = { ...db.candidates[idx], cvText: cvText.trim() };
+  } else {
+    db.profile = { ...db.profile, cvText: cvText.trim() };
+  }
   writeDB(db);
   res.json({ success: true });
 });
