@@ -19,6 +19,14 @@ const screens = [
   { file: '11_ng_tin_tuy_n_d_ng_post_a_job.html', component: lazy(() => import('./pages/Page11NgTinTuyNDNgPostAJob')) },
   { file: '12.12 - Quản lý ứng viên (Candidate Management).html', component: lazy(() => import('./pages/Page1212QuNLNgViNCandidateManagement')) },
   { file: '13_design_system_components.html', component: lazy(() => import('./pages/Page13DesignSystemComponents')) },
+  { file: 'about.html', component: lazy(() => import('./pages/PageInfo')) },
+  { file: 'contact.html', component: lazy(() => import('./pages/PageInfo')) },
+  { file: 'pricing.html', component: lazy(() => import('./pages/PageInfo')) },
+  { file: 'terms.html', component: lazy(() => import('./pages/PageInfo')) },
+  { file: 'privacy.html', component: lazy(() => import('./pages/PageInfo')) },
+  { file: 'help.html', component: lazy(() => import('./pages/PageInfo')) },
+  { file: 'certify.html', component: lazy(() => import('./pages/PageInfo')) },
+  { file: 'cv-guide.html', component: lazy(() => import('./pages/PageInfo')) },
 ];
 
 const routeByText: Record<string, string> = {
@@ -31,8 +39,14 @@ const routeByText: Record<string, string> = {
   'quản lý tin': '/11_ng_tin_tuy_n_d_ng_post_a_job.html', 'đăng tin': '/11_ng_tin_tuy_n_d_ng_post_a_job.html', 'tuyển dụng': '/11_ng_tin_tuy_n_d_ng_post_a_job.html', 'post a job': '/11_ng_tin_tuy_n_d_ng_post_a_job.html',
   'ứng viên': '/12.12 - Quản lý ứng viên (Candidate Management).html', candidate: '/12.12 - Quản lý ứng viên (Candidate Management).html',
   'ai matching talent': '/12.12 - Quản lý ứng viên (Candidate Management).html', 'matching talent': '/12.12 - Quản lý ứng viên (Candidate Management).html',
-  'về trang chủ': '/01_landing_page.html', 'trang chủ': '/01_landing_page.html', home: '/01_landing_page.html', 'trợ giúp': '/01_landing_page.html',
-  'help center': '/01_landing_page.html', 'trung tâm hỗ trợ': '/01_landing_page.html', 'explore companies': '/01_landing_page.html', 'salary insights': '/04_job_search.html',
+  'về trang chủ': '/01_landing_page.html', 'trang chủ': '/01_landing_page.html', home: '/01_landing_page.html',
+  'giới thiệu': '/about.html', 'about us': '/about.html', 'liên hệ': '/contact.html', contact: '/contact.html',
+  'bảng giá': '/pricing.html', pricing: '/pricing.html',
+  'điều khoản dịch vụ': '/terms.html', 'điều khoản': '/terms.html', terms: '/terms.html',
+  'chính sách quyền riêng tư': '/privacy.html', 'bảo mật thông tin sinh viên': '/privacy.html', 'bảo mật': '/privacy.html', privacy: '/privacy.html',
+  'trung tâm hỗ trợ': '/help.html', 'trợ giúp': '/help.html', 'help center': '/help.html', help: '/help.html', 'đường dây nóng': '/contact.html',
+  'hướng dẫn viết cv': '/cv-guide.html', 'quy chuẩn chứng chỉ': '/certify.html', 'mẫu cv': '/cv-guide.html', forum: '/help.html', mail: '/contact.html',
+  'explore companies': '/01_landing_page.html', 'salary insights': '/04_job_search.html',
   mentorship: '/06_cv_analysis.html', 'cài đặt': '/09_h_s_c_nh_n_student_profile.html', settings: '/09_h_s_c_nh_n_student_profile.html',
   'khám phá doanh nghiệp': '/01_landing_page.html', 'báo cáo mức lương': '/04_job_search.html', 'cố vấn nghề nghiệp': '/06_cv_analysis.html',
   'cẩm nang phỏng vấn': '/06_cv_analysis.html', 'đánh giá kỹ năng': '/06_cv_analysis.html', 'đối tác đại học': '/01_landing_page.html',
@@ -288,24 +302,30 @@ function runInteraction(event: Event, navigate: ReturnType<typeof useNavigate>) 
   }
   const iconEl = button.querySelector('[data-icon]');
   const iconName = iconEl?.getAttribute('data-icon')?.toLowerCase() || '';
+  if (button instanceof HTMLAnchorElement && /^(share|link)$/i.test((button.textContent || '').trim())) {
+    event.preventDefault();
+    try { navigator.clipboard?.writeText(window.location.href); } catch { /* ignore */ }
+    showToast('Đã sao chép liên kết', 'success');
+    return;
+  }
   // AI Talent / Messages / Interview actions
-  if (/tin nhắn|chat|mark_chat|tin nhan/i.test(btnText) || iconName === 'mark_chat_unread') {
+  if (button.tagName === 'BUTTON' && (/tin nhắn|chat|mark_chat|tin nhan/i.test(btnText) || iconName === 'mark_chat_unread')) {
     event.preventDefault();
     showToast('Hộp tin nhắn đang được đồng bộ với hệ thống tuyển dụng', 'info');
     return;
   }
-  if (/vào phòng|phòng pv|phỏng vấn ảo|interview room/i.test(btnText)) {
+  if (button.tagName === 'BUTTON' && /vào phòng|phòng pv|phỏng vấn ảo|interview room/i.test(btnText)) {
     event.preventDefault();
     showToast('Đang kết nối đến phòng phỏng vấn...', 'info');
     setTimeout(() => showToast('Phòng phỏng vấn ảo đã sẵn sàng (demo)', 'success'), 600);
     return;
   }
-  if (/mời pv|mời phỏng vấn/i.test(btnText)) {
+  if (button.tagName === 'BUTTON' && /mời pv|mời phỏng vấn/i.test(btnText)) {
     event.preventDefault();
     showToast('Đã gửi lời mời phỏng vấn đến ứng viên', 'success');
     return;
   }
-  if (/khám phá.*ứng viên|8 ứng viên|ai matching.*ứng viên/i.test(btnText)) {
+  if (button.tagName === 'BUTTON' && /khám phá.*ứng viên|8 ứng viên|ai matching.*ứng viên/i.test(btnText)) {
     event.preventDefault();
     navigate('/12.12 - Quản lý ứng viên (Candidate Management).html');
     showToast('Đang hiển thị danh sách ứng viên được AI đề xuất', 'info');
@@ -316,7 +336,7 @@ function runInteraction(event: Event, navigate: ReturnType<typeof useNavigate>) 
     navigate('/12.12 - Quản lý ứng viên (Candidate Management).html');
     return;
   }
-  if (/đăng tin ngay/i.test(btnText)) {
+  if (button.tagName === 'BUTTON' && /đăng tin ngay/i.test(btnText)) {
     event.preventDefault();
     submitPostJob({
       title: (document.getElementById('job-title') as HTMLInputElement | null)?.value || '',
@@ -331,8 +351,24 @@ function runInteraction(event: Event, navigate: ReturnType<typeof useNavigate>) 
     showToast('Đã đặt lại bộ lọc', 'info');
     return;
   }
+  if (button.tagName === 'BUTTON' && /^(tất cả|đang tuyển|tạm dừng|hết hạn)/i.test(btnText.trim()) && document.querySelectorAll('article').length) {
+    event.preventDefault();
+    const key = btnText.trim();
+    const group = button.parentElement;
+    group?.querySelectorAll<HTMLElement>('button').forEach((b) => { b.classList.remove('bg-primary', 'text-on-primary', 'shadow-sm'); b.classList.add('text-on-surface-variant'); });
+    (button as HTMLElement).classList.remove('text-on-surface-variant');
+    (button as HTMLElement).classList.add('bg-primary', 'text-on-primary', 'shadow-sm');
+    const kw = /tất cả/i.test(key) ? '' : (/đang tuyển/i.test(key) ? 'Đang tuyển' : (/tạm dừng/i.test(key) ? 'Tạm dừng' : 'Hết hạn'));
+    document.querySelectorAll<HTMLElement>('article').forEach((a) => {
+      a.style.display = !kw || (a.textContent || '').includes(kw) ? '' : 'none';
+    });
+    return;
+  }
   const feedback: Array<[RegExp, string, 'success' | 'info']> = [
     [/phân tích lại cv|phân tích cv/i, 'Đang phân tích CV bằng AI...', 'info'],
+    [/mời ứng tuyển/i, 'Đã gửi lời mời ứng tuyển', 'success'],
+    [/chi tiết hồ sơ/i, 'Đang mở chi tiết hồ sơ ứng viên', 'info'],
+    [/xem thêm.*ứng viên|xem hồ sơ/i, 'Đang tải danh sách ứng viên phù hợp', 'info'],
     [/tải xuống|download|xuất danh sách|export/i, 'Đang xuất dữ liệu...', 'info'],
     [/xem trước cv|preview cv/i, 'Đang mở bản xem trước CV', 'info'],
     [/duyệt cv|approve/i, 'Đã duyệt CV ứng viên', 'success'],
@@ -362,16 +398,17 @@ function runInteraction(event: Event, navigate: ReturnType<typeof useNavigate>) 
   const jobId = button.dataset.jobId || button.dataset.apply || button.closest<HTMLElement>('[data-job-id]')?.dataset.jobId;
   const store = window.VL;
   if (/xem chi tiết|view detail/i.test(btnText)) { event.preventDefault(); if (jobId) { navigate(`/05_job_detail.html?id=${jobId}`); return; } const path = window.location.pathname; if (path.includes('03_student_dashboard') || path.includes('08_application')) { navigate('/08_application_tracker.html'); return; } navigate('/05_job_detail.html?id=1'); return; }
-  if (button.matches('[data-bookmark]')) {
+  if (/lý do đề xuất/i.test(btnText)) { event.preventDefault(); showToast('Vị trí này phù hợp nhờ kỹ năng và kinh nghiệm trong hồ sơ của bạn.', 'info'); return; }
+  const isBookmarkBtn = button.matches('[data-bookmark]') || /^bookmark(_border|_added)?$/i.test(btnText.trim()) || !!button.querySelector('[data-icon="bookmark"], [data-icon="bookmark_border"], [data-icon="bookmark_added"]');
+  if (isBookmarkBtn) {
     event.preventDefault();
-    if (/lý do đề xuất/i.test(btnText)) { showToast('Vị trí này phù hợp nhờ kỹ năng và kinh nghiệm trong hồ sơ của bạn.', 'info'); return; }
     if (!jobId || !store) return;
     const saved = store.toggleSave(jobId); button.dataset.saved = String(saved);
     const icon = button.querySelector<HTMLElement>('[class*="material-symbol"]');
     if (icon) { icon.style.fontVariationSettings = saved ? "'FILL' 1" : "'FILL' 0"; icon.style.color = saved ? '#f59e0b' : ''; }
     showToast(saved ? 'Đã lưu việc làm' : 'Đã bỏ lưu', saved ? 'success' : 'info'); return;
   }
-  if (button.matches('[data-apply], [data-quick-apply]') || /ứng tuyển nhanh/i.test(btnText)) {
+  if (button.matches('[data-apply], [data-quick-apply]') || (button.tagName === 'BUTTON' && /ứng tuyển/i.test(btnText) && !(button as HTMLButtonElement).disabled && !/đã ứng tuyển/i.test(btnText) && !button.closest('form'))) {
     event.preventDefault();
     const applyJobId = jobId || '1';
     if (!store) { navigate(`/05_job_detail.html?id=${applyJobId}`); return; }

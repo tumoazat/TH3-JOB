@@ -70,5 +70,13 @@
     "component": "Page13DesignSystemComponents",
     "title": "CareerMatch AI - Design System & UI Components Guide v1.2",
     "bodyClass": "min-h-full font-body-md text-on-surface antialiased flex flex-col bg-surface"
-  }
+  },
+  { "file": "about.html", "component": "PageInfo", "title": "Giới thiệu | CareerMatch AI", "bodyClass": "bg-background text-on-surface antialiased" },
+  { "file": "contact.html", "component": "PageInfo", "title": "Liên hệ | CareerMatch AI", "bodyClass": "bg-background text-on-surface antialiased" },
+  { "file": "pricing.html", "component": "PageInfo", "title": "Bảng giá | CareerMatch AI", "bodyClass": "bg-background text-on-surface antialiased" },
+  { "file": "terms.html", "component": "PageInfo", "title": "Điều khoản dịch vụ | CareerMatch AI", "bodyClass": "bg-background text-on-surface antialiased" },
+  { "file": "privacy.html", "component": "PageInfo", "title": "Chính sách quyền riêng tư | CareerMatch AI", "bodyClass": "bg-background text-on-surface antialiased" },
+  { "file": "help.html", "component": "PageInfo", "title": "Trung tâm hỗ trợ | CareerMatch AI", "bodyClass": "bg-background text-on-surface antialiased" },
+  { "file": "certify.html", "component": "PageInfo", "title": "Quy chuẩn chứng chỉ sinh viên | CareerMatch AI", "bodyClass": "bg-background text-on-surface antialiased" },
+  { "file": "cv-guide.html", "component": "PageInfo", "title": "Hướng dẫn viết CV chuẩn ATS | CareerMatch AI", "bodyClass": "bg-background text-on-surface antialiased" }
 ]
