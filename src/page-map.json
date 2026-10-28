@@ -78,5 +78,6 @@
   { "file": "privacy.html", "component": "PageInfo", "title": "Chính sách quyền riêng tư | CareerMatch AI", "bodyClass": "bg-background text-on-surface antialiased" },
   { "file": "help.html", "component": "PageInfo", "title": "Trung tâm hỗ trợ | CareerMatch AI", "bodyClass": "bg-background text-on-surface antialiased" },
   { "file": "certify.html", "component": "PageInfo", "title": "Quy chuẩn chứng chỉ sinh viên | CareerMatch AI", "bodyClass": "bg-background text-on-surface antialiased" },
-  { "file": "cv-guide.html", "component": "PageInfo", "title": "Hướng dẫn viết CV chuẩn ATS | CareerMatch AI", "bodyClass": "bg-background text-on-surface antialiased" }
+  { "file": "cv-guide.html", "component": "PageInfo", "title": "Hướng dẫn viết CV chuẩn ATS | CareerMatch AI", "bodyClass": "bg-background text-on-surface antialiased" },
+  { "file": "ai-match.html", "component": "PageAIMatch", "title": "AI Matching | CareerMatch AI", "bodyClass": "bg-background text-on-surface antialiased" }
 ]
