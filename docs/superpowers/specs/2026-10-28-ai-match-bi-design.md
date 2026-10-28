@@ -2,7 +2,7 @@
 
 **Project:** CareerMatch AI — Hệ thống Tìm việc Thông minh tích hợp AI và BI  
 **Date:** 2026-10-28  
-**Status:** Revised v6 (chờ duyệt)  
+**Status:** Revised v7 (chờ duyệt)  
 **Repo:** https://github.com/tumoazat/TH3-JOB  
 **Quyết định đã chốt:** Stack không đổi (React + Vite + Tailwind + Express + JSON DB), Bearer JWT HS256 (chỉ server ký), schema rõ ràng 6 collection chính, công thức BI dựa trên trạng thái hiện tại, heuristic matching (không ML), không tự tạo mật khẩu/tài khoản giả trong migration.
 
@@ -14,7 +14,7 @@ Mở rộng dự án hiện có để đáp ứng checklist TH3:
 
 1. **CSDL 3 thực thể chính:** Ứng viên, Nhà tuyển dụng, Tin tuyển dụng (schema rõ ràng, tương thích dữ liệu mẫu hiện có, có kế hoạch migration an toàn).
 2. **Mô hình AI match:** Tính điểm tương thích CV ↔ JD (heuristic-based trong Node.js, thang 0–100, trích xuất văn bản từ PDF, phân biệt điểm thấp với không đủ dữ liệu).
-3. **Dashboard BI:** Trực quan hóa ứng viên theo kỹ năng, xu hướng lương, tỷ lệ phân bố trạng thái đơn hiện tại (không tuyên bố là funnel lịch sử nếu không có dữ liệu lịch sử).
+3. **Dashboard BI:** Trực quan hóa ứng viên theo kỹ năng, phân bố mức lương, tỷ lệ phân bố trạng thái đơn hiện tại (không tuyên bố là funnel lịch sử nếu không có dữ liệu lịch sử).
 4. **API AI/BI:** Các endpoint mới tích hợp vào frontend hiện có, bảo vệ bằng xác thực và kiểm tra quyền sở hữu.
 5. **Kiểm thử & báo cáo:** Chạy thử với dữ liệu mẫu + báo cáo đánh giá mô hình gợi ý (rõ ràng giới hạn dữ liệu demo).
 6. **Bảo mật:** Xác thực thực sự (Bearer JWT), phân quyền theo role và sở hữu tài nguyên, bảo vệ PII.
@@ -126,6 +126,7 @@ Schema formalized (additive, backward compatible). **Trước khi triển khai p
 - Quy trình: đăng ký tài khoản mới qua `/api/auth/register` (hoặc trang đăng ký frontend), kích hoạt qua email (nếu có hệ thống email) hoặc tạo tài khoản quản trị ban đầu bằng quy trình thiết lập an toàn (admin setup).
 - Hồ sơ cũ chưa xác định chủ sở hữu phải chờ xác minh, **không tự ghép tài khoản theo tên**.
 - **isActive:** mặc định `true` sau khi đăng ký thành công và xác minh (nếu có). Tài khoản chỉ được phép đăng nhập khi `isActive === true`.
+- **Tài khoản admin ban đầu:** chỉ được tạo qua script thiết lập riêng, chỉ chạy theo hướng dẫn quản trị, **không phải endpoint công khai**, **không có mật khẩu mặc định**.
 
 ---
 
@@ -133,21 +134,18 @@ Schema formalized (additive, backward compatible). **Trước khi triển khai p
 
 - **Xác thực:** chỉ dùng **Bearer JWT do server ký**. Không dùng session/cookie, không trộn lẫn.
   - `POST /api/auth/register` (công khai): nhận `{ email, password, role }`. **Chỉ chấp nhận role `student` hoặc `employer`.** Không bao giờ tin role do client gửi nếu giá trị không nằm trong danh sách cho phép. Tài khoản admin chỉ được tạo qua quy trình thiết lập riêng, có kiểm soát. Email phải kiểm tra trùng; mật khẩu cần có chính sách độ dài tối thiểu và xác thực đầu vào. Đăng ký công khai **không được tạo tài khoản admin**.
+  - Đăng ký tạo hồ sơ tương ứng: Đăng ký `student` phải tạo hoặc khởi tạo hồ sơ `candidates`; đăng ký `employer` phải tạo hoặc khởi tạo hồ sơ `employers`. Nếu bước tạo hồ sơ thất bại, không để lại tài khoản ở trạng thái sử dụng được nhưng thiếu hồ sơ — cần cơ chế rollback hoặc quy trình hoàn tất đăng ký. Không tự ghép hồ sơ cũ chưa xác định chủ sở hữu vào tài khoản mới.
   - `POST /api/auth/login` nhận `{ email, password }`, tra cứu `users`, verify `passwordHash` (mã hóa bằng thư viện `bcryptjs` tương đương, không lưu mật khẩu rõ).
-  - **Đăng ký tạo hồ sơ tương ứng:** Đăng ký `student` phải tạo hoặc khởi tạo hồ sơ `candidates`; đăng ký `employer` phải tạo hoặc khởi tạo hồ sơ `employers`. Nếu bước tạo hồ sơ thất bại, không để lại tài khoản ở trạng thái sử dụng được nhưng thiếu hồ sơ — cần cơ chế rollback hoặc quy trình hoàn tất đăng ký. Không tự ghép hồ sơ cũ chưa xác định chủ sở hữu vào tài khoản mới.
   - Server ký JWT với thuật toán `HS256`, khóa lấy từ biến môi trường `JWT_SECRET` (**bắt buộc thiết lập**; nếu `JWT_SECRET` chưa cấu hình, server phải dừng khởi động với thông báo rõ ràng, không tự dùng secret mặc định), thời hạn token `24h`, payload chứa `userId`, `email`, `role`, `exp`.
   - Phản hồi login: `{ user: { id, email, role }, token }`. **Không trả `passwordHash` hoặc secret token trong phản hồi/log.**
   - Frontend lưu `token` vào `localStorage`, gửi kèm header `Authorization: Bearer <token>` trên mọi yêu cầu cần xác thực. **Giới hạn:** localStorage có rủi ro XSS; tránh render HTML không an toàn và không lưu token trong log.
   - **Xử lý tài khoản bị vô hiệu hóa hoặc đổi role khi token còn hạn:** backend kiểm tra `users[userId].isActive` và `users[userId].role` tại mỗi yêu cầu cần phân quyền (không tin token role là bất biến). Nếu tài khoản bị vô hiệu hóa hoặc role đã đổi → trả về `401` hoặc `403`, yêu cầu đăng nhập lại.
-- **Xử lý lỗi xác thực:**
-  - Token sai chữ ký / hết hạn / malformed → `401 Unauthorized`, không rò rãi chi tiết nội bộ.
-  - Token hết hạn → frontend xóa `localStorage` token, chuyển hướng trang đăng nhập, cho phép đăng nhập lại.
-- **Middleware:**
-  - `requireAuth`: kiểm tra token hợp lệ, kiểm tra `isActive`, gán `req.user` từ payload.
-  - `requireRole(roles)`: kiểm tra `req.user.role`.
+- **Middleware (đã chốt):**
+  - `requireAuth`: xác minh chữ ký, thuật toán và thời hạn JWT; lấy `userId` từ payload đã xác minh; tra cứu tài khoản hiện tại trong `users`; kiểm tra `isActive === true`; gán `req.user` từ dữ liệu tài khoản hiện tại trong DB (đặc biệt là `role`); **không sử dụng role trong JWT làm nguồn sự thật cuối cùng cho phân quyền**. Trường `role` trong payload chỉ giữ để tiện nhận diện, phải đối chiếu với DB.
+  - `requireRole(roles)`: kiểm tra `req.user.role` đã được đối chiếu từ DB.
 - **API công khai vs yêu cầu xác thực (đã chốt):**
-  - Công khai: `POST /api/auth/register`, `POST /api/auth/login`, `GET /api/auth/me` (nếu có token), `GET /api/jobs` (xem công việc công khai).
-  - Bắt buộc xác thực: tất cả endpoint còn lại (`/api/applications/*`, `/api/saved/*`, `/api/cv/extract`, `/api/match/*`, `/api/bi/stats`, `/api/candidates/:id`, các endpoint sửa dữ liệu cũ).
+  - Công khai: `POST /api/auth/register`, `POST /api/auth/login`, `GET /api/jobs` (xem công việc công khai, chỉ trả những tin được phép hiển thị công khai; cần quy định rõ cách xử lý tin đã hết hạn).
+  - Bắt buộc xác thực: tất cả endpoint còn lại, bao gồm `GET /api/auth/me` (bắt buộc có token hợp lệ; không có token trả `401`).
   - Các endpoint cũ được rà soát lại quyền truy cập; không cho phép sửa dữ liệu mà không kiểm tra quyền sở hữu.
 - **Phân quyền theo role VÀ quyền sở hữu tài nguyên (backend kiểm tra, không chỉ ẩn giao diện):**
   - Quy tắc nghiệp vụ nhất quán (đã chốt):
@@ -162,25 +160,22 @@ Schema formalized (additive, backward compatible). **Trước khi triển khai p
 - **API ứng tuyển:** kiểm tra quyền ngay tại backend, lấy `candidateId` từ tài khoản đăng nhập và `employerId` từ tin tuyển dụng (lấy từ bản ghi `jobs`), **không tin các ID quyền sở hữu do frontend gửi lên**.
 - **Bảo vệ PII:** `email`, `phone`, `cvFileName`, `cvText` chỉ hiển thị đầy đủ với (a) chủ sở hữu ứng viên, (b) nhà tuyển dụng đã có đơn ứng tuyển (`applications`) đối với ứng viên đó **và** đơn đó thuộc công việc của chính nhà tuyển dụng (`applications.employerId` khớp với `jobs.employerId`). Các trường khác bị mask (`****@****.com`, `09xx xxxx xx`). Admin cũng bị mask PII theo mặc định (trừ khi có quy định riêng kèm audit log). Không ghi log dữ liệu nhạy cảm.
 - **Rate limit & giới hạn tài nguyên:** giới hạn số lần gọi `/api/cv/extract` và `/api/match` mỗi IP; giới hạn dung lượng file upload (xem mục 7).
+- **Đăng xuất (frontend):** xóa token khỏi `localStorage` và trạng thái người dùng trên giao diện. Nếu không triển khai cơ chế thu hồi token ở server, ghi rõ token đã phát hành vẫn có thể hợp lệ cho đến khi hết hạn hoặc tài khoản bị vô hiệu hóa.
 
 ---
 
 ## 6. Mô hình AI Matching (`POST /api/match`)
 
-**Phương pháp:** Keyword overlap heuristic (ponytail — stdlib + `pdf-parse` chỉ dùng để trích xuất PDF, không có thư viện ML). Đây là **rule-based matching**, không tuyên bố là mô hình ML đã huấn luyện.
+**Phương pháp:** Keyword-overlap heuristic (rule-based) — stdlib + `pdf-parse` chỉ dùng để trích xuất PDF, không có thư viện ML. Đây là **rule-based matching**, không tuyên bố là mô hình ML đã huấn luyện.
 
 **Đầu vào:** `candidate.skills[]`, `candidate.cvText` (từ PDF), `job.tags[]`, `job.description`, `job.requirements`.
 
 **Lấy từ khóa JD (đã chốt):** từ khóa được lấy từ `job.tags`, `job.requirements`, `job.description`. Bỏ từ phổ biến (stopwords tiếng Việt/Anh), xử lý từ khóa trùng (loại bỏ bản sao), chuẩn hóa cụm nhiều từ trước khi so sánh.
 
-**Xử lý dữ liệu thiếu trong Matching (đã chốt):**
-
-- `job.tags` có dữ liệu nhưng `candidate.skills` rỗng → `skillScore` không khả dụng (ứng viên chưa có kỹ năng ghi chép).
-- `candidate.skills` có dữ liệu nhưng `job.tags` rỗng → `skillScore` không khả dụng (công việc chưa ghi kỹ năng yêu cầu).
-- CV có văn bản nhưng không chứa từ khóa JD → `keywordScore` tính được (bằng 0 hoặc tỷ lệ phù hợp thực tế), không phải "không đủ dữ liệu".
-- CV rỗng / không có / chỉ chứa khoảng trắng → `keywordScore` không khả dụng (không phải 0, không coi là không có kỹ năng phù hợp).
-- **Chỉ tính điểm trên những thành phần có dữ liệu hợp lệ.** Nếu có ít nhất một thành phần tính được, chuẩn hóa lại trọng số của thành phần còn dùng được (ví dụ: chỉ có `skillScore` → `match = round(skillScore * 100)`; chỉ có `keywordScore` → `match = round(keywordScore * 100)`).
-- Nếu **không có thành phần nào đủ tin cậy** (cả hai đều thiếu dữ liệu) → trả về `match = null`, `band = "Không đủ dữ liệu để đánh giá"`, `reason` ghi rõ lý do thiếu dữ liệu. **Không coi dữ liệu thiếu là kỹ năng không phù hợp.**
+**Điều kiện thành phần hợp lệ (đã chốt):**
+- `skillScore` hợp lệ chỉ khi `job.tags` có dữ liệu **và** `candidate.skills` có dữ liệu. Nếu `job.tags` rỗng hoặc `candidate.skills` rỗng → `skillScore` không khả dụng.
+- `keywordScore` hợp lệ chỉ khi `candidate.cvText` có nội dung hữu ích **và** JD có ít nhất một từ khóa hợp lệ sau khi chuẩn hóa và loại stopwords. Nếu `cvText` rỗng / không có / chỉ chứa khoảng trắng → `keywordScore` không khả dụng. Nếu CV có văn bản nhưng không chứa từ khóa JD → `keywordScore` tính được (có thể bằng 0), không phải "không đủ dữ liệu".
+- Nếu JD không có `tags` nhưng có `requirements` hoặc `description`: `skillScore` không khả dụng, còn `keywordScore` vẫn có thể tính nếu trích xuất được từ khóa hợp lệ.
 
 **Thuật toán (đã chốt):**
 
@@ -188,11 +183,12 @@ Schema formalized (additive, backward compatible). **Trước khi triển khai p
 2. Chuẩn hóa văn bản: lowercase, trim, bỏ dấu tiếng Việt qua bảng ánh xạ đơn giản.
 3. Chuẩn hóa kỹ năng: ánh xạ alias và cụm từ nhiều từ trước khi so sánh (ví dụ: "React JS" → "reactjs", "Node JS" → "nodejs", xóa ký tự đặc biệt). **Không để `React` tự động khớp `React Native` nếu không có quy tắc alias rõ ràng.**
 4. Xử lý dữ liệu thiếu như mục trên.
-5. Nếu cả hai thành phần đều có dữ liệu:
-   - `skillScore = |candidate.skills ∩ job.tags| / |job.tags|` (0–1).
-   - `keywordScore` = số từ khóa trong JD xuất hiện trong `cvText` / tổng từ khóa JD (0–1).
-   - `match = round((skillScore * 0.6 + keywordScore * 0.4) * 100)` → thang **0–100**.
-6. Band: ≥90 "Rất khớp", 80–89 "Khớp tốt", 70–79 "Khớp tiềm năng", <70 "Cần bổ sung". Kiểm thử ranh giới: 0, 69, 70, 79, 80, 89, 90, 100.
+5. **Chỉ tính điểm trên những thành phần có dữ liệu hợp lệ.** Nếu có ít nhất một thành phần tính được, chuẩn hóa lại trọng số của thành phần còn dùng được:
+   - Có cả `skillScore` và `keywordScore`: `match = round((skillScore * 0.6 + keywordScore * 0.4) * 100)`.
+   - Chỉ có `skillScore`: `match = round(skillScore * 100)`.
+   - Chỉ có `keywordScore`: `match = round(keywordScore * 100)`.
+   - Không có thành phần hợp lệ: `match = null`, `dataStatus = "insufficient"`.
+6. Band (chỉ khi `match` không null): ≥90 "Rất khớp", 80–89 "Khớp tốt", 70–79 "Khớp tiềm năng", <70 "Cần bổ sung". Kiểm thử ranh giới: 0, 69, 70, 79, 80, 89, 90, 100.
 
 **Xuất ra:** `{ jobId, match, band, reason: string[], matchedSkills[], missingSkills[], dataStatus }`.
 
@@ -206,6 +202,8 @@ Schema formalized (additive, backward compatible). **Trước khi triển khai p
 
 **Mã lỗi / trạng thái phản hồi:** Matching thành công về mặt xử lý nhưng thiếu dữ liệu → trả kết quả HTTP 200 với `match: null` và `dataStatus: "insufficient"`, không trả về lỗi 422. Chỉ trả lỗi khi đầu vào không hợp lệ (thiếu `candidateId` hoặc `jobId`): ID không tồn tại → `404`; ID tồn tại nhưng không có quyền → `403`.
 
+**Sắp xếp `/api/match/all`:** `match: null` nằm cuối danh sách hoặc được tách thành nhóm "Chưa đủ dữ liệu"; không coi `null` như 0.
+
 ---
 
 ## 7. Trích xuất CV PDF (`POST /api/cv/extract`) — giới hạn và xử lý lỗi
@@ -213,7 +211,7 @@ Schema formalized (additive, backward compatible). **Trước khi triển khai p
 - **Loại file:** chỉ `.pdf` (kiểm tra extension, MIME type `application/pdf` và chữ ký file `%PDF-`).
 - **Dung lượng:** tối đa 5 MB mỗi file.
 - **Cơ chế upload:** giới hạn upload, không lưu file công khai, lưu vào thư mục tạm và xóa file tạm ngay cả khi trích xuất lỗi.
-- **Timeout:** quy định thời gian xử lý tối đa (ví dụ 30 giây) và cách hủy xử lý PDF quá lâu, không chỉ nêu chung là có giới hạn thời gian.
+- **Timeout:** cố định 30 giây cho một yêu cầu trích xuất. Khi quá hạn, API trả lỗi theo cấu trúc đã thống nhất, không ghi đè CV cũ và phải dọn file tạm. Cần kiểm tra khả năng hủy xử lý thật của thư viện; chỉ đặt timeout cho HTTP response không đảm bảo công việc phân tích PDF đã dừng.
 - **Xử lý lỗi:**
   - File không phải PDF, sai MIME, sai chữ ký hoặc quá lớn → `400` với thông báo rõ ràng.
   - PDF mã hóa / bị hỏng / không có văn bản đọc được → bắt lỗi từ `pdf-parse` → trả về `422` với thông báo "Không thể trích xuất văn bản từ PDF. Vui lòng nhập thông tin CV thủ công."
@@ -229,8 +227,8 @@ Aggregations từ `db.json`:
 
 | Chỉ số | Nguồn | Công thức | Trực quan hoá |
 |--------|-------|-----------|---------------|
-| Ứng viên theo kỹ năng | `candidates[].skills[]` | Đếm tần suất mỗi kỹ năng | Bar chart (top 10) |
-| Xu hướng lương | `jobs[].salary` | Parse khoảng lương, đơn vị VNĐ/tháng, chuẩn hóa, loại dữ liệu không hợp lệ / "thỏa thuận" | Bar chart theo nhóm lương (ranh giới: 0–dưới 5 triệu, 5–dưới 10 triệu, 10–dưới 15 triệu, từ 15 triệu, không cho một mức lương tính vào hai nhóm) |
+| Ứng viên theo kỹ năng | `candidates[].skills[]` | Đếm tần suất mỗi kỹ năng (áp dụng cho candidateId duy nhất, tránh một ứng viên nộp nhiều đơn bị đếm nhiều lần) | Bar chart (top 10) |
+| Phân bố mức lương tuyển dụng | `jobs[].salary` | Parse khoảng lương, đơn vị VNĐ/tháng, chuẩn hóa, loại dữ liệu không hợp lệ / "thỏa thuận" | Bar chart theo nhóm lương |
 | Tỷ trọng đơn đang ở trạng thái phỏng vấn | `applications[]` | `count(status='interview') / countTổngĐơn` | Donut (hiển thị phân bố tất cả trạng thái ứng tuyển) |
 | Số đơn Offer so với số đơn Interview | `applications[]` | `count(status='offer') / count(status='interview')` | KPI hoặc biểu đồ so sánh (không trình bày như một phần của funnel) |
 | Tỷ trọng đơn đang ở trạng thái Offer trên tổng số đơn | `applications[]` | `count(status='offer') / countTổngĐơn` | Stat card |
@@ -239,34 +237,50 @@ Aggregations từ `db.json`:
 
 **Công thức tỷ lệ phân bố trạng thái đơn hiện tại (đã chốt — KHÔNG phải tỷ lệ chuyển đổi funnel lịch sử vì demo không lưu lịch sử chuyển trạng thái):**
 
-- `countTổngĐơn = count(status IN ['applied','reviewing','interview','offer','rejected'])` — tất cả đơn đã nộp.
-- `CR1 = count(status='interview') / countTổngĐơn` — tỷ trọng đơn đang ở vòng phỏng vấn so với tổng đơn (**chỉ số trạng thái hiện tại, không phải "tỷ lệ đã từng chuyển sang phỏng vấn"**).
-- `CR2 = count(status='offer') / count(status='interview')` — **tỷ số giữa số đơn ở trạng thái offer và số đơn ở trạng thái interview (hai nhóm trạng thái hiện tại), không phải tỷ lệ chuyển đổi thực sự qua từng vòng.** Có thể vượt 100% nếu số đơn ở offer nhiều hơn số đơn ở interview (ví dụ 8 offer vs 2 interview). Không được trình bày như funnel tuyển dụng thực sự.
-- `CR3 = count(status='offer') / countTổngĐơn` — tỷ trọng đơn đang ở trạng thái Offer trên tổng số đơn.
+- `countTổngĐơn = count(status IN ['applied','reviewing','interview','offer','rejected'])` — tất cả đơn đã nộp. Chỉ các trạng thái hợp lệ được tính vào `countTổngĐơn`. Trạng thái không nhận diện được không bị âm thầm chuyển thành `rejected`.
+- `interviewShare = count(status='interview') / countTổngĐơn` — tỷ trọng đơn đang ở vòng phỏng vấn so với tổng đơn (**chỉ số trạng thái hiện tại, không phải "tỷ lệ đã từng chuyển sang phỏng vấn"**).
+- `offerToInterviewCountRatio = count(status='offer') / count(status='interview')` — **tỷ số giữa số đơn ở trạng thái offer và số đơn ở trạng thái interview (hai nhóm trạng thái hiện tại), không phải tỷ lệ chuyển đổi thực sự qua từng vòng.** Có thể vượt 100% nếu số đơn ở offer nhiều hơn số đơn ở interview. Không được trình bày như funnel tuyển dụng thực sự.
+- `offerShare = count(status='offer') / countTổngĐơn` — tỷ trọng đơn đang ở trạng thái Offer trên tổng số đơn.
 
 **Lưu ý:** Chỉ tính tỷ lệ chuyển đổi thực sự khi có lịch sử chuyển trạng thái (bảng `applicationStatusHistory`), điều này nằm ngoài phạm vi demo hiện tại.
 
-**Phạm vi thống kê ứng viên của nhà tuyển dụng:** tính ứng viên từ các đơn ứng tuyển vào tin của nhà tuyển dụng đó, **không lấy toàn bộ ứng viên hệ thống**.
+**Phạm vi thống kê ứng viên của nhà tuyển dụng:** tính ứng viên từ các đơn ứng tuyển vào tin của nhà tuyển dụng đó, **đếm theo `candidateId` duy nhất**, tránh một ứng viên nộp nhiều đơn bị đếm nhiều lần.
 
 **Xử lý mẫu số bằng 0:** trả về `null` hoặc trạng thái "Chưa đủ dữ liệu" thay vì lỗi chia cho 0.
 
 **Trạng thái đơn ứng tuyển và tin tuyển dụng (đã chốt):**
 - Trạng thái đơn ứng tuyển: `applied`, `reviewing`, `interview`, `offer`, `rejected`.
 - Trạng thái tin tuyển dụng: `open`, `paused`, `expired`.
-- `expired` được suy ra từ `deadline` (không lưu trạng thái riêng trong DB) hoặc lưu trong DB? **Quyết định:** `expired` được suy ra từ `deadline` (nếu `deadline` đã qua và status vẫn là `open`, hệ thống coi là đã hết hạn khi thống kê). Không để trạng thái `open` nhưng deadline đã qua vẫn bị thống kê là tin đang mở.
-- Xử lý giá trị cũ hoặc không hợp lệ: **chỉ ánh xạ giá trị cũ khi có quy tắc chuyển đổi được xác minh.** Trạng thái không nhận diện được phải được ghi nhận để xử lý; **không tự gán thành rejected**. Không đưa trạng thái không hợp lệ vào các mẫu số thống kê cho đến khi được xử lý, đồng thời báo cáo số bản ghi bị loại.
+- `expired` được suy ra từ `deadline` (nếu `deadline` đã qua và status vẫn là `open`, hệ thống coi là đã hết hạn khi thống kê). Không để trạng thái `open` nhưng deadline đã qua vẫn bị thống kê là tin đang mở.
+- Xử lý giá trị cũ hoặc không hợp lệ: **chỉ ánh xạ giá trị cũ khi có quy tắc chuyển đổi được xác minh.** Trạng thái không nhận diện được phải được ghi nhận để xử lý; **không tự gán thành `rejected`.** Không đưa trạng thái không hợp lệ vào các mẫu số thống kê cho đến khi được xử lý, đồng thời báo cáo số bản ghi bị loại.
 
 **Schema đầu ra thống nhất của `/api/bi/stats`:**
 ```json
 {
   "skillsDistribution": [{ skill, count }],
-  "salaryDistribution": [{ range, min, max, avg, count }],
+  "salaryDistribution": [{ range, rangeMin, rangeMax, avgSalary, count }],
   "statusDistribution": [{ status, count }],
   "universityDistribution": [{ university, count }],
-  "conversionRates": { cr1, cr2, cr3 }
+  "applicationStatusMetrics": {
+    "interviewShare": null,
+    "offerToInterviewCountRatio": null,
+    "offerShare": null
+  },
+  "dataQuality": {
+    "invalidApplicationStatusCount": 0,
+    "excludedSalaryCount": 0
+  }
 }
 ```
 
+- `range`, `rangeMin`, `rangeMax`: cận của nhóm lương (ví dụ: "0–dưới 5 triệu", rangeMin=0, rangeMax=5000000).
+- `avgSalary`: mức lương đại diện trung bình của các tin trong nhóm (không phải cận nhóm).
+- Nhóm lương: [0, 5 triệu), [5 triệu, 10 triệu), [10 triệu, 15 triệu), [15 triệu, +∞). Các nhóm phải có ranh giới không chồng lấn.
+- Quy tắc nhóm lương:
+  - Nếu lương là một mức cụ thể: sử dụng mức đó.
+  - Nếu lương là khoảng: sử dụng trung điểm của khoảng lương để phân nhóm.
+  - Nếu lương là "thỏa thuận", không hợp lệ hoặc không xác định được đơn vị: loại khỏi phân bố số học và ghi nhận số bản ghi bị loại vào `excludedSalaryCount`.
+  - Nếu có lương theo năm hoặc theo giờ: chỉ quy đổi khi xác định được đơn vị và giả định quy đổi; nếu không, loại khỏi thống kê.
 - Phân quyền BI: nhà tuyển dụng lọc theo công việc của mình ở backend (chỉ thống kê jobs/Applications của employer đó); admin mới xem thống kê toàn hệ thống nếu nghiệp vụ quy định như vậy. Thống kê theo nhà tuyển dụng không được trộn lẫn với thống kê toàn hệ thống.
 
 ---
@@ -277,11 +291,11 @@ Aggregations từ `db.json`:
 |----------|--------|-------|--------|----------------|
 | `/api/auth/register` | POST | `{ email, password, role }` | `{ user: { id, email, role }, token }` | public (chỉ role student/employer) |
 | `/api/auth/login` | POST | `{ email, password }` | `{ user: { id, email, role }, token }` | public |
-| `/api/auth/me` | GET | header `Authorization: Bearer <token>` | `{ user, role }` | authenticated |
+| `/api/auth/me` | GET | header `Authorization: Bearer <token>` | `{ user, role }` | authenticated (bắt buộc token hợp lệ; không có token trả 401) |
 | `/api/cv/extract` | POST | file PDF | `{ cvText: string }` | candidate owner |
 | `/api/match` | POST | `{ candidateId, jobId }` | `{ jobId, match, band, reason[], matchedSkills[], missingSkills[], dataStatus }` | candidate (chỉ hồ sơ mình) hoặc employer (chỉ match ứng viên đã ứng tuyển vào công việc của mình) |
 | `/api/match/all` | GET | `?candidateId=` | list `{ jobId, match, band }` giảm dần (match: null nằm cuối hoặc nhóm riêng) | candidate (chỉ candidateId của mình) |
-| `/api/bi/stats` | GET | none | `{ skillsDistribution, salaryDistribution, statusDistribution, universityDistribution, conversionRates }` | employer (lọc theo mình) / admin (toàn hệ thống) |
+| `/api/bi/stats` | GET | none | `{ skillsDistribution, salaryDistribution, statusDistribution, universityDistribution, applicationStatusMetrics, dataQuality }` | employer (lọc theo mình) / admin (toàn hệ thống) |
 | `/api/candidates/:id` | GET | none | candidate profile (PII masked unless owner/employer with application) | candidate/employer/admin |
 
 **Mã lỗi và cấu trúc lỗi (đã chốt):**
@@ -325,7 +339,7 @@ Các endpoint hiện có giữ nguyên.
 
 **Dữ liệu mẫu:** seed `db.json` với ≥10 công việc, ≥15 ứng viên, trộn trạng thái đơn (áp dụng, phỏng vấn, offer, từ chối).
 
-**Bộ dữ liệu chuẩn (golden dataset):** 20 cặp CV-JD được chọn theo các nhóm kỹ năng phổ biến (Frontend, Backend, Design, Data) với điểm/band dự kiến đã định sẵn (do nhân viên HR đánh giá trước). Tiêu chí chọn mẫu: mỗi nhóm 4–5 cặp, đảm bảo phân bố các mức band. Cách gán điểm chuẩn: HR đánh giá thủ công mức độ phù hợp dựa trên kỹ năng và kinh nghiệm, quy thang 0–100. Hạn chế: 20 cặp không đại diện, **không tuyên bố độ chính xác thực tế chỉ từ bộ dữ liệu này**.
+**Bộ dữ liệu chuẩn (golden dataset):** 20 cặp CV-JD được chọn theo các nhóm kỹ năng phổ biến (Frontend, Backend, Design, Data) với điểm/band dự kiến đã định sẵn. Bộ dữ liệu này là bộ dữ liệu chuẩn do người đánh giá gán nhãn thủ công (trừ khi thực sự có HR tham gia đánh giá — không nên ghi "HR đánh giá" như một sự kiện đã xảyra nếu chưa thực hiện). Tiêu chí chọn mẫu: mỗi nhóm 4–5 cặp, đảm bảo phân bố các mức band. Hạn chế: 20 cặp không đại diện, **không tuyên bố độ chính xác thực tế chỉ từ bộ dữ liệu này**.
 
 **Chỉ số đo:**
 - `accuracy@band`: tỷ lệ cặp dự đoán đúng band so với golden dataset.
@@ -354,7 +368,7 @@ Mỗi giai đoạn phải có tiêu chí hoàn thành và kết quả kiểm ch�
 |-----------|-----------|---------------------|
 | A | Kiểm tra repository/dữ liệu hiện tại (savedJobs, applications, postedJobs, profile) | Báo cáo sự không tương thích, danh sách migration cần làm |
 | B | Chốt schema và migration (có sao lưu, kiểm tra sau migration, khả năng khôi phục, không tự tạo mật khẩu/tài khoản giả) | Migration chạy thành công trên bản sao lưu, dữ liệu không mất/lẫn |
-| C | Xác thực/phân quyền (Bearer JWT, bcrypt, middleware, PII mask, rate limit, JWT_SECRET bắt buộc, đăng ký công khai không tạo admin) | Login/logout hoạt động, 401/403 đúng, PII không rò rãi, server dừng nếu thiếu JWT_SECRET |
+| C | Xác thực/phân quyền (Bearer JWT, bcrypt, middleware, PII mask, rate limit, JWT_SECRET bắt buộc) | Login/logout hoạt động, 401/403 đúng, PII không rò rãi, server dừng nếu thiếu JWT_SECRET |
 | D | PDF extraction (`/api/cv/extract` + giới hạn/lỗi/xóa file tạm/timeout) | Trích xuất PDF đúng, lỗi trả về 400/422 rõ ràng, không ghi đè cvText bằng chuỗi rỗng |
 | E | Matching API (`/api/match`, `/api/match/all`) | Điểm đúng công thức, phân quyền đúng, không chia cho 0, phân biệt không đủ dữ liệu |
 | F | BI API (`/api/bi/stats` + công thức chuyển đổi) | Số liệu khớp với DB, mẫu số 0 xử lý gracefully, phân quyền BI đúng |
@@ -378,7 +392,7 @@ Mỗi giai đoạn phải có tiêu chí hoàn thành và kết quả kiểm ch�
 
 ## 14. Giai đoạn tiếp theo (chờ duyệt)
 
-Sau khi bạn duyệt spec v6 này, tôi sẽ gọi skill `writing-plans` để lập kế hoạch triển khai chi tiết, rồi có thể khai nhiều đại lý song song thực hiện các giai đoạn A–I.
+Sau khi bạn duyệt spec v7 này, tôi sẽ gọi skill `writing-plans` để lập kế hoạch triển khai chi tiết, rồi có thể khai nhiều đại lý song song thực hiện các giai đoạn A–I.
 
 ---
 
@@ -389,7 +403,7 @@ Sau khi bạn duyệt spec v6 này, tôi sẽ gọi skill `writing-plans` để 
 - Bearer JWT HS256, secret từ `JWT_SECRET` (bắt buộc, không dùng default), expiry 24h, localStorage + header.
 - Schema 6 collection chính (`users`, `employers`, `jobs`, `candidates`, `applications`, `savedJobs`) + 1 đối tượng cấu hình (`profile`); role chỉ trong `users`; `savedJobs` → `{candidateId, jobId[]}`.
 - Matching heuristic 60% kỹ năng + 40% từ khóa, thang 0–100, fallback "không đủ dữ liệu" thay vì điểm 0.
-- BI dựa trên trạng thái hiện tại, không lưu lịch sử chuyển trạng thái (ngoài phạm vi demo); gọi là tỷ lệ phân bố trạng thái đơn, không phải funnel thực sự.
+- BI dựa trên trạng thái hiện tại, không lưu lịch sử chuyển trạng thái (ngoài phạm vi demo); gọi là tỷ lệ phân bố trạng thái đơn, không phải funnel thực sự. Trường `applicationStatusMetrics` thay thế `conversionRates`.
 - Golden dataset 20 cặp chỉ phục vụ demo, không khẳng định độ chính xác thực tế.
 - Migration không tự tạo mật khẩu/tài khoản giả; kiểm tra dữ liệu thật trước khi quyết định.
 - PII admin: bị mask theo mặc định (trừ khi có quy định riêng kèm audit log).
@@ -405,7 +419,7 @@ Sau khi bạn duyệt spec v6 này, tôi sẽ gọi skill `writing-plans` để 
 
 ---
 
-## Checklist trước khi duyệt v6
+## Checklist trước khi duyệt v7
 
 | Mục | Trạng thái |
 |-----|------------|
@@ -419,4 +433,4 @@ Sau khi bạn duyệt spec v6 này, tôi sẽ gọi skill `writing-plans` để 
 | Có tiêu chí kiểm thử và báo cáo kết quả thực tế | [ ] Nên làm |
 
 ---
-*Vui lòng review spec v6 đã chỉnh sửa. Nếu đồng ý, tôi sẽ viết kế hoạch triển khai. Nếu cần sửa thêm, hãy chỉ ra phần cụ thể. Chưa triển khai code cho đến khi spec này được phê duyệt.*
+*Vui lòng review spec v7 đã chỉnh sửa. Nếu đồng ý, tôi sẽ viết kế hoạch triển khai. Nếu cần sửa thêm, hãy chỉ ra phần cụ thể. Chưa triển khai code cho đến khi spec này được phê duyệt.*
