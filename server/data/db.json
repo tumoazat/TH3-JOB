@@ -1142,6 +1142,839 @@
     }
   ],
   "savedJobs": [],
+  "employers": [
+    {
+      "id": "emp_dnse",
+      "company": "DNSE",
+      "industry": "Công nghệ",
+      "size": "10–50 nhân viên",
+      "location": "Hà Nội",
+      "website": "https://dnse.com",
+      "description": "DNSE là công ty công nghệ hàng đầu tại Việt Nam, chuyên về Golang, API, Docker.",
+      "tags": [
+        "Golang",
+        "API",
+        "Docker",
+        "MySQL",
+        "Microservices",
+        "SQL"
+      ],
+      "jobCount": 1,
+      "salaryRange": "Thỏa thuận"
+    },
+    {
+      "id": "emp_codehq",
+      "company": "CodeHQ",
+      "industry": "AI & Machine Learning",
+      "size": "10–50 nhân viên",
+      "location": "TP. Hồ Chí Minh",
+      "website": "https://codehq.com",
+      "description": "CodeHQ là công ty công nghệ hàng đầu tại Việt Nam, chuyên về Tester, Playwright, API.",
+      "tags": [
+        "Tester",
+        "Playwright",
+        "API",
+        "TestRail",
+        "QA QC",
+        "English"
+      ],
+      "jobCount": 1,
+      "salaryRange": "Thỏa thuận"
+    },
+    {
+      "id": "emp_etc_technology_systems",
+      "company": "ETC Technology Systems",
+      "industry": "Công nghệ",
+      "size": "10–50 nhân viên",
+      "location": "Hà Nội",
+      "website": "https://etctechnologysystems.com",
+      "description": "ETC Technology Systems là công ty công nghệ hàng đầu tại Việt Nam, chuyên về Data Analysis, Data modeling, SQL.",
+      "tags": [
+        "Data Analysis",
+        "Data modeling",
+        "SQL",
+        "Power BI",
+        "Looker"
+      ],
+      "jobCount": 1,
+      "salaryRange": "Thỏa thuận"
+    },
+    {
+      "id": "emp_geocomply",
+      "company": "GeoComply",
+      "industry": "Công nghệ",
+      "size": "10–50 nhân viên",
+      "location": "TP. Hồ Chí Minh",
+      "website": "https://geocomply.com",
+      "description": "GeoComply là công ty công nghệ hàng đầu tại Việt Nam, chuyên về iOS, Swift, Objective C.",
+      "tags": [
+        "iOS",
+        "Swift",
+        "Objective C",
+        "CI/CD",
+        "English"
+      ],
+      "jobCount": 1,
+      "salaryRange": "Thỏa thuận"
+    },
+    {
+      "id": "emp_saigon_technology",
+      "company": "Saigon Technology",
+      "industry": "Công nghệ",
+      "size": "10–50 nhân viên",
+      "location": "Đà Nẵng",
+      "website": "https://saigontechnology.com",
+      "description": "Saigon Technology là công ty công nghệ hàng đầu tại Việt Nam, chuyên về Java, Spring, Database.",
+      "tags": [
+        "Java",
+        "Spring",
+        "Database",
+        "Kafka",
+        "AWS",
+        "SOLID"
+      ],
+      "jobCount": 1,
+      "salaryRange": "Thỏa thuận"
+    },
+    {
+      "id": "emp_lg_cns_vi_t_nam",
+      "company": "LG CNS Việt Nam",
+      "industry": "AI & Machine Learning",
+      "size": "100–200 nhân viên",
+      "location": "Hà Nội",
+      "website": "https://lgcnsvitnam.com",
+      "description": "LG CNS Việt Nam là công ty công nghệ hàng đầu tại Việt Nam, chuyên về ReactJS, TypeScript, JavaScript.",
+      "tags": [
+        "ReactJS",
+        "TypeScript",
+        "JavaScript",
+        "CSS",
+        "HTML",
+        "Figma",
+        "Java",
+        "MySQL"
+      ],
+      "jobCount": 4,
+      "salaryRange": "Thỏa thuận"
+    },
+    {
+      "id": "emp_nexlab_it_solutions",
+      "company": "NEXLAB IT Solutions",
+      "industry": "Công nghệ",
+      "size": "10–50 nhân viên",
+      "location": "TP. Hồ Chí Minh",
+      "website": "https://nexlabitsolutions.com",
+      "description": "NEXLAB IT Solutions là công ty công nghệ hàng đầu tại Việt Nam, chuyên về ReactJS, Figma, GraphQL.",
+      "tags": [
+        "ReactJS",
+        "Figma",
+        "GraphQL",
+        "JavaScript",
+        "TypeScript",
+        "NextJS"
+      ],
+      "jobCount": 1,
+      "salaryRange": "Thỏa thuận"
+    },
+    {
+      "id": "emp_netcompany",
+      "company": "Netcompany",
+      "industry": "Công nghệ",
+      "size": "10–50 nhân viên",
+      "location": "TP. Hồ Chí Minh",
+      "website": "https://netcompany.com",
+      "description": "Netcompany là công ty công nghệ hàng đầu tại Việt Nam, chuyên về .NET, TypeScript, JavaScript.",
+      "tags": [
+        ".NET",
+        "TypeScript",
+        "JavaScript",
+        "Java",
+        "C#",
+        "English"
+      ],
+      "jobCount": 1,
+      "salaryRange": "Thỏa thuận"
+    },
+    {
+      "id": "emp_usol_vietnam",
+      "company": "Usol Vietnam",
+      "industry": "Công nghệ",
+      "size": "10–50 nhân viên",
+      "location": "Hà Nội",
+      "website": "https://usolvietnam.com",
+      "description": "Usol Vietnam là công ty công nghệ hàng đầu tại Việt Nam, chuyên về Java, C#, Japanese.",
+      "tags": [
+        "Java",
+        "C#",
+        "Japanese",
+        "Git",
+        ".NET",
+        "SQL"
+      ],
+      "jobCount": 1,
+      "salaryRange": "Thỏa thuận"
+    },
+    {
+      "id": "emp_money_forward_vietnam_co_ltd",
+      "company": "MONEY FORWARD VIETNAM CO.,LTD",
+      "industry": "Công nghệ",
+      "size": "50–100 nhân viên",
+      "location": "TP. Hồ Chí Minh",
+      "website": "https://moneyforwardvietnamcoltd.com",
+      "description": "MONEY FORWARD VIETNAM CO.,LTD là công ty công nghệ hàng đầu tại Việt Nam, chuyên về Java, English, API.",
+      "tags": [
+        "Java",
+        "English",
+        "API",
+        "AWS",
+        "Security",
+        "Spring Boot",
+        "TypeScript",
+        "ReactJS"
+      ],
+      "jobCount": 2,
+      "salaryRange": "Thỏa thuận"
+    },
+    {
+      "id": "emp_nab_innovation_centre_vietnam",
+      "company": "NAB Innovation Centre Vietnam",
+      "industry": "Công nghệ",
+      "size": "10–50 nhân viên",
+      "location": "TP. Hồ Chí Minh",
+      "website": "https://nabinnovationcentrevietnam.com",
+      "description": "NAB Innovation Centre Vietnam là công ty công nghệ hàng đầu tại Việt Nam, chuyên về Java, Spring Boot, Microservices.",
+      "tags": [
+        "Java",
+        "Spring Boot",
+        "Microservices",
+        "Spring",
+        "AWS",
+        "English"
+      ],
+      "jobCount": 1,
+      "salaryRange": "Thỏa thuận"
+    },
+    {
+      "id": "emp_tpisoftware_co_ltd",
+      "company": "TPIsoftware Co., Ltd",
+      "industry": "Công nghệ",
+      "size": "10–50 nhân viên",
+      "location": "TP. Hồ Chí Minh",
+      "website": "https://tpisoftwarecoltd.com",
+      "description": "TPIsoftware Co., Ltd là công ty công nghệ hàng đầu tại Việt Nam, chuyên về Java, English, Scrum.",
+      "tags": [
+        "Java",
+        "English",
+        "Scrum",
+        "J2EE",
+        "AWS",
+        "SQL"
+      ],
+      "jobCount": 1,
+      "salaryRange": "Thỏa thuận"
+    },
+    {
+      "id": "emp_goline_corporation",
+      "company": "Goline Corporation",
+      "industry": "Công nghệ",
+      "size": "10–50 nhân viên",
+      "location": "Hà Nội",
+      "website": "https://golinecorporation.com",
+      "description": "Goline Corporation là công ty công nghệ hàng đầu tại Việt Nam, chuyên về Java, API, Kafka.",
+      "tags": [
+        "Java",
+        "API",
+        "Kafka",
+        "PostgreSql",
+        "Oracle",
+        "Spring Boot"
+      ],
+      "jobCount": 1,
+      "salaryRange": "Thỏa thuận"
+    },
+    {
+      "id": "emp_itviec_recruitment_consulting",
+      "company": "ITviec Recruitment Consulting",
+      "industry": "AI & Machine Learning",
+      "size": "10–50 nhân viên",
+      "location": "TP. Hồ Chí Minh",
+      "website": "https://itviecrecruitmentconsulting.com",
+      "description": "ITviec Recruitment Consulting là công ty công nghệ hàng đầu tại Việt Nam, chuyên về Java, GraphQL, AI.",
+      "tags": [
+        "Java",
+        "GraphQL",
+        "AI",
+        "GCP",
+        "Azure",
+        "AWS"
+      ],
+      "jobCount": 1,
+      "salaryRange": "Thỏa thuận"
+    },
+    {
+      "id": "emp_c_ng_ty_tnhh_clever_creations_tech",
+      "company": "Công Ty TNHH Clever Creations Tech",
+      "industry": "Công nghệ",
+      "size": "10–50 nhân viên",
+      "location": "TP. Hồ Chí Minh",
+      "website": "https://cngtytnhhclevercreationstech.com",
+      "description": "Công Ty TNHH Clever Creations Tech là công ty công nghệ hàng đầu tại Việt Nam, chuyên về Java, Spring Boot, MySQL.",
+      "tags": [
+        "Java",
+        "Spring Boot",
+        "MySQL",
+        "Project Management",
+        "SQL",
+        "English"
+      ],
+      "jobCount": 1,
+      "salaryRange": "Thỏa thuận"
+    },
+    {
+      "id": "emp_rakuten_fintech_vietnam_co_ltd_",
+      "company": "Rakuten Fintech Vietnam Co., Ltd.",
+      "industry": "Công nghệ",
+      "size": "10–50 nhân viên",
+      "location": "TP. Hồ Chí Minh",
+      "website": "https://rakutenfintechvietnamcoltd.com",
+      "description": "Rakuten Fintech Vietnam Co., Ltd. là công ty công nghệ hàng đầu tại Việt Nam, chuyên về Java, Unit test, Spring Boot.",
+      "tags": [
+        "Java",
+        "Unit test",
+        "Spring Boot",
+        "Spring",
+        "SQL",
+        "English"
+      ],
+      "jobCount": 1,
+      "salaryRange": "Thỏa thuận"
+    },
+    {
+      "id": "emp_one_tech_stop_vietnam_company_ltd",
+      "company": "ONE Tech Stop Vietnam Company Ltd",
+      "industry": "Công nghệ",
+      "size": "50–100 nhân viên",
+      "location": "Đà Nẵng",
+      "website": "https://onetechstopvietnamcompanyltd.com",
+      "description": "ONE Tech Stop Vietnam Company Ltd là công ty công nghệ hàng đầu tại Việt Nam, chuyên về NodeJS, MongoDB, ReactJS.",
+      "tags": [
+        "NodeJS",
+        "MongoDB",
+        "ReactJS",
+        "NextJS",
+        "TypeScript",
+        "SQL",
+        "Software Architecture",
+        "NestJS"
+      ],
+      "jobCount": 2,
+      "salaryRange": "Thỏa thuận"
+    },
+    {
+      "id": "emp_doraverse_jsc_tech_ai",
+      "company": "Doraverse JSC - Tech & AI",
+      "industry": "AI & Machine Learning",
+      "size": "10–50 nhân viên",
+      "location": "Đà Nẵng",
+      "website": "https://doraversejsctechai.com",
+      "description": "Doraverse JSC - Tech & AI là công ty công nghệ hàng đầu tại Việt Nam, chuyên về Team Management, Golang, ReactJS.",
+      "tags": [
+        "Team Management",
+        "Golang",
+        "ReactJS",
+        "AI",
+        "Python",
+        "NodeJS"
+      ],
+      "jobCount": 1,
+      "salaryRange": "Thỏa thuận"
+    },
+    {
+      "id": "emp_robust_tech_house",
+      "company": "Robust Tech House",
+      "industry": "AI & Machine Learning",
+      "size": "10–50 nhân viên",
+      "location": "TP. Hồ Chí Minh",
+      "website": "https://robusttechhouse.com",
+      "description": "Robust Tech House là công ty công nghệ hàng đầu tại Việt Nam, chuyên về NodeJS, VueJS, ReactJS.",
+      "tags": [
+        "NodeJS",
+        "VueJS",
+        "ReactJS",
+        "Ruby on Rails",
+        "Project Management",
+        "English"
+      ],
+      "jobCount": 1,
+      "salaryRange": "Thỏa thuận"
+    },
+    {
+      "id": "emp_ksynerx_vietnam",
+      "company": "kSynerX Vietnam",
+      "industry": "Công nghệ",
+      "size": "10–50 nhân viên",
+      "location": "TP. Hồ Chí Minh",
+      "website": "https://ksynerxvietnam.com",
+      "description": "kSynerX Vietnam là công ty công nghệ hàng đầu tại Việt Nam, chuyên về Python, JavaScript, NodeJS.",
+      "tags": [
+        "Python",
+        "JavaScript",
+        "NodeJS",
+        "SQL",
+        "Java",
+        "C++"
+      ],
+      "jobCount": 1,
+      "salaryRange": "Thỏa thuận"
+    },
+    {
+      "id": "emp_eventista",
+      "company": "Eventista",
+      "industry": "Công nghệ",
+      "size": "10–50 nhân viên",
+      "location": "TP. Hồ Chí Minh",
+      "website": "https://eventista.com",
+      "description": "Eventista là công ty công nghệ hàng đầu tại Việt Nam, chuyên về NodeJS, Docker, AWS.",
+      "tags": [
+        "NodeJS",
+        "Docker",
+        "AWS",
+        "PostgreSql",
+        "API",
+        "TypeScript"
+      ],
+      "jobCount": 1,
+      "salaryRange": "35 - 45 triệu"
+    },
+    {
+      "id": "emp_ionah",
+      "company": "IONAH",
+      "industry": "Công nghệ",
+      "size": "10–50 nhân viên",
+      "location": "Hà Nội",
+      "website": "https://ionah.com",
+      "description": "IONAH là công ty công nghệ hàng đầu tại Việt Nam, chuyên về Fullstack, MongoDB, Angular.",
+      "tags": [
+        "Fullstack",
+        "MongoDB",
+        "Angular",
+        "ReactJS",
+        "NestJS",
+        "NodeJS"
+      ],
+      "jobCount": 1,
+      "salaryRange": "Thỏa thuận"
+    },
+    {
+      "id": "emp_saafehouse",
+      "company": "Saafehouse",
+      "industry": "Công nghệ",
+      "size": "50–100 nhân viên",
+      "location": "Đà Nẵng",
+      "website": "https://saafehouse.com",
+      "description": "Saafehouse là công ty công nghệ hàng đầu tại Việt Nam, chuyên về NodeJS, English, Database.",
+      "tags": [
+        "NodeJS",
+        "English",
+        "Database",
+        "AWS",
+        "TypeScript",
+        "ReactJS",
+        "Automation Test",
+        "Integration test"
+      ],
+      "jobCount": 2,
+      "salaryRange": "Thỏa thuận"
+    },
+    {
+      "id": "emp_everfit",
+      "company": "Everfit",
+      "industry": "AI & Machine Learning",
+      "size": "10–50 nhân viên",
+      "location": "Hà Nội",
+      "website": "https://everfit.com",
+      "description": "Everfit là công ty công nghệ hàng đầu tại Việt Nam, chuyên về NodeJS, Database, AWS.",
+      "tags": [
+        "NodeJS",
+        "Database",
+        "AWS",
+        "System Architecture",
+        "Microservices",
+        "AI"
+      ],
+      "jobCount": 1,
+      "salaryRange": "Thỏa thuận"
+    },
+    {
+      "id": "emp_savills_vietnam",
+      "company": "SAVILLS VIETNAM",
+      "industry": "Công nghệ",
+      "size": "10–50 nhân viên",
+      "location": "TP. Hồ Chí Minh",
+      "website": "https://savillsvietnam.com",
+      "description": "SAVILLS VIETNAM là công ty công nghệ hàng đầu tại Việt Nam, chuyên về Data Engineer, Power BI, Azure.",
+      "tags": [
+        "Data Engineer",
+        "Power BI",
+        "Azure",
+        "Python",
+        "SQL",
+        "ETL"
+      ],
+      "jobCount": 1,
+      "salaryRange": "Thỏa thuận"
+    },
+    {
+      "id": "emp_tnex",
+      "company": "TNEX",
+      "industry": "AI & Machine Learning",
+      "size": "10–50 nhân viên",
+      "location": "Hà Nội",
+      "website": "https://tnex.com",
+      "description": "TNEX là công ty công nghệ hàng đầu tại Việt Nam, chuyên về Risk Management, Machine Learning, SQL.",
+      "tags": [
+        "Risk Management",
+        "Machine Learning",
+        "SQL",
+        "R",
+        "Python",
+        "Statistical Analysis"
+      ],
+      "jobCount": 1,
+      "salaryRange": "Thỏa thuận"
+    },
+    {
+      "id": "emp_vietinbank",
+      "company": "VietinBank",
+      "industry": "AI & Machine Learning",
+      "size": "10–50 nhân viên",
+      "location": "Hà Nội",
+      "website": "https://vietinbank.com",
+      "description": "VietinBank là công ty công nghệ hàng đầu tại Việt Nam, chuyên về Generative AI, API, Docker.",
+      "tags": [
+        "Generative AI",
+        "API",
+        "Docker",
+        "Python",
+        "RAG",
+        "LLM"
+      ],
+      "jobCount": 1,
+      "salaryRange": "Thỏa thuận"
+    },
+    {
+      "id": "emp_arsen_kawaijuku_tech_vietnam_co_ltd",
+      "company": "ARSEN Kawaijuku Tech Vietnam Co.,Ltd",
+      "industry": "Công nghệ",
+      "size": "10–50 nhân viên",
+      "location": "TP. Hồ Chí Minh",
+      "website": "https://arsenkawaijukutechvietnamcoltd.com",
+      "description": "ARSEN Kawaijuku Tech Vietnam Co.,Ltd là công ty công nghệ hàng đầu tại Việt Nam, chuyên về Database, Power BI, Data Analysis.",
+      "tags": [
+        "Database",
+        "Power BI",
+        "Data Analysis",
+        "Azure",
+        "SQL",
+        "Python"
+      ],
+      "jobCount": 1,
+      "salaryRange": "Thỏa thuận"
+    },
+    {
+      "id": "emp_abbank",
+      "company": "ABBANK",
+      "industry": "Công nghệ",
+      "size": "10–50 nhân viên",
+      "location": "Hà Nội",
+      "website": "https://abbank.com",
+      "description": "ABBANK là công ty công nghệ hàng đầu tại Việt Nam, chuyên về Penetration Testing, Tester, Cybersecurity.",
+      "tags": [
+        "Penetration Testing",
+        "Tester",
+        "Cybersecurity",
+        "C++",
+        "PowerShell",
+        "Python"
+      ],
+      "jobCount": 1,
+      "salaryRange": "Thỏa thuận"
+    },
+    {
+      "id": "emp_pyramid_technical_vietnam",
+      "company": "Pyramid Technical Vietnam",
+      "industry": "AI & Machine Learning",
+      "size": "10–50 nhân viên",
+      "location": "Đà Nẵng",
+      "website": "https://pyramidtechnicalvietnam.com",
+      "description": "Pyramid Technical Vietnam là công ty công nghệ hàng đầu tại Việt Nam, chuyên về QA QC, Automation Test, Python.",
+      "tags": [
+        "QA QC",
+        "Automation Test",
+        "Python",
+        "Embedded",
+        "AI",
+        "Team Management"
+      ],
+      "jobCount": 1,
+      "salaryRange": "Thỏa thuận"
+    },
+    {
+      "id": "emp_bosch_global_software_technologies_company_limited",
+      "company": "Bosch Global Software Technologies Company Limited",
+      "industry": "Công nghệ",
+      "size": "10–50 nhân viên",
+      "location": "TP. Hồ Chí Minh",
+      "website": "https://boschglobalsoftwaretechnologiescompanylimited.com",
+      "description": "Bosch Global Software Technologies Company Limited là công ty công nghệ hàng đầu tại Việt Nam, chuyên về Embedded, Python, C++.",
+      "tags": [
+        "Embedded",
+        "Python",
+        "C++",
+        "AUTOSAR",
+        "Firmware",
+        "Linux"
+      ],
+      "jobCount": 1,
+      "salaryRange": "Thỏa thuận"
+    },
+    {
+      "id": "emp_makinarocks",
+      "company": "MAKINAROCKS",
+      "industry": "Công nghệ",
+      "size": "10–50 nhân viên",
+      "location": "TP. Hồ Chí Minh",
+      "website": "https://makinarocks.com",
+      "description": "MAKINAROCKS là công ty công nghệ hàng đầu tại Việt Nam, chuyên về Golang, SSO, GitHub.",
+      "tags": [
+        "Golang",
+        "SSO",
+        "GitHub",
+        "CI/CD",
+        "Python",
+        "Kubernetes"
+      ],
+      "jobCount": 1,
+      "salaryRange": "Thỏa thuận"
+    },
+    {
+      "id": "emp_ghn",
+      "company": "GHN",
+      "industry": "Công nghệ",
+      "size": "10–50 nhân viên",
+      "location": "TP. Hồ Chí Minh",
+      "website": "https://ghn.com",
+      "description": "GHN là công ty công nghệ hàng đầu tại Việt Nam, chuyên về Golang, Redis, Design Systems.",
+      "tags": [
+        "Golang",
+        "Redis",
+        "Design Systems",
+        "Microservices",
+        "Kafka",
+        "Python"
+      ],
+      "jobCount": 1,
+      "salaryRange": "Thỏa thuận"
+    },
+    {
+      "id": "emp_opencommerce_group",
+      "company": "OpenCommerce Group",
+      "industry": "Công nghệ",
+      "size": "10–50 nhân viên",
+      "location": "Hà Nội",
+      "website": "https://opencommercegroup.com",
+      "description": "OpenCommerce Group là công ty công nghệ hàng đầu tại Việt Nam, chuyên về Automation Test, SQL, QA QC.",
+      "tags": [
+        "Automation Test",
+        "SQL",
+        "QA QC",
+        "JavaScript",
+        "Python",
+        "Tester"
+      ],
+      "jobCount": 1,
+      "salaryRange": "Thỏa thuận"
+    },
+    {
+      "id": "emp_thai_son_soft",
+      "company": "Thai Son Soft",
+      "industry": "Công nghệ",
+      "size": "10–50 nhân viên",
+      "location": "Hà Nội",
+      "website": "https://thaisonsoft.com",
+      "description": "Thai Son Soft là công ty công nghệ hàng đầu tại Việt Nam, chuyên về Tester, Automation Test, QA QC.",
+      "tags": [
+        "Tester",
+        "Automation Test",
+        "QA QC"
+      ],
+      "jobCount": 1,
+      "salaryRange": "8 - 11 triệu"
+    },
+    {
+      "id": "emp_restaff_house_of_norway",
+      "company": "Restaff – House Of Norway",
+      "industry": "Công nghệ",
+      "size": "10–50 nhân viên",
+      "location": "TP. Hồ Chí Minh",
+      "website": "https://restaffhouseofnorway.com",
+      "description": "Restaff – House Of Norway là công ty công nghệ hàng đầu tại Việt Nam, chuyên về QA QC, Automation Test, Selenium.",
+      "tags": [
+        "QA QC",
+        "Automation Test",
+        "Selenium",
+        "Tester",
+        "Playwright"
+      ],
+      "jobCount": 1,
+      "salaryRange": "Thỏa thuận"
+    },
+    {
+      "id": "emp_kms_technology",
+      "company": "KMS Technology",
+      "industry": "AI & Machine Learning",
+      "size": "10–50 nhân viên",
+      "location": "Đà Nẵng",
+      "website": "https://kmstechnology.com",
+      "description": "KMS Technology là công ty công nghệ hàng đầu tại Việt Nam, chuyên về Tester, Playwright, Selenium.",
+      "tags": [
+        "Tester",
+        "Playwright",
+        "Selenium",
+        "Automation Test",
+        "AI",
+        "English"
+      ],
+      "jobCount": 1,
+      "salaryRange": "Thỏa thuận"
+    },
+    {
+      "id": "emp_trung_t_m_c_ng_ngh_th_ng_tin_mobifone",
+      "company": "Trung tâm công nghệ thông tin MobiFone",
+      "industry": "Công nghệ",
+      "size": "10–50 nhân viên",
+      "location": "Hà Nội",
+      "website": "https://trungtmcngnghthngtinmobifone.com",
+      "description": "Trung tâm công nghệ thông tin MobiFone là công ty công nghệ hàng đầu tại Việt Nam, chuyên về Tester, Team Management, API.",
+      "tags": [
+        "Tester",
+        "Team Management",
+        "API",
+        "SQL",
+        "Scrum",
+        "Agile"
+      ],
+      "jobCount": 1,
+      "salaryRange": "Thỏa thuận"
+    },
+    {
+      "id": "emp_ol_vietnam",
+      "company": "OL Vietnam",
+      "industry": "Công nghệ",
+      "size": "10–50 nhân viên",
+      "location": "TP. Hồ Chí Minh",
+      "website": "https://olvietnam.com",
+      "description": "OL Vietnam là công ty công nghệ hàng đầu tại Việt Nam, chuyên về QA QC, Tester, English.",
+      "tags": [
+        "QA QC",
+        "Tester",
+        "English"
+      ],
+      "jobCount": 1,
+      "salaryRange": "Thỏa thuận"
+    },
+    {
+      "id": "emp_fpt_is",
+      "company": "FPT IS",
+      "industry": "Công nghệ",
+      "size": "10–50 nhân viên",
+      "location": "Hà Nội",
+      "website": "https://fptis.com",
+      "description": "FPT IS là công ty công nghệ hàng đầu tại Việt Nam, chuyên về Tester, API, Integration test.",
+      "tags": [
+        "Tester",
+        "API",
+        "Integration test",
+        "SQL"
+      ],
+      "jobCount": 1,
+      "salaryRange": "Thỏa thuận"
+    },
+    {
+      "id": "emp_andpad_vietnam_co_ltd",
+      "company": "ANDPAD VietNam Co., Ltd",
+      "industry": "Công nghệ",
+      "size": "10–50 nhân viên",
+      "location": "Hà Nội",
+      "website": "https://andpadvietnamcoltd.com",
+      "description": "ANDPAD VietNam Co., Ltd là công ty công nghệ hàng đầu tại Việt Nam, chuyên về ReactJS, Unit test, VueJS.",
+      "tags": [
+        "ReactJS",
+        "Unit test",
+        "VueJS",
+        "Microservices",
+        "JavaScript",
+        "English"
+      ],
+      "jobCount": 1,
+      "salaryRange": "Thỏa thuận"
+    },
+    {
+      "id": "emp_c_ng_ty_tnhh_qnap_vi_t_nam",
+      "company": "CÔNG TY TNHH QNAP VIỆT NAM",
+      "industry": "Công nghệ",
+      "size": "10–50 nhân viên",
+      "location": "Hà Nội",
+      "website": "https://cngtytnhhqnapvitnam.com",
+      "description": "CÔNG TY TNHH QNAP VIỆT NAM là công ty công nghệ hàng đầu tại Việt Nam, chuyên về ReactJS, API, MySQL.",
+      "tags": [
+        "ReactJS",
+        "API",
+        "MySQL",
+        "PHP",
+        "Laravel",
+        "VueJS"
+      ],
+      "jobCount": 1,
+      "salaryRange": "Thỏa thuận"
+    },
+    {
+      "id": "emp_nam_viet_jsc",
+      "company": "Nam Viet JSC",
+      "industry": "Công nghệ",
+      "size": "10–50 nhân viên",
+      "location": "Hà Nội",
+      "website": "https://namvietjsc.com",
+      "description": "Nam Viet JSC là công ty công nghệ hàng đầu tại Việt Nam, chuyên về .NET, Microsoft SQL Server, ReactJS.",
+      "tags": [
+        ".NET",
+        "Microsoft SQL Server",
+        "ReactJS",
+        "Docker",
+        "Microservices"
+      ],
+      "jobCount": 1,
+      "salaryRange": "Thỏa thuận"
+    },
+    {
+      "id": "emp_cellphones",
+      "company": "CellphoneS",
+      "industry": "Công nghệ",
+      "size": "10–50 nhân viên",
+      "location": "TP. Hồ Chí Minh",
+      "website": "https://cellphones.com",
+      "description": "CellphoneS là công ty công nghệ hàng đầu tại Việt Nam, chuyên về Automation Test, ERP, TypeScript.",
+      "tags": [
+        "Automation Test",
+        "ERP",
+        "TypeScript",
+        "QA QC",
+        "Tester"
+      ],
+      "jobCount": 1,
+      "salaryRange": "Thỏa thuận"
+    }
+  ],
   "profile": null,
   "employer": null,
   "postedJobs": [],
