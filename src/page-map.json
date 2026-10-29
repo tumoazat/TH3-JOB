@@ -18,12 +18,6 @@
     "bodyClass": "bg-background text-on-surface antialiased min-h-screen flex flex-col"
   },
   {
-    "file": "05_job_detail.html",
-    "component": "Page05JobDetail",
-    "title": "Chi tiết việc làm - Thực tập sinh Front-end Developer | CareerMatch AI",
-    "bodyClass": "bg-background text-on-surface antialiased min-h-screen flex selection:bg-secondary-fixed selection:text-on-secondary-fixed"
-  },
-  {
     "file": "06_cv_analysis.html",
     "component": "Page06CvAnalysis",
     "title": "CareerMatch AI - Phân tích CV bằng AI (CV Analysis)",
@@ -56,13 +50,13 @@
   {
     "file": "11_ng_tin_tuy_n_d_ng_post_a_job.html",
     "component": "Page11NgTinTuyNDNgPostAJob",
-    "title": "Đăng tin tuyển dụng mới | CareerMatch AI - NovaTech Solutions",
+    "title": "Đăng tin tuyển dụng mới | CareerMatch AI",
     "bodyClass": "bg-background text-on-surface antialiased flex min-h-screen"
   },
   {
     "file": "12.12 - Quản lý ứng viên (Candidate Management).html",
     "component": "Page1212QuNLNgViNCandidateManagement",
-    "title": "Quản lý ứng viên - NovaTech Solutions | CareerMatch AI",
+    "title": "Quản lý ứng viên | CareerMatch AI",
     "bodyClass": "min-h-full font-body-md text-on-surface antialiased bg-background flex"
   },
   {

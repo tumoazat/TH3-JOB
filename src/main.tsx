@@ -76,8 +76,8 @@ const cache: any = {
   jobs: [],
   applications: [],
   savedJobs: [],
-  profile: { name: 'Nguyễn Minh Anh', email: 'minhanh.nguyen@email.edu.vn', phone: '0912 345 678', university: 'Đại học Thủy Lợi', major: 'Công nghệ Thông tin', gpa: '3.65/4.0', graduationYear: '2026', skills: ['ReactJS', 'JavaScript', 'HTML/CSS', 'Git', 'Tailwind CSS'], bio: 'Sinh viên CNTT năm 4, đam mê front-end, tìm kiếm cơ hội thực tập.', avatarUrl: null, cvScore: 85, cvFileName: 'CV_NguyenMinhAnh_Frontend_2026.pdf' },
-  employer: { company: 'NovaTech Solutions', email: 'hr@novatech.vn', industry: 'Công nghệ', size: '50–200 nhân viên' },
+  profile: null,
+  employer: null,
   postedJobs: [],
   candidates: [],
 };
@@ -145,7 +145,7 @@ function initStoreApi() {
     },
     getProfile: () => cache.profile,
     saveProfile: (data: any) => {
-      cache.profile = { ...cache.profile, ...data };
+      cache.profile = { ...(cache.profile || {}), ...data };
       fetch(`${API_BASE}/profile`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
