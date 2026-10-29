@@ -27,6 +27,20 @@ const PORT = Number(process.env.PORT) || 5000;
 const DATA_DIR = path.join(__dirname, 'data');
 const DB_FILE = path.join(DATA_DIR, 'db.json');
 
+// ponytail: minimum AI config — env toggle, stdlib fs only, no external deps.
+// ML stays off by default (spec: pending until real CV + multiple reviewers).
+const MATCHING_METHOD = process.env.MATCHING_METHOD || 'baseline';
+const MODEL_FILE = path.join(__dirname, 'models', 'linear-match.json');
+let mlModel = null;
+try {
+  if (fs.existsSync(MODEL_FILE)) {
+    const parsed = JSON.parse(fs.readFileSync(MODEL_FILE, 'utf-8'));
+    mlModel = parsed.weights
+      ? { w0: parsed.weights.w0, w1: parsed.weights.w1, w2: parsed.weights.w2, modelVersion: parsed.modelVersion }
+      : null;
+  }
+} catch { /* ignore: model optional */ }
+
 app.use(cors());
 app.use(express.json());
 
@@ -214,7 +228,12 @@ function buildMatchResult(job: any, candidate: any) {
 
   const skillScore = computeSkillScore(skills, jobTags);
   const keywordScore = computeKeywordScore(cvText, jdText);
-  const match = computeMatch(skillScore, keywordScore);
+
+  let match = computeMatch(skillScore, keywordScore);
+  let method = MATCHING_METHOD;
+  if (MATCHING_METHOD === 'ml' && mlModel) {
+    match = Math.max(0, Math.min(100, Math.round((mlModel.w0 + mlModel.w1 * (skillScore ?? 0) + mlModel.w2 * (keywordScore ?? 0)) * 100)));
+  }
   const dataStatus =
     skillScore != null && keywordScore != null
       ? 'complete'
@@ -238,8 +257,8 @@ function buildMatchResult(job: any, candidate: any) {
     jobId: job?.id,
     match,
     band: classifyBand(match),
-    method: 'baseline',
-    modelVersion: null,
+    method,
+    modelVersion: method === 'ml' ? (mlModel?.modelVersion ?? null) : null,
     dataStatus,
     matchedSkills,
     missingSkills,
