@@ -292,9 +292,11 @@ app.post('/api/match', (req, res) => {
 app.get('/api/match/all', (req, res) => {
   const db = readDB();
   const { candidateId } = req.query;
-  const candidate = candidateId
-    ? db.candidates.find((c: any) => c.id === candidateId)
-    : db.profile;
+  const candidate = candidateId === 'profile'
+    ? db.profile
+    : candidateId
+      ? db.candidates.find((c: any) => c.id === candidateId)
+      : db.profile;
   if (!candidate) {
     return res.status(404).json({ error: { code: 404, message: 'Ứng viên không tồn tại' } });
   }
