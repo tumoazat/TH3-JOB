@@ -1,16 +1,18 @@
 {
   "modelVersion": "linear-2026-10-29",
-  "trainedAt": "2026-10-29T16:43:44.187Z",
+  "trainedAt": "2026-10-29T17:04:07.135Z",
   "featureSchemaVersion": 1,
-  "trainingSampleCount": 20,
+  "trainingSampleCount": 40,
   "evaluationMetrics": {
-    "inSampleMAE": 0.037
+    "inSampleMAE": 0.0905,
+    "leaveOneCandidateOutMAE": 0.1676,
+    "baselineLeaveOneCandidateOutMAE": 0.2184
   },
-  "baselineComparison": "not_evaluated",
+  "baselineComparison": "not_approved",
   "approvalStatus": "pending",
   "weights": {
-    "w0": 0.06792741699492641,
-    "w1": 0.010832298409525428,
-    "w2": 0.01199830384944587
+    "w0": 0.10920235331831953,
+    "w1": 0.010789349873904662,
+    "w2": 0.015501880955703092
   }
 }
