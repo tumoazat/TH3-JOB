@@ -1132,83 +1132,18 @@
       "source": "https://itviec.com/it-jobs/automation-tester-erp-cellphones-2524"
     }
   ],
-  "applications": [],
-  "savedJobs": [],
-  "profile": {
-    "name": "Nguyá»…n Minh Anh",
-    "email": "minhanh.nguyen@email.edu.vn",
-    "phone": "0912 345 678",
-    "university": "Đại học Thủy Lợi",
-    "major": "Công nghệ Thông tin",
-    "gpa": "3.65/4.0",
-    "graduationYear": "2026",
-    "skills": [
-      "ReactJS",
-      "JavaScript",
-      "HTML/CSS",
-      "Git",
-      "Tailwind CSS"
-    ],
-    "bio": "Sinh viên CNTT năm 4, đam mê front-end, tìm kiếm cơ hội thực tập.",
-    "avatarUrl": null,
-    "cvScore": 85,
-    "cvFileName": "CV_NguyenMinhAnh_Frontend_2026.pdf"
-  },
-  "employer": {
-    "company": "NovaTech Solutions",
-    "email": "hr@novatech.vn",
-    "industry": "Công nghệ",
-    "size": "50–200 nhân viên"
-  },
-  "postedJobs": [],
-  "candidates": [
+  "applications": [
     {
-      "id": "c_backend_java",
-      "name": "Trần Văn Backend",
-      "email": "backend.dev@email.edu.vn",
-      "university": "Đại học Bách Khoa Hà Nội",
-      "major": "Công nghệ Thông tin",
-      "gpa": "3.2/4.0",
-      "graduationYear": "2023",
-      "skills": ["Java", "Spring", "SQL", "Git", "AWS"],
-      "bio": "Kỹ sư backend 3 năm kinh nghiệm, chuyên Java Spring Boot, phát triển API và microservices.",
-      "experienceYears": 3,
-      "avatarUrl": null,
-      "cvScore": 70,
-      "cvFileName": "CV_TranVanBackend_Java.pdf",
-      "synthetic": true
-    },
-    {
-      "id": "c_data_analyst",
-      "name": "Lê Thị Data",
-      "email": "data.analyst@email.edu.vn",
-      "university": "Đại học Kinh tế Quốc dân",
-      "major": "Kinh tế Đo lường",
-      "gpa": "3.5/4.0",
-      "graduationYear": "2024",
-      "skills": ["Python", "SQL", "Power BI", "Excel", "Data Analysis"],
-      "bio": "Chuyên viên phân tích dữ liệu 2 năm kinh nghiệm, thành thạo Python, SQL, Power BI.",
-      "experienceYears": 2,
-      "avatarUrl": null,
-      "cvScore": 75,
-      "cvFileName": "CV_LeThiData_Analyst.pdf",
-      "synthetic": true
-    },
-    {
-      "id": "c_qa_tester",
-      "name": "Phạm Văn Test",
-      "email": "qa.tester@email.edu.vn",
-      "university": "Đại học Công nghệ Thông tin TP.HCM",
-      "major": "Công nghệ Thông tin",
-      "gpa": "3.0/4.0",
-      "graduationYear": "2025",
-      "skills": ["Tester", "Playwright", "Selenium", "QA QC", "API", "JavaScript"],
-      "bio": "Kỹ sư kiểm thử phần mềm 1 năm kinh nghiệm, tự động hoá kiểm thử bằng Playwright và Selenium.",
-      "experienceYears": 1,
-      "avatarUrl": null,
-      "cvScore": 65,
-      "cvFileName": "CV_PhamVanTest_QA.pdf",
-      "synthetic": true
+      "id": "a1793294563324",
+      "jobId": 1,
+      "status": "reviewing",
+      "appliedDate": "30/10/2026",
+      "note": ""
     }
-  ]
+  ],
+  "savedJobs": [],
+  "profile": null,
+  "employer": null,
+  "postedJobs": [],
+  "candidates": []
 }
