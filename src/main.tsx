@@ -10,7 +10,6 @@ const screens = [
   { file: '01_landing_page.html', component: lazy(() => import('./pages/Page01LandingPage')) },
   { file: '03_student_dashboard.html', component: lazy(() => import('./pages/Page03StudentDashboard')) },
   { file: '04_job_search.html', component: lazy(() => import('./pages/Page04JobSearch')) },
-  { file: '05_job_detail.html', component: lazy(() => import('./pages/Page05JobDetail')) },
   { file: '06_cv_analysis.html', component: lazy(() => import('./pages/Page06CvAnalysis')) },
   { file: '07_matched_jobs.html', component: lazy(() => import('./pages/Page07MatchedJobs')) },
   { file: '08_application_tracker.html', component: lazy(() => import('./pages/Page08ApplicationTracker')) },
@@ -28,7 +27,6 @@ const screens = [
   { file: 'certify.html', component: lazy(() => import('./pages/PageInfo')) },
   { file: 'cv-guide.html', component: lazy(() => import('./pages/PageInfo')) },
   { file: 'ai-match.html', component: lazy(() => import('./pages/PageAIMatch')) },
-  { file: 'job-detail.html', component: lazy(() => import('./pages/PageJobDetail')) },
 ];
 
 const routeByText: Record<string, string> = {
@@ -399,7 +397,7 @@ function runInteraction(event: Event, navigate: ReturnType<typeof useNavigate>) 
   }
   const jobId = button.dataset.jobId || button.dataset.apply || button.closest<HTMLElement>('[data-job-id]')?.dataset.jobId;
   const store = window.VL;
-  if (/xem chi tiết|view detail/i.test(btnText)) { event.preventDefault(); if (jobId) { navigate(`/05_job_detail.html?id=${jobId}`); return; } const path = window.location.pathname; if (path.includes('03_student_dashboard') || path.includes('08_application')) { navigate('/08_application_tracker.html'); return; } navigate('/05_job_detail.html?id=1'); return; }
+  if (/xem chi tiết|view detail/i.test(btnText)) { event.preventDefault(); if (jobId) { navigate(`/04_job_search.html?id=${jobId}`); return; } const path = window.location.pathname; if (path.includes('03_student_dashboard') || path.includes('08_application')) { navigate('/08_application_tracker.html'); return; } navigate('/04_job_search.html?id=1'); return; }
   if (/lý do đề xuất/i.test(btnText)) { event.preventDefault(); showToast('Vị trí này phù hợp nhờ kỹ năng và kinh nghiệm trong hồ sơ của bạn.', 'info'); return; }
   const isBookmarkBtn = button.matches('[data-bookmark]') || /^bookmark(_border|_added)?$/i.test(btnText.trim()) || !!button.querySelector('[data-icon="bookmark"], [data-icon="bookmark_border"], [data-icon="bookmark_added"]');
   if (isBookmarkBtn) {
@@ -413,8 +411,8 @@ function runInteraction(event: Event, navigate: ReturnType<typeof useNavigate>) 
   if (button.matches('[data-apply], [data-quick-apply]') || (button.tagName === 'BUTTON' && /ứng tuyển/i.test(btnText) && !(button as HTMLButtonElement).disabled && !/đã ứng tuyển/i.test(btnText) && !button.closest('form'))) {
     event.preventDefault();
     const applyJobId = jobId || '1';
-    if (!store) { navigate(`/05_job_detail.html?id=${applyJobId}`); return; }
-    if (store.getApp(applyJobId)) { showToast('Bạn đã ứng tuyển vào vị trí này rồi', 'info'); navigate(`/05_job_detail.html?id=${applyJobId}`); return; }
+    if (!store) { navigate(`/04_job_search.html?id=${applyJobId}`); return; }
+    if (store.getApp(applyJobId)) { showToast('Bạn đã ứng tuyển vào vị trí này rồi', 'info'); navigate(`/04_job_search.html?id=${applyJobId}`); return; }
     if (!store.apply(applyJobId)) return;
     document.querySelectorAll<HTMLElement>(`[data-job-id="${applyJobId}"] [data-apply], [data-apply="${applyJobId}"]`).forEach(markApplied);
     showToast('Ứng tuyển thành công! Kiểm tra hồ sơ ứng tuyển.');
@@ -528,3 +526,5 @@ function App() {
 const root = document.getElementById('root');
 if (!root) throw new Error('React root element is missing');
 createRoot(root).render(<React.StrictMode><App /></React.StrictMode>);
+
+
