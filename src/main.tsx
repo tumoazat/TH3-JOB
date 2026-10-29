@@ -28,6 +28,7 @@ const screens = [
   { file: 'certify.html', component: lazy(() => import('./pages/PageInfo')) },
   { file: 'cv-guide.html', component: lazy(() => import('./pages/PageInfo')) },
   { file: 'ai-match.html', component: lazy(() => import('./pages/PageAIMatch')) },
+  { file: 'job-detail.html', component: lazy(() => import('./pages/PageJobDetail')) },
 ];
 
 const routeByText: Record<string, string> = {
