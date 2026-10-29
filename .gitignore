@@ -4,5 +4,9 @@ dist
 *.log
 .env
 .env.local
-
 .superpowers/
+
+# Matching batch results (large generated files)
+match_all_candidates.json
+match_all_candidates.csv
+*.~lock.*

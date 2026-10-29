@@ -289,6 +289,57 @@ app.post('/api/match', (req, res) => {
   res.json(buildMatchResult(job, candidate));
 });
 
+app.get('/api/match/batch', (req, res) => {
+  const file = path.join(__dirname, '..', 'match_all_candidates.json');
+  if (!fs.existsSync(file)) {
+    return res.status(404).json({ error: { code: 404, message: 'Chưa có dữ liệu matching batch' } });
+  }
+  let data: Record<string, any[]>;
+  try {
+    data = JSON.parse(fs.readFileSync(file, 'utf-8'));
+  } catch (e: any) {
+    return res.status(500).json({ error: { code: 500, message: 'Lỗi đọc dữ liệu matching: ' + e.message } });
+  }
+  const db = readDB();
+  const jmap: Record<number, any> = {};
+  db.jobs.forEach((j: any) => { jmap[j.id] = j; });
+  const { candidateId, limit, category, location, minMatch, band } = req.query;
+  if (candidateId) {
+    const results = data[candidateId as string];
+    if (!results) {
+      return res.status(404).json({ error: { code: 404, message: 'Không tìm thấy kết quả cho candidate này' } });
+    }
+    let filtered = results.filter((r: any) => {
+      const j = jmap[r.jobId];
+      if (category && j?.category && String(j.category).toLowerCase() !== String(category).toLowerCase()) return false;
+      if (location && j?.location && !String(j.location).toLowerCase().includes(String(location).toLowerCase())) return false;
+      if (minMatch != null && (r.match ?? 0) < Number(minMatch)) return false;
+      if (band && r.band !== String(band)) return false;
+      return true;
+    });
+    const top = limit ? filtered.slice(0, Number(limit)) : filtered;
+    return res.json({ candidateId, total: filtered.length, results: top });
+  }
+  const summary = Object.entries(data).map(([cid, arr]) => {
+    const filtered = arr.filter((r: any) => {
+      const j = jmap[r.jobId];
+      if (category && j?.category && String(j.category).toLowerCase() !== String(category).toLowerCase()) return false;
+      if (location && j?.location && !String(j.location).toLowerCase().includes(String(location).toLowerCase())) return false;
+      if (minMatch != null && (r.match ?? 0) < Number(minMatch)) return false;
+      if (band && r.band !== String(band)) return false;
+      return true;
+    });
+    return {
+      candidateId: cid,
+      topJob: filtered[0]?.jobId ?? null,
+      topMatch: filtered[0]?.match ?? null,
+      topBand: filtered[0]?.band ?? null,
+      ratKhopCount: filtered.filter((x: any) => x.band === 'Rất khớp').length,
+    };
+  });
+  res.json({ totalCandidates: summary.length, summary });
+});
+
 app.get('/api/match/all', (req, res) => {
   const db = readDB();
   const { candidateId } = req.query;
@@ -364,6 +415,30 @@ app.post('/api/cv/extract', upload.single('file'), async (req, res) => {
       },
     });
   }
+});
+
+app.post('/api/match/feedback', (req, res) => {
+  const { candidateId, jobId, action } = req.body || {};
+  if (!candidateId || !jobId || !action) {
+    return res.status(400).json({ error: { code: 400, message: 'Thiếu candidateId, jobId hoặc action' } });
+  }
+  const file = path.join(__dirname, 'data', 'match_feedback.json');
+  let existing: any[] = [];
+  try {
+    existing = JSON.parse(fs.readFileSync(file, 'utf-8'));
+  } catch { /* ignore */ }
+  existing.push({ candidateId, jobId: Number(jobId), action, createdAt: new Date().toISOString() });
+  fs.writeFileSync(file, JSON.stringify(existing, null, 2));
+  res.json({ success: true, count: existing.length });
+});
+
+app.get('/api/match/feedback', (_req, res) => {
+  const file = path.join(__dirname, 'data', 'match_feedback.json');
+  let existing: any[] = [];
+  try {
+    existing = JSON.parse(fs.readFileSync(file, 'utf-8'));
+  } catch { /* ignore */ }
+  res.json({ count: existing.length, feedback: existing });
 });
 
 app.use((err: any, _req: any, res: any, _next: any) => {
