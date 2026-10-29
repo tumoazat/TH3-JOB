@@ -1,0 +1,16 @@
+{
+  "modelVersion": "linear-2026-10-29",
+  "trainedAt": "2026-10-29T16:43:44.187Z",
+  "featureSchemaVersion": 1,
+  "trainingSampleCount": 20,
+  "evaluationMetrics": {
+    "inSampleMAE": 0.037
+  },
+  "baselineComparison": "not_evaluated",
+  "approvalStatus": "pending",
+  "weights": {
+    "w0": 0.06792741699492641,
+    "w1": 0.010832298409525428,
+    "w2": 0.01199830384944587
+  }
+}
