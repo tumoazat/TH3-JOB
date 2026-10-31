@@ -28,6 +28,9 @@ const screens = [
   { file: 'cv-guide.html', component: lazy(() => import('./pages/PageInfo')) },
   { file: 'ai-match.html', component: lazy(() => import('./pages/PageAIMatch')) },
   { file: 'bi-dashboard.html', component: lazy(() => import('./pages/PageBIDashboard')) },
+  { file: 'auth.html', component: lazy(() => import('./pages/PageAuth')) },
+  { file: 'employer-dashboard.html', component: lazy(() => import('./pages/PageEmployerDashboard')) },
+  { file: 'ai-talent.html', component: lazy(() => import('./pages/PageAITalent')) },
 ];
 
 const routeByText: Record<string, string> = {
@@ -57,7 +60,10 @@ const routeByText: Record<string, string> = {
   'tìm hiểu giải pháp doanh nghiệp': '/10_dashboard_nh_tuy_n_d_ng_employer_dashboard.html', 'xem tất cả công việc': '/04_job_search.html',
   'xem tất cả gợi ý': '/07_matched_jobs.html', 'xem danh sách việc làm đã lưu': '/07_matched_jobs.html', 'luyện câu hỏi phỏng vấn': '/06_cv_analysis.html',
   'tối ưu hóa ngay': '/06_cv_analysis.html', 'tối ưu hồ sơ': '/06_cv_analysis.html', 'xem thêm 10+': '/04_job_search.html', 'xem trang công ty': '/01_landing_page.html',
-  'hồ sơ & cv': '/09_h_s_c_nh_n_student_profile.html', 'đăng xuất': '/01_landing_page.html', 'log out': '/01_landing_page.html', 'đăng nhập': '/03_student_dashboard.html', 'bắt đầu miễn phí': '/03_student_dashboard.html',
+  'hồ sơ & cv': '/09_h_s_c_nh_n_student_profile.html', 'đăng xuất': '/auth.html', 'log out': '/auth.html', 'đăng nhập': '/auth.html', 'bắt đầu miễn phí': '/auth.html',
+  'employer dashboard': '/employer-dashboard.html', 'dashboard nhà tuyển dụng': '/employer-dashboard.html', 'nhà tuyển dụng': '/employer-dashboard.html',
+  'ai talent': '/ai-talent.html', 'talent demo': '/ai-talent.html', 'phỏng vấn thử': '/ai-talent.html', 'phòng phỏng vấn': '/ai-talent.html',
+  'trích xuất cv': '/ai-talent.html', 'gợi ý nâng cao cv': '/ai-talent.html',
   'thêm dự án': '/09_h_s_c_nh_n_student_profile.html', 'cập nhật': '/09_h_s_c_nh_n_student_profile.html',
   'upload new cv': '/06_cv_analysis.html', 'tải lên cv mới': '/06_cv_analysis.html', 'upload cv': '/06_cv_analysis.html',
   'dashboard bi': '/bi-dashboard.html', 'bi dashboard': '/bi-dashboard.html', 'thống kê': '/bi-dashboard.html', 'báo cáo bi': '/bi-dashboard.html',

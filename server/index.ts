@@ -6,6 +6,9 @@ import { fileURLToPath } from 'url';
 import { v4 as uuidv4 } from 'uuid';
 import dotenv from 'dotenv';
 import { execFileSync } from 'child_process';
+import bcrypt from 'bcryptjs';
+import jwt from 'jsonwebtoken';
+import cookieParser from 'cookie-parser';
 dotenv.config();
 import {
   normalizeSkill,
@@ -46,8 +49,58 @@ try {
   }
 } catch { /* ignore: model optional */ }
 
-app.use(cors());
+app.use(cors({ origin: true, credentials: true }));
 app.use(express.json());
+app.use(cookieParser());
+
+const JWT_SECRET = process.env.JWT_SECRET || 'dev-insecure-secret-change-me';
+const JWT_EXPIRES = '7d';
+const COOKIE_NAME = 'cm_token';
+const VALID_ROLES = ['candidate', 'employer', 'admin'];
+
+type AuthUser = { id: string; email: string; role: string; name: string };
+
+function signToken(user: AuthUser) {
+  return jwt.sign({ id: user.id, email: user.email, role: user.role, name: user.name }, JWT_SECRET, { expiresIn: JWT_EXPIRES });
+}
+
+function setAuthCookie(res: any, token: string) {
+  res.cookie(COOKIE_NAME, token, {
+    httpOnly: true,
+    sameSite: 'strict',
+    secure: process.env.NODE_ENV === 'production',
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+  });
+}
+
+function authFromReq(req: any): AuthUser | null {
+  const token = req.cookies?.[COOKIE_NAME];
+  if (!token) return null;
+  try {
+    const payload: any = jwt.verify(token, JWT_SECRET);
+    return { id: payload.id, email: payload.email, role: payload.role, name: payload.name };
+  } catch {
+    return null;
+  }
+}
+
+function requireAuth(req: any, res: any, next: any) {
+  const user = authFromReq(req);
+  if (!user) return res.status(401).json({ error: { code: 401, message: 'Chưa đăng nhập' } });
+  req.user = user;
+  next();
+}
+
+function requireRole(roles: string[]) {
+  return (req: any, res: any, next: any) => {
+    requireAuth(req, res, () => {
+      if (!roles.includes(req.user.role)) {
+        return res.status(403).json({ error: { code: 403, message: 'Không có quyền truy cập' } });
+      }
+      next();
+    });
+  };
+}
 
 const SEED_JOBS = [
   { id: 1, company: 'NovaTech Solutions', title: 'Thực tập sinh Front-end Developer (ReactJS / UI)', location: 'Hà Nội · Cầu Giấy', type: 'Hybrid', salary: '3–5 triệu', match: 85, deadline: '30/11/2026', tags: ['HTML5', 'CSS3', 'ReactJS', 'Git', 'Tailwind CSS'], description: 'Phát triển giao diện web hiện đại với ReactJS và Tailwind CSS.', requirements: 'Biết HTML/CSS/JS, cơ bản ReactJS, ưu tiên có kinh nghiệm Tailwind.', benefits: 'Lương cạnh tranh, môi trường năng động, cơ hội chính thức.', posted: '15/10/2026' },
@@ -93,6 +146,25 @@ function initDB() {
       ],
     };
     fs.writeFileSync(DB_FILE, JSON.stringify(db, null, 2));
+  } else {
+    // Migrate existing DB: ensure users collection + seed demo admin once.
+    try {
+      const db = JSON.parse(fs.readFileSync(DB_FILE, 'utf-8'));
+      let changed = false;
+      if (!Array.isArray(db.users)) { db.users = []; changed = true; }
+      if (!db.users.some((u: any) => u.role === 'admin')) {
+        db.users.push({
+          id: 'u_admin',
+          email: 'admin@careermatch.local',
+          passwordHash: bcrypt.hashSync('admin123', 10),
+          role: 'admin',
+          name: 'Quản trị viên',
+          createdAt: new Date().toISOString(),
+        });
+        changed = true;
+      }
+      if (changed) fs.writeFileSync(DB_FILE, JSON.stringify(db, null, 2));
+    } catch { /* ignore: DB corrupt, initDB will recreate on next if missing */ }
   }
 }
 
@@ -105,6 +177,73 @@ function readDB() {
 function writeDB(db: any) {
   fs.writeFileSync(DB_FILE, JSON.stringify(db, null, 2));
 }
+
+// Auth
+function publicUser(u: any) {
+  return { id: u.id, email: u.email, role: u.role, name: u.name, createdAt: u.createdAt };
+}
+
+app.post('/api/auth/register', async (req, res) => {
+  const { email, password, role, name } = req.body || {};
+  if (!email || !password || !name) {
+    return res.status(400).json({ error: { code: 400, message: 'Thiếu email, mật khẩu hoặc tên' } });
+  }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(email))) {
+    return res.status(400).json({ error: { code: 400, message: 'Email không hợp lệ' } });
+  }
+  if (String(password).length < 6) {
+    return res.status(400).json({ error: { code: 400, message: 'Mật khẩu phải từ 6 ký tự' } });
+  }
+  const chosenRole = VALID_ROLES.includes(role) ? role : 'candidate';
+  if (chosenRole === 'admin') {
+    return res.status(403).json({ error: { code: 403, message: 'Không thể đăng ký vai trò admin' } });
+  }
+  const db = readDB();
+  db.users = db.users || [];
+  if (db.users.some((u: any) => String(u.email).toLowerCase() === String(email).toLowerCase())) {
+    return res.status(409).json({ error: { code: 409, message: 'Email đã được đăng ký' } });
+  }
+  const passwordHash = await bcrypt.hash(String(password), 10);
+  const user = {
+    id: `u_${uuidv4().slice(0, 8)}`,
+    email: String(email).toLowerCase(),
+    passwordHash,
+    role: chosenRole,
+    name: String(name),
+    createdAt: new Date().toISOString(),
+  };
+  db.users.push(user);
+  writeDB(db);
+
+  const token = signToken(publicUser(user));
+  setAuthCookie(res, token);
+  res.status(201).json({ user: publicUser(user) });
+});
+
+app.post('/api/auth/login', async (req, res) => {
+  const { email, password } = req.body || {};
+  if (!email || !password) {
+    return res.status(400).json({ error: { code: 400, message: 'Thiếu email hoặc mật khẩu' } });
+  }
+  const db = readDB();
+  db.users = db.users || [];
+  const user = db.users.find((u: any) => String(u.email).toLowerCase() === String(email).toLowerCase());
+  if (!user || !(await bcrypt.compare(String(password), user.passwordHash))) {
+    return res.status(401).json({ error: { code: 401, message: 'Email hoặc mật khẩu không đúng' } });
+  }
+  const token = signToken(publicUser(user));
+  setAuthCookie(res, token);
+  res.json({ user: publicUser(user) });
+});
+
+app.post('/api/auth/logout', (_req, res) => {
+  res.clearCookie(COOKIE_NAME);
+  res.json({ success: true });
+});
+
+app.get('/api/auth/me', requireAuth, (req: any, res) => {
+  res.json({ user: req.user });
+});
 
 // Jobs
 app.get('/api/jobs', (req, res) => {
@@ -192,13 +331,15 @@ app.get('/api/posted-jobs', (req, res) => {
 
 app.post('/api/posted-jobs', (req, res) => {
   const db = readDB();
+  const authUser = authFromReq(req);
   const job = {
     id: `pj${Date.now()}`,
     title: req.body.title,
     status: 'active',
     applicants: 0,
     views: 0,
-    deadline: req.body.deadline || ''
+    deadline: req.body.deadline || '',
+    employerId: authUser?.id || null,
   };
   db.postedJobs.push(job);
   writeDB(db);
@@ -681,6 +822,80 @@ app.post('/api/ai/predict', (req, res) => {
   } catch (e: any) {
     res.status(500).json({ error: { code: 500, message: 'Lỗi dự đoán ML: ' + e.message } });
   }
+});
+
+// Employer dashboard stats
+app.get('/api/employer/stats', requireRole(['employer', 'admin']), (req: any, res) => {
+  const db = readDB();
+  const allPosted = db.postedJobs || [];
+  const mine = allPosted.filter((p: any) => !p.employerId || p.employerId === req.user.id);
+  const postedJobs = mine.length ? mine : allPosted;
+  const totalPosts = postedJobs.length;
+  const totalViews = postedJobs.reduce((s: number, p: any) => s + (Number(p.views) || 0), 0);
+  const totalApplicants = postedJobs.reduce((s: number, p: any) => s + (Number(p.applicants) || 0), 0);
+  const candidates = db.candidates || [];
+  const offers = candidates.filter((c: any) => c.status === 'offer').length;
+  const applyRate = totalViews ? Math.round((totalApplicants / totalViews) * 100) : 0;
+  const offerRate = totalApplicants ? Math.round((offers / totalApplicants) * 100) : 0;
+  res.json({ totalPosts, totalViews, totalApplicants, offers, applyRate, offerRate, postedJobs });
+});
+
+// AI recommendations for CV improvement
+app.post('/api/ai/recommendations', async (req, res) => {
+  const db = readDB();
+  const { jobId, candidateId } = req.body || {};
+  const job = db.jobs.find((j: any) => j.id === Number(jobId));
+  if (!job) return res.status(404).json({ error: { code: 404, message: 'Công việc không tồn tại' } });
+  const candidate = candidateId
+    ? db.candidates.find((c: any) => c.id === candidateId)
+    : db.profile;
+  if (!candidate) return res.status(404).json({ error: { code: 404, message: 'Ứng viên không tồn tại' } });
+
+  const jobTags: string[] = job.tags || [];
+  const skills: string[] = candidate.skills || [];
+  const cSet = new Set(skills.map((s: string) => normalizeSkill(s)));
+  const missingSkills = jobTags.filter((t: string) => !cSet.has(normalizeSkill(t)));
+  const matchedSkills = jobTags.filter((t: string) => cSet.has(normalizeSkill(t)));
+
+  const baseSuggestions = missingSkills.slice(0, 8).map((s: string) => `Bổ sung kỹ năng "${s}" qua khóa học, chứng chỉ hoặc dự án thực tế.`);
+  const improvement = [
+    'Thêm số liệu định lượng vào kinh nghiệm/dự án (ví dụ: tăng tốc 30%, giảm lỗi 20%).',
+    'Viết mô tả dự án theo cấu trúc: bài toán – hành động – kết quả.',
+    'Nêu rõ công nghệ sử dụng trong từng dự án.',
+  ];
+
+  let suggestions = baseSuggestions;
+  let summary = `Thiếu ${missingSkills.length}/${jobTags.length} kỹ năng yêu cầu.`;
+  if (process.env.GEMINI_API_KEY) {
+    try {
+      const r = await geminiMatch(candidate.cvText || candidate.bio || '', job.title || '', job.description || '', job.requirements || '', 0, skills, jobTags);
+      if (r.recommendations?.length) suggestions = r.recommendations;
+      if (r.explanation) summary = r.explanation;
+    } catch { /* fallback to rule-based */ }
+  }
+  res.json({ jobId: job.id, jobTitle: job.title, matchedSkills, missingSkills, suggestions, improvement, summary });
+});
+
+// AI mock interview (demo)
+app.post('/api/ai/interview', (req, res) => {
+  const db = readDB();
+  const { jobId } = req.body || {};
+  const job = db.jobs.find((j: any) => j.id === Number(jobId));
+  const title = job?.title || 'vị trí ứng tuyển';
+  const tags: string[] = job?.tags || [];
+  const questions = [
+    `Hãy giới thiệu ngắn gọn bản thân và lý do bạn phù hợp với vị trí ${title}.`,
+    tags[0] ? `Bạn đã từng làm việc với ${tags[0]} như thế nào? Cho ví dụ cụ thể.` : 'Kể về dự án kỹ thuật bạn tự hào nhất.',
+    'Mô tả một thử thách trong công việc/nhóm và cách bạn giải quyết.',
+    'Bạn ưu tiên điều gì khi làm việc nhóm trong dự án công nghệ?',
+    'Bạn học công nghệ mới như thế nào? Cho ví dụ gần đây.',
+  ];
+  const tips = [
+    'Trả lời theo STAR: Situation – Task – Action – Result.',
+    'Nêu công nghệ cụ thể và vai trò của bạn trong dự án.',
+    'Giữ câu trả lời 1–2 phút, có số liệu nếu có.',
+  ];
+  res.json({ jobTitle: title, questions, tips, mode: 'demo', note: 'Phỏng vấn demo offline.' });
 });
 
 app.listen(PORT, () => {
