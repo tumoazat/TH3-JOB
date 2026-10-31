@@ -4,15 +4,20 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { v4 as uuidv4 } from 'uuid';
+import dotenv from 'dotenv';
+import { execFileSync } from 'child_process';
+dotenv.config();
 import {
   normalizeSkill,
   computeSkillScore,
   computeKeywordScore,
   computeMatch,
   classifyBand,
-} from '../src/lib/matching';
+} from '../src/lib/matching.ts';
 import multer from 'multer';
-import { extractPdfText, isPdfSignature } from './cvExtractor';
+import { extractPdfText, isPdfSignature } from './cvExtractor.ts';
+import { geminiMatch, RUBRIC_VERSION, PROMPT_VERSION } from './services/geminiMatch.ts';
+import type { MatchResult } from './services/geminiMatch.ts';
 
 const upload = multer({
   storage: multer.memoryStorage(),
@@ -29,7 +34,7 @@ const DB_FILE = path.join(DATA_DIR, 'db.json');
 
 // ponytail: minimum AI config — env toggle, stdlib fs only, no external deps.
 // ML stays off by default (spec: pending until real CV + multiple reviewers).
-const MATCHING_METHOD = process.env.MATCHING_METHOD || 'baseline';
+const MATCHING_METHOD = process.env.MATCHING_METHOD || (process.env.GEMINI_API_KEY ? 'gemini' : 'baseline');
 const MODEL_FILE = path.join(__dirname, 'models', 'linear-match.json');
 let mlModel = null;
 try {
@@ -219,8 +224,8 @@ app.put('/api/candidates/:id/status', (req, res) => {
   res.json({ success: true });
 });
 
-// Matching engine (Level 1 baseline)
-function buildMatchResult(job: any, candidate: any) {
+// Matching engine (Level 1 baseline + Gemini semantic matching with fallback)
+async function buildMatchResult(job: any, candidate: any) {
   const jobTags: string[] = Array.isArray(job?.tags) ? job.tags : [];
   const skills: string[] = Array.isArray(candidate?.skills) ? candidate.skills : [];
   const cvText: string = candidate?.cvText || candidate?.bio || '';
@@ -228,52 +233,94 @@ function buildMatchResult(job: any, candidate: any) {
 
   const skillScore = computeSkillScore(skills, jobTags);
   const keywordScore = computeKeywordScore(cvText, jdText);
+  const ruleScore = computeMatch(skillScore, keywordScore);
 
-  let match = computeMatch(skillScore, keywordScore);
-  let method = MATCHING_METHOD;
-  if (MATCHING_METHOD === 'ml' && mlModel) {
-    match = Math.max(0, Math.min(100, Math.round((mlModel.w0 + mlModel.w1 * (skillScore ?? 0) + mlModel.w2 * (keywordScore ?? 0)) * 100)));
-  }
   const dataStatus =
     skillScore != null && keywordScore != null
       ? 'complete'
       : skillScore != null || keywordScore != null
-      ? 'partial'
-      : 'insufficient';
+        ? 'partial'
+        : 'insufficient';
 
-  const cSet = new Set(skills.map(normalizeSkill).filter(Boolean));
+  let match: number | null = ruleScore;
+  let method: string = 'rule-based';
+  let fallback = false;
+  let geminiResult: MatchResult | null = null;
+
+  if (MATCHING_METHOD === 'gemini') {
+    try {
+      const result = await geminiMatch(
+        cvText,
+        job?.title || '',
+        job?.description || '',
+        job?.requirements || '',
+        ruleScore,
+        skills,
+        jobTags,
+      );
+      match = result.match;
+      method = result.matchingMethod === 'gemini_semantic' ? 'gemini_semantic' : 'rule-based';
+      fallback = result.matchingMethod === 'rule_based_fallback';
+      geminiResult = result;
+    } catch {
+      match = ruleScore;
+      method = 'rule-based';
+      fallback = true;
+    }
+  }
+
+  const cSet = new Set(skills.map(s => s.toLowerCase().replace(/[^\w\s]/g, '').replace(/\s+/g, '')));
   const seen = new Set<string>();
-  const matchedSkills: string[] = [];
-  const missingSkills: string[] = [];
+  const ruleMatchedSkills: string[] = [];
+  const ruleMissingSkills: string[] = [];
   for (const tag of jobTags) {
-    const n = normalizeSkill(tag);
+    const n = tag.toLowerCase().replace(/[^\w\s]/g, '').replace(/\s+/g, '');
     if (!n || seen.has(n)) continue;
     seen.add(n);
-    if (cSet.has(n)) matchedSkills.push(tag);
-    else missingSkills.push(tag);
+    if (cSet.has(n)) ruleMatchedSkills.push(tag);
+    else ruleMissingSkills.push(tag);
   }
+
+  const finalExplanation = geminiResult
+    ? {
+        skillScore,
+        keywordScore,
+        summary: geminiResult.explanation,
+        criteria: geminiResult.criteria,
+        confidence: geminiResult.confidence,
+      }
+    : {
+        skillScore,
+        keywordScore,
+        summary:
+          match == null
+            ? 'Chưa đủ dữ liệu để đánh giá.'
+            : `Khớp ${ruleMatchedSkills.length}/${ruleMatchedSkills.length + ruleMissingSkills.length} kỹ năng yêu cầu.`,
+      };
 
   return {
     jobId: job?.id,
     match,
     band: classifyBand(match),
     method,
+    fallback,
     modelVersion: method === 'ml' ? (mlModel?.modelVersion ?? null) : null,
     dataStatus,
-    matchedSkills,
-    missingSkills,
-    explanation: {
-      skillScore,
-      keywordScore,
-      summary:
-        match == null
-          ? 'Chưa đủ dữ liệu để đánh giá.'
-          : `Khớp ${matchedSkills.length}/${matchedSkills.length + missingSkills.length} kỹ năng yêu cầu.`,
-    },
+    matchedSkills: geminiResult?.matchedSkills ?? ruleMatchedSkills,
+    missingSkills: geminiResult?.missingSkills ?? ruleMissingSkills,
+    explanation: finalExplanation,
+    strengths: geminiResult?.strengths ?? [],
+    weaknesses: geminiResult?.weaknesses ?? [],
+    recommendations: geminiResult?.recommendations ?? [],
+    matchingMethod: geminiResult?.matchingMethod ?? (fallback ? 'rule_based_fallback' : 'rule_based'),
+    criteria: geminiResult?.criteria ?? [],
+    confidence: geminiResult?.confidence ?? (fallback ? 0.5 : null),
+    rubricVersion: geminiResult?.rubricVersion ?? RUBRIC_VERSION,
+    promptVersion: geminiResult?.promptVersion ?? PROMPT_VERSION,
   };
 }
 
-app.post('/api/match', (req, res) => {
+app.post('/api/match', async (req, res) => {
   const db = readDB();
   const { jobId, candidateId } = req.body || {};
   const job = db.jobs.find((j: any) => j.id === Number(jobId));
@@ -286,7 +333,7 @@ app.post('/api/match', (req, res) => {
   if (!candidate) {
     return res.status(404).json({ error: { code: 404, message: 'Ứng viên không tồn tại' } });
   }
-  res.json(buildMatchResult(job, candidate));
+  res.json(await buildMatchResult(job, candidate));
 });
 
 app.get('/api/match/batch', (req, res) => {
@@ -340,7 +387,7 @@ app.get('/api/match/batch', (req, res) => {
   res.json({ totalCandidates: summary.length, summary });
 });
 
-app.get('/api/match/all', (req, res) => {
+app.get('/api/match/all', async (req, res) => {
   const db = readDB();
   const { candidateId } = req.query;
   const candidate = candidateId === 'profile'
@@ -351,10 +398,10 @@ app.get('/api/match/all', (req, res) => {
   if (!candidate) {
     return res.status(404).json({ error: { code: 404, message: 'Ứng viên không tồn tại' } });
   }
-  const results = db.jobs.map((job: any) => {
-    const r = buildMatchResult(job, candidate);
+  const results = await Promise.all(db.jobs.map(async (job: any) => {
+    const r = await buildMatchResult(job, candidate);
     return { jobId: r.jobId, match: r.match, band: r.band, dataStatus: r.dataStatus };
-  });
+  }));
   results.sort((a: any, b: any) => (b.match ?? -1) - (a.match ?? -1));
   res.json(results);
 });
@@ -446,6 +493,194 @@ app.use((err: any, _req: any, res: any, _next: any) => {
     return res.status(400).json({ error: { code: 400, message: 'File vượt quá 5 MB' } });
   }
   res.status(500).json({ error: { code: 500, message: 'Lỗi server nội bộ' } });
+});
+
+// BI Statistics endpoints
+app.get('/api/stats/overview', (_req, res) => {
+  const db = readDB();
+  const jobs = db.jobs || [];
+  const candidates = db.candidates || [];
+  const profile = db.profile || {};
+  const employers = db.employer ? 1 : 0;
+  const postedJobs = db.postedJobs || [];
+  const applications = db.applications || [];
+
+  const skillsCount: Record<string, number> = {};
+  jobs.forEach((j: any) => {
+    (j.tags || []).forEach((t: string) => { skillsCount[t] = (skillsCount[t] || 0) + 1; });
+  });
+  const topSkills = Object.entries(skillsCount)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 10)
+    .map(([name, count]) => ({ name, count }));
+
+  const locationsCount: Record<string, number> = {};
+  jobs.forEach((j: any) => { locationsCount[j.location] = (locationsCount[j.location] || 0) + 1; });
+  const topLocations = Object.entries(locationsCount)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 10)
+    .map(([name, count]) => ({ name, count }));
+
+  const statusCount: Record<string, number> = {};
+  applications.forEach((a: any) => { statusCount[a.status] = (statusCount[a.status] || 0) + 1; });
+
+  // Phase 7: phân bố ứng viên theo ngành
+  const categoryCount: Record<string, number> = {};
+  candidates.forEach((c: any) => {
+    const cat = c.category || 'Khác';
+    categoryCount[cat] = (categoryCount[cat] || 0) + 1;
+  });
+  const categoryDistribution = Object.entries(categoryCount)
+    .sort((a, b) => b[1] - a[1])
+    .map(([name, count]) => ({ name, count }));
+
+  // Phase 7: nguồn dữ liệu (thực tế vs synthetic vs AI)
+  const dataSources = {
+    real: candidates.filter((c: any) => !c.synthetic).length,
+    synthetic: candidates.filter((c: any) => c.synthetic).length,
+    aiPredicted: 0,
+  };
+
+  // Phase 7: phân bố lương (dựa trên trường salary text; cảnh báo nếu thiếu số liệu)
+  const salaryCount: Record<string, number> = {};
+  let numericSalaryJobs = 0;
+  jobs.forEach((j: any) => {
+    if (typeof j.salary_min === 'number' && typeof j.salary_max === 'number') numericSalaryJobs++;
+    const key = j.salary ? String(j.salary).trim() : 'Không rõ';
+    salaryCount[key] = (salaryCount[key] || 0) + 1;
+  });
+  const salaryDistribution = Object.entries(salaryCount)
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, 10)
+    .map(([name, count]) => ({ name, count }));
+
+  // Phase 7: tỷ lệ chuyển đổi qua trạng thái ứng tuyển
+  const totalApps = applications.length || 1;
+  const conversion = Object.entries(statusCount).map(([status, count]) => ({
+    status,
+    count,
+    rate: Math.round((count / totalApps) * 100),
+  }));
+
+  res.json({
+    totalJobs: jobs.length,
+    totalCandidates: candidates.length,
+    totalProfile: profile ? 1 : 0,
+    totalEmployers: employers,
+    totalPostedJobs: postedJobs.length,
+    totalApplications: applications.length,
+    topSkills,
+    topLocations,
+    applicationStatus: statusCount,
+    categoryDistribution,
+    dataSources,
+    salaryDistribution,
+    salaryDataNote: numericSalaryJobs === 0
+      ? 'Không có dữ liệu lương dạng số (salary_min/salary_max). Chỉ phân bố theo mô tả lương.'
+      : `${numericSalaryJobs} tin có dữ liệu lương dạng số.`,
+    conversion,
+  });
+});
+
+app.get('/api/stats/matching-distribution', (_req, res) => {
+  const db = readDB();
+  const jobs = db.jobs || [];
+  const candidates = db.candidates || [];
+  const profile = db.profile;
+
+  const bands: Record<string, number> = { 'Rất khớp': 0, 'Khớp tốt': 0, 'Khớp tiềm năng': 0, 'Cần bổ sung': 0 };
+  let count = 0;
+
+  const sampleJobs = jobs.slice(0, 20);
+  const sampleCands = (candidates.length ? candidates : [profile]).slice(0, 30);
+  sampleCands.forEach((cand: any) => {
+    sampleJobs.forEach((job: any) => {
+      const skillScore = computeSkillScore(cand.skills || [], job.tags || []);
+      const keywordScore = computeKeywordScore(cand.cvText || cand.bio || '', [job.title, job.description, job.requirements].filter(Boolean).join(' '));
+      const match = computeMatch(skillScore, keywordScore);
+      if (match != null) {
+        const band = classifyBand(match);
+        bands[band] = (bands[band] || 0) + 1;
+        count++;
+      }
+    });
+  });
+
+  res.json({ totalPairs: count, distribution: bands, sampled: true });
+});
+
+app.get('/api/stats/skills', (_req, res) => {
+  const db = readDB();
+  const jobs = db.jobs || [];
+  const candidates = db.candidates || [];
+  const profile = db.profile;
+
+  const requiredSkills: Record<string, number> = {};
+  const candidateSkills: Record<string, number> = {};
+
+  jobs.forEach((j: any) => {
+    (j.tags || []).forEach((t: string) => { requiredSkills[t] = (requiredSkills[t] || 0) + 1; });
+  });
+  (candidates.length ? candidates : [profile]).forEach((c: any) => {
+    (c.skills || []).forEach((t: string) => { candidateSkills[t] = (candidateSkills[t] || 0) + 1; });
+  });
+
+  const allSkills = new Set([...Object.keys(requiredSkills), ...Object.keys(candidateSkills)]);
+  const comparison = Array.from(allSkills).map(skill => ({
+    name: skill,
+    requiredByJobs: requiredSkills[skill] || 0,
+    ownedByCandidates: candidateSkills[skill] || 0,
+  })).sort((a, b) => b.requiredByJobs - a.requiredByJobs).slice(0, 20);
+
+  res.json({ comparison });
+});
+
+// ML endpoints
+app.get('/api/ai/model-info', (_req, res) => {
+  const metaPath = path.join(__dirname, 'models', 'ml_meta.json');
+  let meta = null;
+  try {
+    meta = JSON.parse(fs.readFileSync(metaPath, 'utf-8'));
+  } catch { /* ignore */ }
+  res.json(meta || { status: 'not_trained', message: 'Chưa huấn luyện mô hình ML' });
+});
+
+app.get('/api/ai/model-status', (_req, res) => {
+  const metaPath = path.join(__dirname, 'models', 'ml_meta.json');
+  const modelPath = path.join(__dirname, 'models', 'ml_model.joblib');
+  let meta: any = null;
+  try {
+    meta = JSON.parse(fs.readFileSync(metaPath, 'utf-8'));
+  } catch { /* ignore */ }
+  res.json({
+    aiMatchingMethod: MATCHING_METHOD,
+    geminiConfigured: !!process.env.GEMINI_API_KEY,
+    geminiModel: process.env.GEMINI_MODEL || 'gemini-1.5-flash',
+    mlModelExists: fs.existsSync(modelPath),
+    mlModelVersion: meta?.model_version ?? null,
+    mlBestModel: meta?.best_model ?? null,
+    mlStatus: meta?.status ?? (meta ? 'trained' : 'not_trained'),
+    lastTrainingDate: meta?.training_date ?? null,
+    healthy: true,
+  });
+});
+
+app.post('/api/ai/predict', (req, res) => {
+  const { candidateId, jobId } = req.body || {};
+  if (!candidateId || jobId == null) {
+    return res.status(400).json({ error: { code: 400, message: 'Thiếu candidateId hoặc jobId' } });
+  }
+  try {
+    const output = execFileSync(
+      'python',
+      [path.join(__dirname, '..', 'ml', 'predict.py'), String(candidateId), String(jobId)],
+      { encoding: 'utf-8', maxBuffer: 1024 * 1024, timeout: 30000 },
+    );
+    const result = JSON.parse(output);
+    res.json(result);
+  } catch (e: any) {
+    res.status(500).json({ error: { code: 500, message: 'Lỗi dự đoán ML: ' + e.message } });
+  }
 });
 
 app.listen(PORT, () => {

@@ -1,0 +1,89 @@
+{
+  "model_version": "ml-v1",
+  "best_model": "random_forest",
+  "training_date": "2026-10-31T23:34:31.927763",
+  "n_samples": 173340,
+  "features": [
+    "skill_overlap_ratio",
+    "required_skill_coverage",
+    "preferred_skill_coverage",
+    "text_overlap",
+    "experience_relevance",
+    "education_relevance",
+    "project_relevance",
+    "tfidf_text"
+  ],
+  "labels": {
+    "0": "Không phù hợp",
+    "1": "Phù hợp một phần",
+    "2": "Phù hợp",
+    "3": "Rất phù hợp"
+  },
+  "results": {
+    "logistic_regression": {
+      "accuracy": 0.9995,
+      "precision_macro": 0.823,
+      "recall_macro": 0.9999,
+      "f1_macro": 0.8857,
+      "confusion_matrix": [
+        [
+          25962,
+          10,
+          2,
+          0
+        ],
+        [
+          0,
+          9,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          9,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          9
+        ]
+      ]
+    },
+    "random_forest": {
+      "accuracy": 1.0,
+      "precision_macro": 1.0,
+      "recall_macro": 1.0,
+      "f1_macro": 1.0,
+      "confusion_matrix": [
+        [
+          25974,
+          0,
+          0,
+          0
+        ],
+        [
+          0,
+          9,
+          0,
+          0
+        ],
+        [
+          0,
+          0,
+          9,
+          0
+        ],
+        [
+          0,
+          0,
+          0,
+          9
+        ]
+      ]
+    }
+  },
+  "note": "Pseudo-labels derived from rule-based heuristic (skill 60% + keyword 40%). Not human-labeled."
+}

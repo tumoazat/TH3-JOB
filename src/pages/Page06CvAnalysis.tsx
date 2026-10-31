@@ -1,21 +1,272 @@
+import { useState, useEffect, useRef } from 'react';
+
+const API = 'http://localhost:5000/api';
+
+function showToast(message: string, kind: 'success' | 'info' | 'error' = 'success') {
+  let wrap = document.getElementById('vl-toast-wrap');
+  if (!wrap) {
+    wrap = document.createElement('div');
+    wrap.id = 'vl-toast-wrap';
+    wrap.setAttribute('aria-live', 'polite');
+    document.body.append(wrap);
+  }
+  const toast = document.createElement('div');
+  toast.className = `vl-toast vl-toast-${kind}`;
+  toast.textContent = message;
+  wrap.append(toast);
+  requestAnimationFrame(() => toast.classList.add('is-visible'));
+  window.setTimeout(() => { toast.classList.remove('is-visible'); window.setTimeout(() => toast.remove(), 200); }, 3000);
+}
+
 export default function Page06CvAnalysis() {
+  const [profile, setProfile] = useState<any>(null);
+  const [loading, setLoading] = useState(false);
+  const [extracted, setExtracted] = useState<any>(null);
+  const [matchResults, setMatchResults] = useState<any[]>([]);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    fetch(`${API}/profile`)
+      .then((r) => r.json())
+      .then((data) => setProfile(data))
+      .catch(() => {});
+  }, []);
+
+  const handleUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    if (file.type !== 'application/pdf') {
+      showToast('Vui lòng chọn file PDF', 'error');
+      return;
+    }
+    setLoading(true);
+    const formData = new FormData();
+    formData.append('file', file);
+    try {
+      const res = await fetch(`${API}/cv/extract`, {
+        method: 'POST',
+        body: formData,
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error?.message || 'Lỗi trích xuất');
+      setExtracted(data.cvText);
+      setProfile({ ...(profile || {}), cvText: data.cvText });
+      showToast('Đã trích xuất nội dung CV', 'success');
+    } catch (e: any) {
+      showToast(e.message || 'Lỗi upload CV', 'error');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const saveCVText = async (text: string) => {
+    setLoading(true);
+    try {
+      const res = await fetch(`${API}/cv/manual`, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ cvText: text }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error?.message || 'Lỗi lưu');
+      setProfile({ ...(profile || {}), cvText: text });
+      showToast('Đã lưu nội dung CV', 'success');
+    } catch (e: any) {
+      showToast(e.message || 'Lỗi lưu CV', 'error');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const runMatch = async () => {
+    if (!profile?.cvText) {
+      showToast('Vui lòng nhập/trích xuất CV trước khi matching', 'error');
+      return;
+    }
+    setLoading(true);
+    try {
+      const res = await fetch(`${API}/match/all`, {
+        method: 'GET',
+      });
+      const data = await res.json();
+      setMatchResults(Array.isArray(data) ? data : []);
+      showToast(`Đã matching ${data.length} việc làm`, 'success');
+    } catch (e: any) {
+      showToast(e.message || 'Lỗi matching', 'error');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const bandColor = (band: string | null) => {
+    switch (band) {
+      case 'Rất khớp': return 'bg-green-100 text-green-800';
+      case 'Khớp tốt': return 'bg-blue-100 text-blue-800';
+      case 'Khớp tiềm năng': return 'bg-amber-100 text-amber-800';
+      default: return 'bg-red-100 text-red-800';
+    }
+  };
+
   return (
     <>
-      {"\n"}
-      
-      {"\n"}
-      <aside className="fixed left-0 top-0 bottom-0 z-40 flex flex-col justify-between p-4 w-64 h-screen bg-surface-container-lowest border-r border-outline-variant shadow-sm select-none">{"\n"}<div className="flex flex-col gap-5">{"\n"}{"\n"}<div className="flex items-center gap-3 px-2 pt-1">{"\n"}<div className="w-10 h-10 rounded-lg bg-primary-container text-on-primary flex items-center justify-center font-display-lg font-bold shadow-sm">{"\n"}<span className="material-symbols-outlined text-[24px]">{"psychology"}</span>{"\n"}</div>{"\n"}<div className="flex flex-col">{"\n"}<span className="text-headline-sm font-headline-sm font-bold text-primary tracking-tight">{"CareerMatch AI"}</span>{"\n"}<span className="text-[10px] uppercase font-bold tracking-wider text-outline">{"Early-Career Talent Hub"}</span>{"\n"}</div>{"\n"}</div>{"\n"}{"\n"}<button className="w-full py-2.5 px-4 bg-primary hover:bg-primary-container active:scale-[0.99] transition-all duration-200 text-on-primary rounded-lg font-label-lg text-label-lg flex items-center justify-center gap-2 shadow-sm">{"\n"}<span className="material-symbols-outlined text-[18px]">{"upload_file"}</span>{"\n"}<span>{"Upload New CV"}</span>{"\n"}</button>{"\n"}{"\n"}<nav className="flex flex-col gap-1">{"\n"}{"\n"}<a className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors duration-150 font-label-lg text-label-lg" href="#">{"\n"}<span className="material-symbols-outlined text-[20px]">{"space_dashboard"}</span>{"\n"}<span>{"Dashboard"}</span>{"\n"}</a>{"\n"}{"\n"}<a className="flex items-center justify-between px-3 py-2.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors duration-150 font-label-lg text-label-lg" href="#">{"\n"}<div className="flex items-center gap-3">{"\n"}<span className="material-symbols-outlined text-[20px]">{"work"}</span>{"\n"}<span>{"Matched Jobs"}</span>{"\n"}</div>{"\n"}<span className="px-2 py-0.5 rounded-full text-label-sm font-label-sm bg-surface-container text-secondary font-bold">{"12"}</span>{"\n"}</a>{"\n"}{"\n"}<a className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors duration-150 font-label-lg text-label-lg" href="#">{"\n"}<span className="material-symbols-outlined text-[20px]">{"fact_check"}</span>{"\n"}<span>{"Applications"}</span>{"\n"}</a>{"\n"}{"\n"}<a className="flex items-center gap-3 px-3 py-2.5 rounded-lg bg-surface-container text-secondary font-semibold transition-all duration-200 active:scale-[0.99] font-label-lg text-label-lg shadow-sm" href="#">{"\n"}<span className="material-symbols-outlined text-[20px]" style={{"fontVariationSettings": "'FILL' 1"}}>{"psychology"}</span>{"\n"}<span>{"Assessments"}</span>{"\n"}</a>{"\n"}{"\n"}<a className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors duration-150 font-label-lg text-label-lg" href="#">{"\n"}<span className="material-symbols-outlined text-[20px]">{"account_box"}</span>{"\n"}<span>{"Profile & CV"}</span>{"\n"}</a>{"\n"}{"\n"}<a className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors duration-150 font-label-lg text-label-lg" href="#">{"\n"}<span className="material-symbols-outlined text-[20px]">{"settings"}</span>{"\n"}<span>{"Settings"}</span>{"\n"}</a>{"\n"}</nav>{"\n"}</div>{"\n"}{"\n"}<div className="flex flex-col gap-3 pt-4 border-t border-outline-variant">{"\n"}{"\n"}<div className="flex items-center gap-3 p-2 rounded-lg bg-surface-container-low border border-outline-variant">{"\n"}<img className="w-10 h-10 rounded-full object-cover border border-outline-variant" data-alt="A refined portrait of Nguyen Minh Anh, a promising Vietnamese senior undergraduate university student wearing modern business casual attire against a clean architectural studio interior with soft natural lighting and sophisticated neutral tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCwtFuqc7-bVJSIeT7cee7NmJPYOPu3ph9goKNlCThA65MZK5vDzmvDsEJL3-88BiwHJsTFNssxg50dW5OHpadHgk5whQq5zzP4GOS_0Ayrw3usE2Re_Z9O-3VRP809fbkEPpBpuScxUspJPr9CQ17EVxrvA9mLFTgMGFAseYqEtK6dDMw84WR3XoGigj82NE-sFCJvyquHlmf-pckRYeR5VaxPMt7yAxK58t3O9F97HcIqaJlo-Wkaff4vmxRKswN6RiAILyzrYWI" />{"\n"}<div className="flex flex-col min-w-0">{"\n"}<div className="flex items-center gap-1">{"\n"}<span className="text-label-md font-label-md text-on-surface truncate">{"Nguyễn Minh Anh"}</span>{"\n"}<span className="material-symbols-outlined text-secondary text-[14px]" style={{"fontVariationSettings": "'FILL' 1"}}>{"verified"}</span>{"\n"}</div>{"\n"}<span className="text-label-sm font-label-sm text-on-surface-variant truncate">{"Năm 4 • ĐH Thủy Lợi"}</span>{"\n"}</div>{"\n"}</div>{"\n"}{"\n"}<div className="flex flex-col gap-0.5">{"\n"}<a className="flex items-center gap-3 px-3 py-2 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors duration-150 font-label-md text-label-md" href="#">{"\n"}<span className="material-symbols-outlined text-[18px]">{"help"}</span>{"\n"}<span>{"Help Center"}</span>{"\n"}</a>{"\n"}<a className="flex items-center gap-3 px-3 py-2 rounded-lg text-error hover:bg-error-container hover:text-on-error-container transition-colors duration-150 font-label-md text-label-md" href="#">{"\n"}<span className="material-symbols-outlined text-[18px]">{"logout"}</span>{"\n"}<span>{"Log Out"}</span>{"\n"}</a>{"\n"}</div>{"\n"}</div>{"\n"}</aside>
-      {"\n"}
-      
-      {"\n"}
-      <div className="pl-64 flex-1 flex flex-col min-h-screen">{"\n"}{"\n"}<header className="sticky top-0 z-30 flex items-center justify-between px-6 h-16 w-full bg-surface-container-lowest border-b border-outline-variant shadow-sm">{"\n"}{"\n"}<div className="flex items-center gap-6">{"\n"}<div className="flex items-center gap-2 text-body-sm font-body-sm text-on-surface-variant">{"\n"}<span>{"Trang chủ"}</span>{"\n"}<span className="material-symbols-outlined text-[14px]">{"chevron_right"}</span>{"\n"}<span className="text-on-surface font-semibold">{"Phân tích CV bằng AI"}</span>{"\n"}</div>{"\n"}<div className="relative w-72">{"\n"}<span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[18px] text-outline">{"search"}</span>{"\n"}<input className="w-full h-9 pl-9 pr-4 text-body-sm font-body-sm bg-surface rounded-lg border border-outline-variant focus:outline-none focus:border-secondary focus:ring-2 focus:ring-secondary/20 placeholder:text-outline transition-all" placeholder="Tìm kiếm công ty, vị trí..." type="text" />{"\n"}</div>{"\n"}</div>{"\n"}{"\n"}<div className="flex items-center gap-5">{"\n"}<nav className="hidden lg:flex items-center gap-6 text-label-md font-label-md text-on-surface-variant">{"\n"}<a className="hover:text-secondary transition-colors duration-150" href="#">{"Explore Companies"}</a>{"\n"}<a className="hover:text-secondary transition-colors duration-150" href="#">{"Salary Insights"}</a>{"\n"}<a className="hover:text-secondary transition-colors duration-150" href="#">{"Mentorship"}</a>{"\n"}</nav>{"\n"}<div className="h-4 w-[1px] bg-outline-variant hidden lg:block"></div>{"\n"}<div className="flex items-center gap-2">{"\n"}<button className="relative p-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low rounded-lg transition-colors">{"\n"}<span className="material-symbols-outlined text-[20px]">{"notifications"}</span>{"\n"}<span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-error ring-2 ring-surface-container-lowest"></span>{"\n"}</button>{"\n"}<button className="p-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low rounded-lg transition-colors">{"\n"}<span className="material-symbols-outlined text-[20px]">{"mark_chat_unread"}</span>{"\n"}</button>{"\n"}</div>{"\n"}<button className="py-2 px-3.5 bg-secondary hover:bg-secondary-container active:scale-95 text-on-secondary rounded-lg font-label-md text-label-md shadow-sm transition-all duration-200 flex items-center gap-1.5">{"\n"}<span className="material-symbols-outlined text-[16px]">{"bolt"}</span>{"\n"}<span>{"Quick Apply"}</span>{"\n"}</button>{"\n"}</div>{"\n"}</header>{"\n"}{"\n"}<main className="flex-1 p-8 max-w-[1280px] mx-auto w-full flex flex-col gap-6">{"\n"}{"\n"}<section className="flex flex-col md:flex-row md:items-center justify-between gap-4 pb-2 border-b border-outline-variant">{"\n"}<div>{"\n"}<div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-surface-container text-secondary border border-outline-variant mb-2">{"\n"}<span className="material-symbols-outlined text-[14px]">{"auto_awesome"}</span>{"\n"}<span className="text-label-sm font-label-sm uppercase tracking-wide">{"AI RESUME ANALYZER • CHUẨN ATS"}</span>{"\n"}</div>{"\n"}<h1 className="text-headline-lg font-headline-lg text-primary tracking-tight">{"Phân tích CV bằng AI"}</h1>{"\n"}<p className="text-body-md font-body-md text-on-surface-variant mt-1 max-w-2xl">{"\n            Nhận diện kỹ năng, đánh giá độ phù hợp và xem gợi ý cải thiện hồ sơ trước khi ứng tuyển vào các vị trí thực tập và fresher.\n          "}</p>{"\n"}</div>{"\n"}{"\n"}<div className="flex items-center gap-4 bg-surface-container-lowest p-3.5 rounded-xl border border-outline-variant custom-shadow-1">{"\n"}<div className="relative w-14 h-14 flex items-center justify-center">{"\n"}{"\n"}<svg className="w-14 h-14 -rotate-90" viewBox="0 0 36 36">{"\n"}<path className="text-surface-container" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-width="3.5"></path>{"\n"}<path className="text-on-tertiary-container" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="currentColor" stroke-dasharray="85, 100" stroke-linecap="round" stroke-width="3.5"></path>{"\n"}</svg>{"\n"}<span className="absolute font-headline-sm text-headline-sm text-primary font-bold" data-ats-score="">{"85"}</span>{"\n"}</div>{"\n"}<div className="flex flex-col">{"\n"}<div className="flex items-center gap-1.5">{"\n"}<span className="text-label-md font-label-md text-on-surface">{"Điểm ATS tương thích"}</span>{"\n"}<span className="px-1.5 py-0.2 rounded text-[10px] font-bold bg-surface-container text-secondary">{"TỐT"}</span>{"\n"}</div>{"\n"}<span className="text-body-sm font-body-sm text-on-surface-variant">{"Khả năng qua vòng lọc: "}<strong className="text-on-surface">{"Rất cao"}</strong></span>{"\n"}</div>{"\n"}</div>{"\n"}</section>{"\n"}{"\n"}<section className="bg-surface-container-lowest rounded-xl border border-outline-variant p-6 custom-shadow-1">{"\n"}<div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch">{"\n"}{"\n"}<div className="lg:col-span-6 flex flex-col justify-center items-center p-6 border-2 border-dashed border-outline-variant rounded-xl bg-surface-container-low hover:border-secondary transition-colors cursor-pointer text-center group" data-cv-dropzone="">{"\n"}<input accept="application/pdf" className="hidden" data-cv-input="" type="file" />{"\n"}<div className="w-12 h-12 rounded-full bg-surface-container text-secondary flex items-center justify-center mb-3 group-hover:scale-105 transition-transform">{"\n"}<span className="material-symbols-outlined text-[26px]">{"cloud_upload"}</span>{"\n"}</div>{"\n"}<p className="text-body-md font-body-md font-semibold text-on-surface">{"\n              Kéo thả file CV (PDF) vào đây hoặc "}<span className="text-secondary underline decoration-1">{"chọn tệp từ máy tính"}</span>{"\n"}</p>{"\n"}<p className="text-body-sm font-body-sm text-outline mt-1">{"Định dạng hỗ trợ: PDF (Chuẩn định dạng ATS tối ưu nhất), tối đa 5MB"}</p>{"\n"}</div>{"\n"}{"\n"}<div className="lg:col-span-6 flex flex-col justify-between p-5 bg-surface rounded-xl border border-outline-variant">{"\n"}<div className="flex items-start justify-between gap-4">{"\n"}<div className="flex items-center gap-3.5">{"\n"}{"\n"}<div className="w-12 h-12 rounded-lg bg-error-container text-error flex items-center justify-center flex-shrink-0">{"\n"}<span className="material-symbols-outlined text-[28px]" style={{"fontVariationSettings": "'FILL' 1"}}>{"picture_as_pdf"}</span>{"\n"}</div>{"\n"}{"\n"}<div className="flex flex-col">{"\n"}<div className="flex items-center gap-2">{"\n"}<span className="font-headline-sm text-headline-sm text-on-surface truncate max-w-[200px] md:max-w-xs" data-cv-filename="">{"CV_Nguyen_Minh_Anh.pdf"}</span>{"\n"}<span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-label-sm font-label-sm bg-surface-container text-tertiary-container font-semibold border border-outline-variant">{"\n"}<span className="w-1.5 h-1.5 rounded-full bg-on-tertiary-container"></span>{"\n                      Đã quét ATS\n                    "}</span>{"\n"}</div>{"\n"}<div className="flex items-center gap-3 text-body-sm font-body-sm text-on-surface-variant mt-1">{"\n"}<span>{"1.2 MB"}</span>{"\n"}<span>{"•"}</span>{"\n"}<span>{"Cập nhật 2 giờ trước"}</span>{"\n"}</div>{"\n"}</div>{"\n"}</div>{"\n"}{"\n"}<div className="flex items-center gap-1">{"\n"}<button className="p-2 rounded-lg text-on-surface-variant hover:text-secondary hover:bg-surface-container transition-colors" title="Tải lại tệp khác">{"\n"}<span className="material-symbols-outlined text-[20px]">{"sync"}</span>{"\n"}</button>{"\n"}<button className="p-2 rounded-lg text-on-surface-variant hover:text-error hover:bg-error-container transition-colors" title="Xóa file">{"\n"}<span className="material-symbols-outlined text-[20px]">{"delete"}</span>{"\n"}</button>{"\n"}</div>{"\n"}</div>{"\n"}{"\n"}<div className="mt-4 pt-4 border-t border-outline-variant flex flex-col sm:flex-row items-center justify-between gap-3">{"\n"}<span className="text-body-sm font-body-sm text-on-surface-variant flex items-center gap-1.5">{"\n"}<span className="material-symbols-outlined text-on-tertiary-container text-[18px]" style={{"fontVariationSettings": "'FILL' 1"}}>{"check_circle"}</span>{"\n                Tệp đạt cấu trúc phân tích 100%\n              "}</span>{"\n"}<button className="w-full sm:w-auto px-5 py-2.5 rounded-lg bg-primary hover:bg-primary-container text-on-primary font-label-lg text-label-lg flex items-center justify-center gap-2 transition-all duration-200 active:scale-95 shadow-sm">{"\n"}<span className="material-symbols-outlined text-[18px]">{"auto_awesome"}</span>{"\n"}<span>{"Phân tích lại CV bằng AI"}</span>{"\n"}</button>{"\n"}</div>{"\n"}</div>{"\n"}</div>{"\n"}</section>{"\n"}{"\n"}<section className="grid grid-cols-1 lg:grid-cols-12 gap-6">{"\n"}{"\n"}<div className="lg:col-span-5 bg-surface-container-lowest rounded-xl border border-outline-variant p-6 custom-shadow-1 flex flex-col justify-between">{"\n"}<div>{"\n"}<div className="flex items-center gap-2 pb-3 mb-4 border-b border-outline-variant">{"\n"}<span className="material-symbols-outlined text-secondary text-[22px]">{"badge"}</span>{"\n"}<h2 className="text-headline-sm font-headline-sm text-primary">{"Thông tin nhận diện từ CV"}</h2>{"\n"}</div>{"\n"}<div className="space-y-4">{"\n"}<div>{"\n"}<span className="text-label-sm font-label-sm text-outline uppercase tracking-wider">{"Ngành học & Trường"}</span>{"\n"}<p className="text-body-md font-body-md font-semibold text-on-surface mt-0.5">{"\n                  Công nghệ thông tin - Đại học Thủy lợi "}<span className="text-secondary font-normal">{"(Sinh viên năm 4)"}</span>{"\n"}</p>{"\n"}</div>{"\n"}<div>{"\n"}<span className="text-label-sm font-label-sm text-outline uppercase tracking-wider">{"Định hướng nghề nghiệp"}</span>{"\n"}<p className="text-body-md font-body-md font-semibold text-on-surface mt-0.5">{"\n                  Front-end Developer / Web Developer\n                "}</p>{"\n"}</div>{"\n"}<div>{"\n"}<span className="text-label-sm font-label-sm text-outline uppercase tracking-wider">{"Mức độ sẵn sàng"}</span>{"\n"}<div className="flex items-center gap-2 mt-0.5">{"\n"}<span className="px-2.5 py-0.5 rounded-full text-label-sm font-label-sm bg-surface-container text-secondary font-semibold">{"\n                    Sẵn sàng thực tập / Junior\n                  "}</span>{"\n"}<span className="text-body-sm font-body-sm text-on-surface-variant">{"Toàn thời gian & Bán thời gian"}</span>{"\n"}</div>{"\n"}</div>{"\n"}</div>{"\n"}</div>{"\n"}<div className="mt-5 p-3.5 rounded-lg bg-surface-container-low border border-outline-variant">{"\n"}<span className="text-label-sm font-label-sm text-primary font-bold flex items-center gap-1.5 mb-1">{"\n"}<span className="material-symbols-outlined text-[16px]">{"insights"}</span>{"\n              Đánh giá tổng quan\n            "}</span>{"\n"}<p className="text-body-sm font-body-sm text-on-surface-variant italic leading-relaxed">{"\n              \"Hồ sơ có nền tảng lập trình giao diện tốt, cấu trúc rõ ràng, phù hợp nhất với vị trí Thực tập sinh Web/Frontend tại các doanh nghiệp công nghệ.\"\n            "}</p>{"\n"}</div>{"\n"}</div>{"\n"}{"\n"}<div className="lg:col-span-7 bg-surface-container-lowest rounded-xl border border-outline-variant p-6 custom-shadow-1 flex flex-col justify-between">{"\n"}<div>{"\n"}<div className="flex items-center justify-between pb-3 mb-4 border-b border-outline-variant">{"\n"}<div className="flex items-center gap-2">{"\n"}<span className="material-symbols-outlined text-secondary text-[22px]">{"smart_toy"}</span>{"\n"}<h2 className="text-headline-sm font-headline-sm text-primary">{"Kỹ năng phát hiện từ CV (AI Skill Extractor)"}</h2>{"\n"}</div>{"\n"}<div className="flex items-center gap-1 text-label-sm font-label-sm text-on-tertiary-container bg-surface-container px-2 py-0.5 rounded-md font-semibold">{"\n"}<span>{"Khớp từ khóa ATS: 88%"}</span>{"\n"}</div>{"\n"}</div>{"\n"}{"\n"}<div className="mb-5">{"\n"}<span className="text-label-sm font-label-sm text-outline uppercase tracking-wider mb-2 block">{"\n                Kỹ năng kỹ thuật & Lập trình (Detected 7)\n              "}</span>{"\n"}<div className="flex flex-wrap gap-2">{"\n"}<span className="px-3 py-1.5 rounded-md text-label-md font-label-md bg-surface-container text-primary font-semibold border border-outline-variant flex items-center gap-1.5">{"\n"}<span className="w-1.5 h-1.5 rounded-full bg-secondary"></span>{" HTML5\n                "}</span>{"\n"}<span className="px-3 py-1.5 rounded-md text-label-md font-label-md bg-surface-container text-primary font-semibold border border-outline-variant flex items-center gap-1.5">{"\n"}<span className="w-1.5 h-1.5 rounded-full bg-secondary"></span>{" CSS3\n                "}</span>{"\n"}<span className="px-3 py-1.5 rounded-md text-label-md font-label-md bg-surface-container text-primary font-semibold border border-outline-variant flex items-center gap-1.5">{"\n"}<span className="w-1.5 h-1.5 rounded-full bg-secondary"></span>{" JavaScript (ES6+)\n                "}</span>{"\n"}<span className="px-3 py-1.5 rounded-md text-label-md font-label-md bg-surface-container text-primary font-semibold border border-outline-variant flex items-center gap-1.5">{"\n"}<span className="w-1.5 h-1.5 rounded-full bg-secondary"></span>{" ReactJS\n                "}</span>{"\n"}<span className="px-3 py-1.5 rounded-md text-label-md font-label-md bg-surface-container text-primary font-semibold border border-outline-variant flex items-center gap-1.5">{"\n"}<span className="w-1.5 h-1.5 rounded-full bg-secondary"></span>{" Git/GitHub\n                "}</span>{"\n"}<span className="px-3 py-1.5 rounded-md text-label-md font-label-md bg-surface-container text-primary font-semibold border border-outline-variant flex items-center gap-1.5">{"\n"}<span className="w-1.5 h-1.5 rounded-full bg-secondary"></span>{" SQL\n                "}</span>{"\n"}<span className="px-3 py-1.5 rounded-md text-label-md font-label-md bg-surface-container text-primary font-semibold border border-outline-variant flex items-center gap-1.5">{"\n"}<span className="w-1.5 h-1.5 rounded-full bg-secondary"></span>{" TailwindCSS\n                "}</span>{"\n"}</div>{"\n"}</div>{"\n"}{"\n"}<div>{"\n"}<span className="text-label-sm font-label-sm text-outline uppercase tracking-wider mb-2 block">{"\n                Kỹ năng mềm & Tác phong làm việc\n              "}</span>{"\n"}<div className="flex flex-wrap gap-2">{"\n"}<span className="px-3 py-1.5 rounded-md text-label-md font-label-md bg-surface-container-low text-on-surface-variant border border-outline-variant">{"\n                  Làm việc nhóm\n                "}</span>{"\n"}<span className="px-3 py-1.5 rounded-md text-label-md font-label-md bg-surface-container-low text-on-surface-variant border border-outline-variant">{"\n                  Tự học công nghệ mới\n                "}</span>{"\n"}<span className="px-3 py-1.5 rounded-md text-label-md font-label-md bg-surface-container-low text-on-surface-variant border border-outline-variant">{"\n                  Tư duy logic\n                "}</span>{"\n"}<span className="px-3 py-1.5 rounded-md text-label-md font-label-md bg-surface-container-low text-on-surface-variant border border-outline-variant">{"\n                  Giao tiếp kỹ thuật\n                "}</span>{"\n"}</div>{"\n"}</div>{"\n"}</div>{"\n"}<div className="mt-4 pt-3 border-t border-outline-variant flex items-center justify-between text-body-sm font-body-sm text-outline">{"\n"}<span>{"Độ phủ từ khóa ngành Front-end: "}<strong>{"Cao"}</strong></span>{"\n"}<button className="text-secondary font-semibold hover:underline flex items-center gap-1 text-label-sm font-label-sm">{"\n"}<span className="material-symbols-outlined text-[16px]">{"add_circle"}</span>{"\n              Thêm từ khóa kỹ năng\n            "}</button>{"\n"}</div>{"\n"}</div>{"\n"}</section>{"\n"}{"\n"}<section className="grid grid-cols-1 md:grid-cols-2 gap-6">{"\n"}{"\n"}<div className="bg-surface-container-lowest rounded-xl border border-outline-variant p-6 custom-shadow-1 flex flex-col justify-between">{"\n"}<div>{"\n"}<div className="flex items-center gap-2.5 pb-3 mb-4 border-b border-outline-variant">{"\n"}<div className="w-8 h-8 rounded-lg bg-surface-container text-on-tertiary-container flex items-center justify-center">{"\n"}<span className="material-symbols-outlined text-[20px]" style={{"fontVariationSettings": "'FILL' 1"}}>{"check_circle"}</span>{"\n"}</div>{"\n"}<div>{"\n"}<h3 className="text-headline-sm font-headline-sm text-primary">{"Điểm mạnh nổi bật"}</h3>{"\n"}<span className="text-label-sm font-label-sm text-outline">{"Đã xác thực qua 3 tiêu chuẩn tuyển dụng"}</span>{"\n"}</div>{"\n"}</div>{"\n"}<div className="space-y-3.5">{"\n"}<div className="flex items-start gap-3 p-3 rounded-lg bg-surface border border-outline-variant">{"\n"}<span className="material-symbols-outlined text-on-tertiary-container text-[20px] mt-0.5">{"verified"}</span>{"\n"}<div>{"\n"}<h4 className="text-label-lg font-label-lg text-on-surface">{"Nền tảng kỹ thuật vững"}</h4>{"\n"}<p className="text-body-sm font-body-sm text-on-surface-variant mt-0.5 leading-relaxed">{"\n                    Nắm vững kiến thức nền tảng HTML/CSS và JavaScript hiện đại (ES6+), cấu trúc code sạch và bài bản.\n                  "}</p>{"\n"}</div>{"\n"}</div>{"\n"}<div className="flex items-start gap-3 p-3 rounded-lg bg-surface border border-outline-variant">{"\n"}<span className="material-symbols-outlined text-on-tertiary-container text-[20px] mt-0.5">{"verified"}</span>{"\n"}<div>{"\n"}<h4 className="text-label-lg font-label-lg text-on-surface">{"Dự án thực tế có độ hoàn thiện"}</h4>{"\n"}<p className="text-body-sm font-body-sm text-on-surface-variant mt-0.5 leading-relaxed">{"\n                    Có sản phẩm demo cá nhân ReactJS thực tế (Web Portfolio & E-commerce Prototype) thể hiện năng lực tự build giao diện.\n                  "}</p>{"\n"}</div>{"\n"}</div>{"\n"}<div className="flex items-start gap-3 p-3 rounded-lg bg-surface border border-outline-variant">{"\n"}<span className="material-symbols-outlined text-on-tertiary-container text-[20px] mt-0.5">{"verified"}</span>{"\n"}<div>{"\n"}<h4 className="text-label-lg font-label-lg text-on-surface">{"Chuẩn định dạng máy đọc ATS"}</h4>{"\n"}<p className="text-body-sm font-body-sm text-on-surface-variant mt-0.5 leading-relaxed">{"\n                    Trình bày rõ ràng, cấu trúc CV dễ đọc, phân mục rành mạch và đạt chuẩn đọc máy ATS giúp không bị lọc nhầm.\n                  "}</p>{"\n"}</div>{"\n"}</div>{"\n"}</div>{"\n"}</div>{"\n"}<div className="mt-4 pt-3 border-t border-outline-variant text-label-sm font-label-sm text-outline">{"\n            Tỷ lệ cạnh tranh: Top 15% hồ sơ thực tập sinh IT\n          "}</div>{"\n"}</div>{"\n"}{"\n"}<div className="bg-surface-container-lowest rounded-xl border border-outline-variant p-6 custom-shadow-1 flex flex-col justify-between">{"\n"}<div>{"\n"}<div className="flex items-center gap-2.5 pb-3 mb-4 border-b border-outline-variant">{"\n"}<div className="w-8 h-8 rounded-lg bg-surface-container text-secondary flex items-center justify-center">{"\n"}<span className="material-symbols-outlined text-[20px]">{"lightbulb"}</span>{"\n"}</div>{"\n"}<div>{"\n"}<h3 className="text-headline-sm font-headline-sm text-primary">{"Điểm có thể cải thiện"}</h3>{"\n"}<span className="text-label-sm font-label-sm text-outline">{"Khuyến nghị bởi AI Mentor để nâng cơ hội phỏng vấn"}</span>{"\n"}</div>{"\n"}</div>{"\n"}<div className="space-y-3.5">{"\n"}<div className="flex items-start gap-3 p-3 rounded-lg bg-surface border border-outline-variant">{"\n"}<span className="material-symbols-outlined text-secondary text-[20px] mt-0.5">{"priority_high"}</span>{"\n"}<div>{"\n"}<h4 className="text-label-lg font-label-lg text-on-surface">{"Thiếu số liệu đo lường (Impact Metrics)"}</h4>{"\n"}<p className="text-body-sm font-body-sm text-on-surface-variant mt-0.5 leading-relaxed">{"\n                    Cần mô tả rõ hơn về tác động và kết quả (metric, kết quả đo lường, ví dụ: tối ưu tốc độ tải 20%, số lượng view) của các dự án.\n                  "}</p>{"\n"}</div>{"\n"}</div>{"\n"}<div className="flex items-start gap-3 p-3 rounded-lg bg-surface border border-outline-variant">{"\n"}<span className="material-symbols-outlined text-secondary text-[20px] mt-0.5">{"link"}</span>{"\n"}<div>{"\n"}<h4 className="text-label-lg font-label-lg text-on-surface">{"Thiếu liên kết Live Demo & GitHub"}</h4>{"\n"}<p className="text-body-sm font-body-sm text-on-surface-variant mt-0.5 leading-relaxed">{"\n                    Bổ sung thêm link GitHub repository hoạt động và link live demo trực tiếp trong từng dự án để nhà tuyển dụng kiểm tra ngay.\n                  "}</p>{"\n"}</div>{"\n"}</div>{"\n"}<div className="flex items-start gap-3 p-3 rounded-lg bg-surface border border-outline-variant">{"\n"}<span className="material-symbols-outlined text-secondary text-[20px] mt-0.5">{"extension"}</span>{"\n"}<div>{"\n"}<h4 className="text-label-lg font-label-lg text-on-surface">{"Minh chứng về API & Quản lý trạng thái"}</h4>{"\n"}<p className="text-body-sm font-body-sm text-on-surface-variant mt-0.5 leading-relaxed">{"\n                    Nên đưa thêm ví dụ cụ thể về việc tích hợp API thực tế (RESTful API, State Management như Redux Toolkit hoặc Zustand).\n                  "}</p>{"\n"}</div>{"\n"}</div>{"\n"}</div>{"\n"}</div>{"\n"}<div className="mt-4 pt-3 border-t border-outline-variant text-label-sm font-label-sm text-secondary font-semibold">{"\n            Áp dụng các đề xuất này có thể tăng điểm ATS lên 94/100\n          "}</div>{"\n"}</div>{"\n"}</section>{"\n"}{"\n"}<section className="bg-surface-container rounded-xl border border-outline-variant p-6 custom-shadow-2 flex flex-col md:flex-row items-center justify-between gap-6">{"\n"}<div className="flex items-center gap-4">{"\n"}<div className="w-12 h-12 rounded-xl bg-secondary-container text-on-secondary flex items-center justify-center flex-shrink-0 shadow-sm">{"\n"}<span className="material-symbols-outlined text-[26px]">{"travel_explore"}</span>{"\n"}</div>{"\n"}<div>{"\n"}<h3 className="text-headline-sm font-headline-sm text-primary">{"Sẵn sàng ứng tuyển bước tiếp theo?"}</h3>{"\n"}<p className="text-body-md font-body-md text-on-surface-variant mt-0.5">{"\n              Dựa trên kết quả phân tích CV, bạn có "}<strong className="text-secondary font-bold">{"12 việc làm phù hợp"}</strong>{" với tỷ lệ khớp từ 80% trở lên!\n            "}</p>{"\n"}</div>{"\n"}</div>{"\n"}<div className="flex items-center gap-3 w-full md:w-auto">{"\n"}<button className="flex-1 md:flex-none px-4 py-2.5 rounded-lg border border-outline-variant bg-surface-container-lowest hover:bg-surface text-primary font-label-lg text-label-lg transition-colors flex items-center justify-center gap-2">{"\n"}<span className="material-symbols-outlined text-[18px]">{"edit"}</span>{"\n"}<span>{"Cập nhật hồ sơ"}</span>{"\n"}</button>{"\n"}<button className="flex-1 md:flex-none px-5 py-2.5 rounded-lg bg-primary hover:bg-primary-container text-on-primary font-label-lg text-label-lg transition-all duration-200 active:scale-95 shadow-sm flex items-center justify-center gap-2">{"\n"}<span className="material-symbols-outlined text-[18px]">{"work"}</span>{"\n"}<span>{"Xem 12 việc làm phù hợp nhất"}</span>{"\n"}</button>{"\n"}</div>{"\n"}</section>{"\n"}{"\n"}<footer className="pt-2 pb-6 flex flex-col sm:flex-row items-center justify-between gap-3 text-body-sm font-body-sm text-outline border-t border-outline-variant">{"\n"}<p>{"Kết quả trên là dữ liệu phân tích minh họa prototype CareerMatch AI. Ứng viên có thể chỉnh sửa và bổ sung thông tin bất kỳ lúc nào."}</p>{"\n"}<p>{"© 2025 CareerMatch AI. Vietnamese Early-Career Talent Platform."}</p>{"\n"}</footer>{"\n"}</main>{"\n"}</div>
-      {"\n  "}
-      
-      {"\n  "}
-      
-      {"\n  "}
-      
-      {"\n"}
+      <aside className="fixed left-0 top-0 bottom-0 z-40 flex flex-col justify-between p-4 w-64 h-screen bg-surface-container-lowest border-r border-outline-variant shadow-sm select-none">
+        <div className="flex flex-col gap-5">
+          <div className="flex items-center gap-3 px-2 pt-1">
+            <div className="w-10 h-10 rounded-lg bg-primary-container text-on-primary flex items-center justify-center font-display-lg font-bold shadow-sm">
+              <span className="material-symbols-outlined text-[24px]" data-icon="psychology">psychology</span>
+            </div>
+            <div className="flex flex-col">
+              <span className="text-headline-sm font-headline-sm font-bold text-primary tracking-tight">CareerMatch AI</span>
+              <span className="text-[10px] uppercase font-bold tracking-wider text-outline">Early-Career Talent Hub</span>
+            </div>
+          </div>
+          <button
+            onClick={() => fileInputRef.current?.click()}
+            disabled={loading}
+            className={`w-full py-2.5 px-4 rounded-lg text-on-primary font-label-lg text-label-lg flex items-center justify-center gap-2 shadow-sm transition-all duration-200 disabled:opacity-60 ${
+              loading ? 'bg-secondary' : 'bg-primary hover:bg-primary-container active:scale-[0.99]'
+            }`}
+          >
+            <span className="material-symbols-outlined text-[18px]">upload_file</span>
+            <span>{loading ? 'Đang xử lý...' : 'Upload New CV'}</span>
+          </button>
+          <input ref={fileInputRef} type="file" accept=".pdf" onChange={handleUpload} className="hidden" />
+          <nav className="flex flex-col gap-1">
+            <a className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors duration-150 font-label-lg text-label-lg" href="#dashboard">
+              <span className="material-symbols-outlined text-[20px]">space_dashboard</span>
+              <span>Dashboard</span>
+            </a>
+            <a className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low transition-colors duration-150 font-label-lg text-label-lg" href="#matched-jobs">
+              <span className="material-symbols-outlined text-[20px]">work</span>
+              <span>Matched Jobs</span>
+            </a>
+          </nav>
+        </div>
+      </aside>
+      <div className="pl-64 flex-1 flex flex-col min-h-screen">
+        <header className="sticky top-0 z-30 flex items-center justify-between px-6 h-16 w-full bg-surface-container-lowest border-b border-outline-variant shadow-sm">
+          <div className="flex items-center gap-6">
+            <div className="flex items-center gap-2 text-body-sm font-body-sm text-on-surface-variant">
+              <span>Trang chủ</span>
+              <span className="material-symbols-outlined text-[14px] text-outline">chevron_right</span>
+              <span className="text-on-surface font-semibold">Phân tích CV bằng AI</span>
+            </div>
+            <div className="relative w-72">
+              <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-[18px] text-outline">search</span>
+              <input className="w-full h-9 pl-9 pr-4 text-body-sm font-body-sm bg-surface rounded-lg border border-outline-variant focus:outline-none focus:border-secondary focus:ring-2 focus:ring-secondary/20 placeholder:text-outline transition-all" placeholder="Tìm kiếm công ty, vị trí..." type="text" />
+            </div>
+          </div>
+          <div className="flex items-center gap-5">
+            <nav className="hidden lg:flex items-center gap-6 text-label-md font-label-md text-on-surface-variant">
+              <a className="hover:text-secondary transition-colors duration-150" href="#">Explore Companies</a>
+              <a className="hover:text-secondary transition-colors duration-150" href="#">Salary Insights</a>
+              <a className="hover:text-secondary transition-colors duration-150" href="#">Mentorship</a>
+            </nav>
+            <div className="h-4 w-[1px] bg-outline-variant hidden lg:block"></div>
+            <div className="flex items-center gap-2">
+              <button className="relative p-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low rounded-lg transition-colors">
+                <span className="material-symbols-outlined text-[20px]">notifications</span>
+              </button>
+              <button className="relative p-2 text-on-surface-variant hover:text-on-surface hover:bg-surface-container-low rounded-lg transition-colors">
+                <span className="material-symbols-outlined text-[20px]">account_circle</span>
+              </button>
+            </div>
+          </div>
+        </header>
+
+        <main className="flex-1 p-8 space-y-8">
+          <section id="dashboard">
+            <h2 className="text-2xl font-bold text-primary mb-4">Thông tin hồ sơ</h2>
+            {profile ? (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div className="bg-surface border border-outline-variant/40 rounded-xl p-4">
+                  <div className="text-xs font-medium text-outline mb-1">Họ và tên</div>
+                  <div className="text-body-md font-body-md text-on-surface">{profile.name || 'Chưa có'}</div>
+                </div>
+                <div className="bg-surface border border-outline-variant/40 rounded-xl p-4">
+                  <div className="text-xs font-medium text-outline mb-1">Email</div>
+                  <div className="text-body-md font-body-md text-on-surface">{profile.email || 'Chưa có'}</div>
+                </div>
+                <div className="bg-surface border border-outline-variant/40 rounded-xl p-4">
+                  <div className="text-xs font-medium text-outline mb-1">Điểm CV</div>
+                  <div className="text-2xl font-bold text-primary">{profile.cvScore ?? '—'}</div>
+                </div>
+              </div>
+            ) : (
+              <div className="bg-surface border border-outline-variant/40 rounded-xl p-8 text-center">
+                <p className="text-on-surface-variant">Chưa có hồ sơ. Vui lòng upload CV.</p>
+              </div>
+            )}
+          </section>
+
+          <section id="upload">
+            <h2 className="text-2xl font-bold text-primary mb-4">Upload CV PDF</h2>
+            <div className="bg-surface border border-outline-variant/40 rounded-xl p-6">
+              <label className="block mb-4 text-sm font-medium text-on-surface">Chọn file CV (PDF, tối đa 5 MB)</label>
+              <input
+                type="file"
+                accept=".pdf"
+                onChange={handleUpload}
+                disabled={loading}
+                className="block w-full text-sm text-on-surface file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-primary file:text-on-primary hover:file:bg-primary-container"
+              />
+              {loading && <p className="mt-2 text-xs text-outline">Đang trích xuất nội dung PDF...</p>}
+              {extracted && (
+                <div className="mt-4 bg-surface-container-lowest border border-outline-variant/40 rounded-lg p-4">
+                  <div className="text-xs font-medium text-outline mb-2">Nội dung CV đã trích xuất (xem trước)</div>
+                  <div className="text-xs text-on-surface-variant break-words max-h-64 overflow-y-auto">
+                    {extracted.slice(0, 2000)}{extracted.length > 2000 ? '...' : ''}
+                  </div>
+                  <textarea
+                    className="mt-2 w-full h-32 p-3 text-sm text-on-surface bg-surface border border-outline-variant rounded-lg focus:ring-2 focus:ring-secondary focus:outline-none"
+                    placeholder="Chỉnh sửa nội dung CV nếu cần..."
+                    defaultValue={extracted}
+                    onChange={(e) => saveCVText(e.target.value)}
+                  />
+                </div>
+              )}
+            </div>
+          </section>
+
+          <section id="matched-jobs">
+            <h2 className="text-2xl font-bold text-primary mb-4">Việc làm phù hợp</h2>
+            <div className="flex items-center gap-3 mb-4">
+              <button
+                onClick={runMatch}
+                disabled={loading || !profile?.cvText}
+                className={`px-4 py-2 rounded-lg font-label-md text-label-md transition-colors duration-200 ${
+                  loading || !profile?.cvText
+                    ? 'bg-outline/20 text-outline-variant cursor-not-allowed'
+                    : 'bg-primary text-on-primary hover:bg-primary-container active:scale-[0.98]'
+                }`}
+              >
+                {loading ? 'Đang matching...' : 'Tìm việc phù hợp'}
+              </button>
+              {!profile?.cvText && <span className="text-xs text-red-500">Cần có nội dung CV trước khi matching</span>}
+            </div>
+            {matchResults.length > 0 && (
+              <div className="space-y-3">
+                {matchResults.slice(0, 10).map((r: any) => (
+                  <div key={r.jobId} className="bg-surface border border-outline-variant/40 rounded-xl p-4 flex items-center justify-between">
+                    <div>
+                      <span className="font-medium text-on-surface">Việc làm #{r.jobId}</span>
+                      <div className="text-xs text-outline mt-1">{r.method ?? '—'} • {r.matchingMethod ?? '—'}</div>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <span className={`px-2 py-1 rounded-md text-xs font-medium ${bandColor(r.band)}`}>{r.band ?? '—'}</span>
+                      <span className="font-bold text-on-surface">{r.match == null ? '—' : `${r.match}%`}</span>
+                    </div>
+                  </div>
+                ))}
+                {matchResults.length > 10 && <p className="text-xs text-outline mt-2">Hiển thị 10/{matchResults.length} kết quả đầu tiên</p>}
+              </div>
+            )}
+            {matchResults.length === 0 && profile?.cvText && (
+              <p className="text-on-surface-variant">Chưa có kết quả matching. Nhấn nút bên trên để bắt đầu.</p>
+            )}
+          </section>
+        </main>
+      </div>
     </>
   );
 }

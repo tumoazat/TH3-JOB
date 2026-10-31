@@ -27,6 +27,7 @@ const screens = [
   { file: 'certify.html', component: lazy(() => import('./pages/PageInfo')) },
   { file: 'cv-guide.html', component: lazy(() => import('./pages/PageInfo')) },
   { file: 'ai-match.html', component: lazy(() => import('./pages/PageAIMatch')) },
+  { file: 'bi-dashboard.html', component: lazy(() => import('./pages/PageBIDashboard')) },
 ];
 
 const routeByText: Record<string, string> = {
@@ -59,6 +60,7 @@ const routeByText: Record<string, string> = {
   'hồ sơ & cv': '/09_h_s_c_nh_n_student_profile.html', 'đăng xuất': '/01_landing_page.html', 'log out': '/01_landing_page.html', 'đăng nhập': '/03_student_dashboard.html', 'bắt đầu miễn phí': '/03_student_dashboard.html',
   'thêm dự án': '/09_h_s_c_nh_n_student_profile.html', 'cập nhật': '/09_h_s_c_nh_n_student_profile.html',
   'upload new cv': '/06_cv_analysis.html', 'tải lên cv mới': '/06_cv_analysis.html', 'upload cv': '/06_cv_analysis.html',
+  'dashboard bi': '/bi-dashboard.html', 'bi dashboard': '/bi-dashboard.html', 'thống kê': '/bi-dashboard.html', 'báo cáo bi': '/bi-dashboard.html',
   'quick apply': '/04_job_search.html',
   'xem 12 việc làm phù hợp nhất': '/07_matched_jobs.html', 'cập nhật hồ sơ ngay': '/09_h_s_c_nh_n_student_profile.html',
 };

@@ -6,7 +6,13 @@ dist
 .env.local
 .superpowers/
 
+# Build artifacts
+*.tsbuildinfo
+
 # Matching batch results (large generated files)
 match_all_candidates.json
 match_all_candidates.csv
 *.~lock.*
+
+# Generated AI cache
+server/data/gemini_match_cache.json
