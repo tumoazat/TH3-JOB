@@ -16,3 +16,7 @@ match_all_candidates.csv
 
 # Generated AI cache
 server/data/gemini_match_cache.json
+
+# Runtime database (contains user-uploaded PII: profile.cvText, etc.)
+# Commit the sanitized seed server/data/db.seed.json instead.
+server/data/db.json

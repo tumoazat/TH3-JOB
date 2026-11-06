@@ -34,6 +34,7 @@ const app = express();
 const PORT = Number(process.env.PORT) || 5000;
 const DATA_DIR = path.join(__dirname, 'data');
 const DB_FILE = path.join(DATA_DIR, 'db.json');
+const DB_SEED_FILE = path.join(DATA_DIR, 'db.seed.json');
 
 // ponytail: minimum AI config — env toggle, stdlib fs only, no external deps.
 // ML stays off by default (spec: pending until real CV + multiple reviewers).
@@ -126,6 +127,13 @@ function initDB() {
     fs.mkdirSync(DATA_DIR, { recursive: true });
   }
   if (!fs.existsSync(DB_FILE)) {
+    // Prefer committed seed (no runtime PII) when present.
+    if (fs.existsSync(DB_SEED_FILE)) {
+      try {
+        fs.copyFileSync(DB_SEED_FILE, DB_FILE);
+        return;
+      } catch { /* fall through to inline seed */ }
+    }
     const db = {
       jobs: SEED_JOBS,
       applications: SEED_APPLICATIONS,
